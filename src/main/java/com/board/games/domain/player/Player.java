@@ -1,0 +1,42 @@
+package com.board.games.domain.player;
+
+import com.board.games.domain.game.BoardGame;
+
+import java.util.List;
+
+/**
+ * An entity representing a board game player
+ */
+public abstract class Player {
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Instance Variables
+    ///////////////////////////////////////////////////////////////////////////
+    private String name;
+
+    public Player(String name) {
+        this.name = name;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Abstract Method Declarations
+    ///////////////////////////////////////////////////////////////////////////
+
+    public abstract PlayerTurnInfo playGameTurn(BoardGame game);
+    
+    public abstract List<Move> getAllMoves();
+    
+    ///////////////////////////////////////////////////////////////////////////
+    // Getter - Setters
+    ///////////////////////////////////////////////////////////////////////////
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+}
