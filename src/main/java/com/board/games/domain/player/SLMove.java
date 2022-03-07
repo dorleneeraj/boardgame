@@ -1,7 +1,5 @@
 package com.board.games.domain.player;
 
-import com.board.games.domain.player.MoveType;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,29 +10,33 @@ import java.util.Map;
  */
 public class SLMove implements Move {
 
-    private final Integer fromPosition;
-    private final Integer toPosition;
     private final MoveType moveType;
     private final String moveComments;
-    private final Integer totalTilesMoved;
     private final Map<String, Object> moveDetails = new HashMap<>();
+    private int fromPosition = 0;
+    private int toPosition = 0;
+    private int totalTilesMoved = 0;
+    private Move interMediateMove = null;
+    private int intermediatePosition = 0;
+    private int totalTilesClimbed = 0;
+    private int totalTilesDescended = 0;
 
-    private Move interMediateMove;
-    private Integer intermediatePosition;
-    private Integer totalTilesClimbed;
-    private Integer totalTilesDescended;
-
-    public SLMove(MoveType moveType, Integer fromPosition, Integer toPosition, String comments) {
+    public SLMove(MoveType moveType, int fromPosition, int toPosition, String comments) {
         this.moveType = moveType;
         this.fromPosition = fromPosition;
         this.toPosition = toPosition;
         this.moveComments = comments;
         this.totalTilesMoved = Math.abs(toPosition - fromPosition);
+
         moveDetails.put(MOVE_TYPE, this.moveType);
         moveDetails.put(MOVE_FROM_POSITION, this.fromPosition);
         moveDetails.put(MOVE_TO_POSITION, this.toPosition);
         moveDetails.put(MOVE_EXTRA_DETAILS, this.moveComments);
         moveDetails.put(MOVE_TOTAL_TILES, this.totalTilesMoved);
+        moveDetails.put(MOVE_INTERMEDIATE_MOVE, interMediateMove);
+        moveDetails.put(MOVE_INTERMEDIATE_POSITION, intermediatePosition);
+        moveDetails.put(MOVE_TOTAL_CLIMBED, this.totalTilesClimbed);
+        moveDetails.put(MOVE_TOTAL_DESCENDED, this.totalTilesDescended);
     }
 
     @Override
@@ -42,11 +44,11 @@ public class SLMove implements Move {
         return this.moveDetails;
     }
 
-    public Integer getFromPosition() {
+    public int getFromPosition() {
         return fromPosition;
     }
 
-    public Integer getToPosition() {
+    public int getToPosition() {
         return toPosition;
     }
 
@@ -58,15 +60,19 @@ public class SLMove implements Move {
         return moveComments;
     }
 
-    public Integer getTotalTilesMoved() {
+    public int getTotalTilesMoved() {
         return totalTilesMoved;
     }
 
     public Move getInterMediateMove() {
-        if (null == this.interMediateMove && this.moveDetails.containsKey(MOVE_INTERMEDIATE_MOVE)) {
-            this.interMediateMove = (SLMove) moveDetails.get(MOVE_INTERMEDIATE_MOVE);
-        }
         return interMediateMove;
+    }
+
+    public void setTotalTilesMoved(int totalTilesMoved) {
+        if (totalTilesMoved != 0) {
+            this.totalTilesMoved = totalTilesMoved;
+            this.moveDetails.put(MOVE_TOTAL_TILES, totalTilesMoved);
+        }
     }
 
     public void setInterMediateMove(Move interMediateMove) {
@@ -76,36 +82,42 @@ public class SLMove implements Move {
         }
     }
 
-    public Integer getTotalTilesClimbed() {
-        if (this.totalTilesClimbed == 0 && this.moveDetails.containsKey(MOVE_TOTAL_CLIMBED)) {
-            this.totalTilesClimbed = (Integer) this.moveDetails.get(MOVE_TOTAL_CLIMBED);
-        }
+    public int getTotalTilesClimbed() {
         return totalTilesClimbed;
     }
 
-    public void setTotalTilesClimbed(Integer totalTilesClimbed) {
-        if (this.totalTilesClimbed != 0) {
+    public void setTotalTilesClimbed(int totalTilesClimbed) {
+        if (totalTilesClimbed != 0) {
             this.totalTilesClimbed = totalTilesClimbed;
             this.moveDetails.put(MOVE_TOTAL_CLIMBED, this.totalTilesClimbed);
         }
     }
 
-    public Integer getTotalTilesDescended() {
-        if (this.totalTilesDescended == 0 && this.moveDetails.containsKey(MOVE_TOTAL_DESCENDED)) {
-            this.totalTilesDescended = (Integer) this.moveDetails.get(MOVE_TOTAL_DESCENDED);
-        }
+    public int getTotalTilesDescended() {
         return totalTilesDescended;
     }
 
-    public void setTotalTilesDescended(Integer totalTilesDescended) {
+    public void setTotalTilesDescended(int totalTilesDescended) {
         if (totalTilesDescended != 0) {
             this.totalTilesDescended = totalTilesDescended;
             this.moveDetails.put(MOVE_TOTAL_DESCENDED, this.totalTilesDescended);
         }
     }
 
+    public int getIntermediatePosition() {
+        return intermediatePosition;
+    }
+
+    public void setIntermediatePosition(int intermediatePosition) {
+        if (intermediatePosition != 0) {
+            this.intermediatePosition = intermediatePosition;
+            this.moveDetails.put(MOVE_INTERMEDIATE_POSITION, this.intermediatePosition);
+        }
+    }
+
     @Override
     public Object getMoveAttribute(String moveKey) {
+
         return moveDetails.get(moveKey);
     }
 
@@ -113,7 +125,7 @@ public class SLMove implements Move {
     public void addMoveAttribute(String moveKey, Object moveAttribute) {
         moveDetails.put(moveKey, moveAttribute);
     }
-
+    
     @Override
     public String toString() {
         return "TokenMove{" +

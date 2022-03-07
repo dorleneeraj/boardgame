@@ -1,13 +1,8 @@
 package com.board.games.domain.player;
 
-import com.board.games.domain.board.Board;
-import com.board.games.domain.cell.Cell;
-import com.board.games.domain.game.BoardGame;
 import com.board.games.domain.game.Dice;
 import com.board.games.domain.game.SnakeAndLadder;
-import com.board.games.factory.MovesFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,8 +11,7 @@ import java.util.List;
 public class SLPlayer extends Player {
 
     private Token token;
-    private Dice dice;
-
+    
     public SLPlayer(String name, Token token) {
         super(name);
         this.token = token;
@@ -28,57 +22,12 @@ public class SLPlayer extends Player {
      *
      * @return
      */
-    private Integer rollDice() {
+    public Integer rollDice(Dice dice) {
         return dice.rollDice();
     }
-
-    private SLMove movePlayer(Cell fromCell, Cell toCell) {
-        SLMove move = null;
-        if (null != fromCell) {
-            fromCell.removeToken(this.token);
-        }
-        if (null != toCell) {
-            move = (SLMove) toCell.acceptToken(this.token);
-        } else {
-            move = MovesFactory.getUnluckyMove();
-        }
-        return move;
-    }
-
-    private void updatePlayerPosition(Integer newPosition) {
-        this.token.setPosition(newPosition);
-    }
-
-    public Integer getCurrentPosition() {
+    
+    public Integer getCurrentPostion(){
         return this.token.getPosition();
     }
-
-    @Override
-    public PlayerTurnInfo playGameTurn(BoardGame game) {
-        Board gameBoard = game.getGameBoard();
-        Integer roll = rollDice();
-        Integer currentPlayerPosition = getCurrentPosition();
-        Cell currentPlayerCell = gameBoard.getCellByNumber(currentPlayerPosition);
-        Cell nextCell = gameBoard.getCellByNumber(currentPlayerPosition + roll);
-        movePlayer(currentPlayerCell, nextCell);
-        return buildStats();
-    }
-
-    protected PlayerTurnInfo buildStats() {
-
-        return null;
-    }
-
-    public Dice getDice() {
-        return dice;
-    }
-
-    public void setDice(Dice dice) {
-        this.dice = dice;
-    }
-
-    @Override
-    public List<Move> getAllMoves() {
-        return null;
-    }
+    
 }

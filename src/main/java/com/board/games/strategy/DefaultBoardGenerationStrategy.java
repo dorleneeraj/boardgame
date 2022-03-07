@@ -2,9 +2,9 @@ package com.board.games.strategy;
 
 import com.board.games.domain.board.Board;
 import com.board.games.domain.board.Dimension;
-import com.board.games.domain.cell.SLBoardCell;
 import com.board.games.domain.cell.Cell;
 import com.board.games.domain.cell.LadderCell;
+import com.board.games.domain.cell.SLBoardCell;
 import com.board.games.domain.cell.SnakeCell;
 
 import java.util.ArrayList;
@@ -15,13 +15,9 @@ import java.util.stream.IntStream;
 /**
  * Auto - generates a board for Snake and Ladder
  */
-public class AutoBoardGenerationStrategy implements BoardGenerationStrategy {
+public class DefaultBoardGenerationStrategy implements BoardGenerationStrategy {
 
-    private Dimension boardDimension;
-
-    public AutoBoardGenerationStrategy(Dimension boardDimension) {
-        this.boardDimension = boardDimension;
-    }
+    private Dimension boardDimension = new Dimension(10,10);
 
     @Override
     public Board generateBoard() {
@@ -43,7 +39,7 @@ public class AutoBoardGenerationStrategy implements BoardGenerationStrategy {
                 throw new RuntimeException("Invalid ladder configuration - start: " + tuple.start + ", end: " + tuple.end +
                         ", ladder start cannot be greater than ladder end");
             }
-            
+
             Cell ladderStartCell = boardCells.get(tuple.start - 1);
             Cell ladderEndCell = boardCells.get(tuple.end - 1);
             boardCells.set(tuple.start - 1, new LadderCell(ladderStartCell, ladderEndCell));
@@ -59,7 +55,7 @@ public class AutoBoardGenerationStrategy implements BoardGenerationStrategy {
             Cell snakeEndCell = boardCells.get(tuple.end - 1);
             boardCells.set(tuple.start - 1, new SnakeCell(snakeStartCell, snakeEndCell));
         });
-        
+
         return new Board(this.boardDimension, boardCells);
     }
 

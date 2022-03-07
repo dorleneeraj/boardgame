@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class SnakeCell implements Cell {
 
-    Cell boardCell;
-    Cell snakeEndCell;
+    private Cell boardCell;
+    private Cell snakeEndCell;
 
     public SnakeCell(Cell boardCell, Cell snakeEndCell) {
         this.boardCell = boardCell;
@@ -22,16 +22,10 @@ public class SnakeCell implements Cell {
 
     @Override
     public Move acceptToken(Token token) {
-        Integer tokenInitialPosition = token.getPosition();
         Move intermediateMove = boardCell.acceptToken(token);
-        Integer tokenIntermediatePosition = token.getPosition();
         removeToken(token);
-        snakeEndCell.acceptToken(token);
-        Integer tokenFinalPosition = token.getPosition();
-        Move snakeMove = MovesFactory.getSnakeDescendMove(tokenInitialPosition, tokenFinalPosition);
-        snakeMove.addMoveAttribute(Move.MOVE_INTERMEDIATE_MOVE, intermediateMove);
-        snakeMove.addMoveAttribute(Move.MOVE_TOTAL_DESCENDED, Math.abs(tokenIntermediatePosition - tokenFinalPosition));
-        return snakeMove;
+        Move snakeStep = snakeEndCell.acceptToken(token);
+        return MovesFactory.getSnakeDescendMove(intermediateMove, snakeStep);
     }
 
     @Override
@@ -46,6 +40,6 @@ public class SnakeCell implements Cell {
 
     @Override
     public List<Token> getCurrentTokensOnCell() {
-        throw new RuntimeException("Snake Cells can't have Tokens");
+        throw new RuntimeException("Snake Cells can't have Tokens! Tokens get eaten");
     }
 }

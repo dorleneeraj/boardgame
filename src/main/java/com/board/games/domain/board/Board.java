@@ -22,9 +22,9 @@ public class Board {
         }
     }
     
-    public SLBoardCell getCellByNumber(int cellNumber){
-        if(cellNumber >= 1 || cellNumber <= this.boardSize){
-            this.boardCells.get(cellNumber - 1);   
+    public Cell getCellByNumber(int cellNumber){
+        if(cellNumber >= 1 && cellNumber <= this.boardSize){
+           return this.boardCells.get(cellNumber - 1);   
         }
         return null;
     }

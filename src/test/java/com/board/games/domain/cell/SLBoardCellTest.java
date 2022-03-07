@@ -1,11 +1,13 @@
 package com.board.games.domain.cell;
 
+import com.board.games.domain.player.Move;
 import com.board.games.domain.player.Token;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test class for {@link @SLBoardCellTest}
@@ -25,14 +27,12 @@ class SLBoardCellTest {
 
     @Test
     void acceptToken() {
-        slBoardCell.acceptToken(token1);
-        slBoardCell.acceptToken(token2);
+        Move move1 = slBoardCell.acceptToken(token1);
+        Move move2 = slBoardCell.acceptToken(token2);
         assertEquals(10, token1.getPosition());
         assertEquals(10, token2.getPosition());
-        assertNotNull(slBoardCell.getCurrentTokensOnCell());
-        assertEquals(2, slBoardCell.getCurrentTokensOnCell().size());
-        assertEquals(token1, slBoardCell.getCurrentTokensOnCell().get(0));
-        assertEquals(token2, slBoardCell.getCurrentTokensOnCell().get(1));
+        assertNotNull(move1);
+        assertNotNull(move2);
     }
 
     @Test
@@ -45,5 +45,15 @@ class SLBoardCellTest {
     @Test
     void getCellPosition() {
         assertEquals(10, slBoardCell.getCellPosition());
+    }
+
+    @Test
+    void getCurrentTokensOnCell() {
+        slBoardCell.acceptToken(token1);
+        slBoardCell.acceptToken(token2);
+        assertNotNull(slBoardCell.getCurrentTokensOnCell());
+        assertEquals(2, slBoardCell.getCurrentTokensOnCell().size());
+        assertTrue(slBoardCell.getCurrentTokensOnCell().contains(token1));
+        assertTrue(slBoardCell.getCurrentTokensOnCell().contains(token2));
     }
 }

@@ -14,46 +14,52 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * Test class for the {@link LadderCell}
- */
-class LadderCellTest {
+class SnakeCellTest {
 
-    private static LadderCell ladderCell;
+    private static SnakeCell snakeCell;
     private static SLBoardCell boardCell;
-    private static SLBoardCell ladderEndCell;
+    private static SLBoardCell snakeEndCell;
     private static Token token;
 
     @BeforeAll
     static void setUp() {
-        boardCell = Mockito.spy(new SLBoardCell(10));
-        ladderEndCell = Mockito.spy(new SLBoardCell(25));
-        token = new Token(1, "Red", 0);
-        ladderCell = Mockito.spy(new LadderCell(boardCell, ladderEndCell));
+        boardCell = Mockito.spy(new SLBoardCell(35));
+        snakeEndCell = Mockito.spy(new SLBoardCell(20));
+        token = new Token(1, "Red", 30);
+        snakeCell = Mockito.spy(new SnakeCell(boardCell, snakeEndCell));
     }
-
+    
+    
     @Test
-    void testAcceptToken() {
-        Move move = ladderCell.acceptToken(token);
+    void acceptToken() {
+        Move move = snakeCell.acceptToken(token);
         assertNotNull(move);
         assertTrue(move instanceof SLMove);
         assertNotNull(move.getMoveAttribute(Move.MOVE_INTERMEDIATE_MOVE));
-        assertEquals(MoveType.LADDER_ADVANCE, move.getMoveAttribute(Move.MOVE_TYPE));
-        InOrder order = Mockito.inOrder(ladderCell, boardCell, ladderEndCell);
+        assertEquals(MoveType.SNAKE_DESCEND, move.getMoveAttribute(Move.MOVE_TYPE));
+        InOrder order = Mockito.inOrder(snakeCell, boardCell, snakeEndCell);
         Mockito.verify(boardCell).acceptToken(token);
-        Mockito.verify(ladderCell).removeToken(token);
+        Mockito.verify(snakeCell).removeToken(token);
         Mockito.verify(boardCell).removeToken(token);
-        Mockito.verify(ladderEndCell).acceptToken(token);
-        assertEquals(25, token.getPosition());
+        Mockito.verify(snakeEndCell).acceptToken(token);
+        assertEquals(20, token.getPosition());
         assertTrue(boardCell.getCurrentTokensOnCell().isEmpty());
-        assertTrue(ladderEndCell.getCurrentTokensOnCell().size() == 1);
-        assertTrue(ladderEndCell.getCurrentTokensOnCell().contains(token));
+        assertTrue(snakeEndCell.getCurrentTokensOnCell().size() == 1);
+        assertTrue(snakeEndCell.getCurrentTokensOnCell().contains(token));
     }
 
     @Test
-    void testGetCurrentTokensOnCell() {
+    void removeToken() {
+    }
+
+    @Test
+    void getCellPosition() {
+    }
+
+    @Test
+    void getCurrentTokensOnCell() {
         Throwable throwable = assertThrows(RuntimeException.class, () -> {
-            ladderCell.getCurrentTokensOnCell();
+            snakeCell.getCurrentTokensOnCell();
         });
     }
 }

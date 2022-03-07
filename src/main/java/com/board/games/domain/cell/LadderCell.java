@@ -21,16 +21,10 @@ public class LadderCell implements Cell {
 
     @Override
     public Move acceptToken(Token token) {
-        Move intermediateMove = acceptTokenCurrentCell(token);
+        Move intermediateMove = boardCell.acceptToken(token);
         removeToken(token);
         Move ladderAcceptMove = ladderEndCell.acceptToken(token);
-       // Move ladderMove = MovesFactory.getLadderAdvanceMove(intermediateMove, ladderAcceptMove);
-        return null;
-    }
-
-    protected Move acceptTokenCurrentCell(Token token) {
-        Integer tokenInitialPosition = token.getPosition();
-        return boardCell.acceptToken(token);
+        return MovesFactory.getLadderAdvanceMove(intermediateMove, ladderAcceptMove);
     }
 
     @Override
@@ -45,6 +39,6 @@ public class LadderCell implements Cell {
 
     @Override
     public List<Token> getCurrentTokensOnCell() {
-        throw new RuntimeException("Ladder Cells can't have Tokens");
+        throw new RuntimeException("Ladder Cells can't have Tokens! Tokens are pushed up!");
     }
 }

@@ -1,13 +1,11 @@
 package com.board.games;
 
-import com.board.games.domain.board.Dimension;
 import com.board.games.domain.game.Dice;
 import com.board.games.domain.game.Game;
 import com.board.games.domain.player.Player;
 import com.board.games.domain.player.SLPlayer;
 import com.board.games.domain.player.Token;
-import com.board.games.factory.BoardGenerationStrategies;
-import com.board.games.factory.GameFactory;
+import com.board.games.factory.BoardFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,10 +20,7 @@ public class GameSimulator {
     private static final Logger LOGGER = LogManager.getLogger(GameSimulator.class);
     
     public static void main(String[] args) {
-        LOGGER.info("Starting Game Simulator");
-        Game snakeAndLadder = GameFactory.getSnakeAndLaddersGame( getPlayers(), BoardGenerationStrategies.getAutoGenerationStrategy(new Dimension(10, 10)), new Dice());
-        snakeAndLadder.startGame();
-        LOGGER.info("Game Simulation completed");
+        
     }
 
     private static List<Player> getPlayers() {

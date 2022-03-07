@@ -1,8 +1,8 @@
 package com.board.games.domain.player;
 
-import com.board.games.domain.game.BoardGame;
-
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * An entity representing a board game player
@@ -13,19 +13,24 @@ public abstract class Player {
     // Instance Variables
     ///////////////////////////////////////////////////////////////////////////
     private String name;
+    private final Stack<Move> playerMoves = new Stack<>();
 
     public Player(String name) {
         this.name = name;
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    // Abstract Method Declarations
-    ///////////////////////////////////////////////////////////////////////////
+    public List<Move> getAllMoves() {
+        return new ArrayList<>(playerMoves);
+    }
 
-    public abstract PlayerTurnInfo playGameTurn(BoardGame game);
-    
-    public abstract List<Move> getAllMoves();
-    
+    public void addMove(Move playerMove) {
+        this.playerMoves.push(playerMove);
+    }
+
+    public Move getLastMove() {
+        return playerMoves.peek();
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Getter - Setters
     ///////////////////////////////////////////////////////////////////////////

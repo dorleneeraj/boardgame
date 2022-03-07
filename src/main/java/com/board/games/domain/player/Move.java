@@ -39,6 +39,7 @@ public interface Move {
     public static final String MOVE_TOTAL_CLIMBED = "MOVE_TOTAL_CLIMBED";
     public static final String MOVE_TOTAL_DESCENDED = "MOVE_TOTAL_DESCENDED";
     public static final String MOVE_INTERMEDIATE_MOVE = "MOVE_INTERMEDIATE_MOVE";
+    public static final String MOVE_INTERMEDIATE_POSITION = "MOVE_INTERMEDIATED_POSITION";
 
     Map<String, Object> getMoveDetails();
 
