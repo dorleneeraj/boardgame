@@ -1,8 +1,8 @@
-package com.board.games.factory;
+package com.board.games.domain.move;
 
-import com.board.games.domain.player.Move;
-import com.board.games.domain.player.MoveType;
-import com.board.games.domain.player.SLMove;
+import com.board.games.domain.move.Move;
+import com.board.games.domain.move.MoveType;
+import com.board.games.domain.move.SLMove;
 
 /**
  * Simple static factory to articulate Move Types

@@ -1,4 +1,7 @@
-package com.board.games.domain.player;
+package com.board.games.domain.move;
+
+import com.board.games.domain.move.Move;
+import com.board.games.domain.move.MoveType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +9,7 @@ import java.util.Map;
 /**
  * Encapsulates the details of a single move by the Token on the Snakes and Ladder game board
  *
- * @see com.board.games.domain.player.Move
+ * @see Move
  */
 public class SLMove implements Move {
 
@@ -20,6 +23,7 @@ public class SLMove implements Move {
     private int intermediatePosition = 0;
     private int totalTilesClimbed = 0;
     private int totalTilesDescended = 0;
+    private int diceRoll = 0;
 
     public SLMove(MoveType moveType, int fromPosition, int toPosition, String comments) {
         this.moveType = moveType;
@@ -115,6 +119,14 @@ public class SLMove implements Move {
         }
     }
 
+    public int getDiceRoll() {
+        return diceRoll;
+    }
+
+    public void setDiceRoll(int diceRoll) {
+        this.diceRoll = diceRoll;
+    }
+
     @Override
     public Object getMoveAttribute(String moveKey) {
 
@@ -125,7 +137,7 @@ public class SLMove implements Move {
     public void addMoveAttribute(String moveKey, Object moveAttribute) {
         moveDetails.put(moveKey, moveAttribute);
     }
-    
+
     @Override
     public String toString() {
         return "TokenMove{" +

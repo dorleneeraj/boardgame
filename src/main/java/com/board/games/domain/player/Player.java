@@ -1,5 +1,8 @@
 package com.board.games.domain.player;
 
+import com.board.games.domain.game.Game;
+import com.board.games.domain.move.Move;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -12,7 +15,7 @@ public abstract class Player {
     ///////////////////////////////////////////////////////////////////////////
     // Instance Variables
     ///////////////////////////////////////////////////////////////////////////
-    private String name;
+    private final String name;
     private final Stack<Move> playerMoves = new Stack<>();
 
     public Player(String name) {
@@ -39,9 +42,9 @@ public abstract class Player {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    ///////////////////////////////////////////////////////////////////////////
+    // Abstract methods
+    ///////////////////////////////////////////////////////////////////////////
 
-
+    public abstract void quitGame(Game game);
 }

@@ -1,12 +1,12 @@
 package com.board.games.domain.game;
 
 import com.board.games.domain.board.Board;
-import com.board.games.domain.player.Player;
-import com.board.games.strategy.BoardGenerationStrategy;
+import com.board.games.domain.board.BoardGenerator;
+import com.board.games.domain.player.PlayerGenerator;
 
 /**
- * A board game will have a lifecycle of its own. To start a game, a board needs to be generated with the required cells and its subtypes.
- * Players need to assigned and manage the flow of the game till it ends. This class has a template method to successfully execute a game.
+ * 
+ * 
  */
 public abstract class BoardGame implements Game {
 
@@ -14,14 +14,16 @@ public abstract class BoardGame implements Game {
     // Instance Variables
     ///////////////////////////////////////////////////////////////////////////
 
-    protected BoardGenerationStrategy generationStrategy;
+    protected BoardGenerator generationStrategy;
     protected Board gameBoard;
     protected GameState currentGameState = GameState.NOT_STARTED;
-    private Integer playerCount;
+    protected Integer playerCount;
+    protected PlayerGenerator playerGenerator;
 
-    public BoardGame(BoardGenerationStrategy generationStrategy, Integer playerCount) {
+    public BoardGame(BoardGenerator generationStrategy, Integer playerCount, PlayerGenerator playerGenerator) {
         this.generationStrategy = generationStrategy;
         this.playerCount = playerCount;
+        this.playerGenerator = playerGenerator;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -31,10 +33,18 @@ public abstract class BoardGame implements Game {
     @Override
     public void startGame() {
         initializeGame();
-        while (!GameState.FINISHED.equals(currentGameState)) {
-            processPlayerTurn();
-        }
+        playGame();
         endGame();
+    }
+
+    @Override
+    public void playGame() {
+        setGameState(updateAndGetNextState());
+        while (!GameState.GAME_COMPLETED.equals(currentGameState)) {
+            playTurn();
+            updateTurnStatistics();
+            setGameState(updateAndGetNextState());
+        }
     }
 
     @Override
@@ -43,18 +53,18 @@ public abstract class BoardGame implements Game {
 
         }
         this.generateGameAnalytics();
-        setGameState(GameState.FINISHED);
+        setGameState(updateAndGetNextState());
     }
 
     ///////////////////////////////////////////////////////////////////////////
     // Abstract Method Declaration
     ///////////////////////////////////////////////////////////////////////////
+    
+    protected abstract void initializeGameStates();
 
-    protected abstract void validateGame();
+    protected abstract void selectNextPlayer();
 
-    protected abstract Player getNextPlayer();
-
-    protected abstract void updateGameState();
+    protected abstract GameState updateAndGetNextState();
 
     public abstract void updateTurnStatistics();
 
@@ -69,31 +79,29 @@ public abstract class BoardGame implements Game {
     ///////////////////////////////////////////////////////////////////////////
 
     protected void initializeGame() {
-        validateGame();
+        initializeGameStates();
         this.gameBoard = generateBoard(this.generationStrategy);
+        addPlayersToTheGame();
+        setGameState(updateAndGetNextState());
+    }
+
+    protected void addPlayersToTheGame() {
         for (int i = 0; i < this.playerCount; i++) {
             addNewPlayerToGame();
         }
-        setGameState(GameState.STARTED);
     }
 
     protected void setGameState(GameState state) {
         this.currentGameState = state;
     }
 
-    protected Board generateBoard(BoardGenerationStrategy boardGenerationStrategy) {
-        return boardGenerationStrategy.generateBoard();
+    protected Board generateBoard(BoardGenerator boardGenerator) {
+        return boardGenerator.generateBoard();
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    // Template Method
-    ///////////////////////////////////////////////////////////////////////////
-
-    protected void processPlayerTurn() {
-        getNextPlayer();
+    protected void playTurn() {
+        selectNextPlayer();
         movePlayer();
-        updateTurnStatistics();
-        updateGameState();
     }
 
     ///////////////////////////////////////////////////////////////////////////

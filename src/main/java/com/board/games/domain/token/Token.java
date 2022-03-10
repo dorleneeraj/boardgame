@@ -1,7 +1,6 @@
-package com.board.games.domain.player;
+package com.board.games.domain.token;
 
 import java.util.Objects;
-import java.util.Stack;
 
 /**
  * Token indicates a piece on the board game.
@@ -9,10 +8,10 @@ import java.util.Stack;
 public class Token {
 
     private Integer tokenNumber;
-    private String tokenColour;
+    private TokenColour tokenColour;
     private Integer position = 0;
 
-    public Token(Integer tokenNumber, String tokenColour, Integer position) {
+    public Token(Integer tokenNumber, TokenColour tokenColour, Integer position) {
         this.tokenNumber = tokenNumber;
         this.tokenColour = tokenColour;
         this.position = position;
@@ -30,11 +29,11 @@ public class Token {
         this.tokenNumber = tokenNumber;
     }
 
-    public String getTokenColour() {
+    public TokenColour getTokenColour() {
         return tokenColour;
     }
 
-    public void setTokenColour(String tokenColour) {
+    public void setTokenColour(TokenColour tokenColour) {
         this.tokenColour = tokenColour;
     }
 

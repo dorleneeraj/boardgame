@@ -1,21 +1,20 @@
-package com.board.games.domain.cell;
+package com.board.games.domain.cell.sl;
 
-import com.board.games.domain.player.Move;
-import com.board.games.domain.player.SLMove;
-import com.board.games.domain.player.Token;
-import com.board.games.factory.MovesFactory;
+import com.board.games.domain.move.Move;
+import com.board.games.domain.token.Token;
+import com.board.games.domain.move.MovesFactory;
 
 import java.util.List;
 
 /**
  * Snake decorator for BoardCell
  */
-public class SnakeCell implements Cell {
+public class SnakeCell extends SLBoardCell {
 
-    private Cell boardCell;
-    private Cell snakeEndCell;
+    private SLBoardCell boardCell;
+    private SLBoardCell snakeEndCell;
 
-    public SnakeCell(Cell boardCell, Cell snakeEndCell) {
+    public SnakeCell(SLBoardCell boardCell, SLBoardCell snakeEndCell) {
         this.boardCell = boardCell;
         this.snakeEndCell = snakeEndCell;
     }

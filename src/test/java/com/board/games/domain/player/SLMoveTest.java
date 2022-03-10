@@ -1,6 +1,9 @@
 package com.board.games.domain.player;
 
-import com.board.games.factory.MovesFactory;
+import com.board.games.domain.move.Move;
+import com.board.games.domain.move.MoveType;
+import com.board.games.domain.move.SLMove;
+import com.board.games.domain.move.MovesFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

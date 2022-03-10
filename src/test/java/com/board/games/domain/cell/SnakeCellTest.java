@@ -1,9 +1,12 @@
 package com.board.games.domain.cell;
 
-import com.board.games.domain.player.Move;
-import com.board.games.domain.player.MoveType;
-import com.board.games.domain.player.SLMove;
-import com.board.games.domain.player.Token;
+import com.board.games.domain.cell.sl.SLBoardCell;
+import com.board.games.domain.cell.sl.SnakeCell;
+import com.board.games.domain.move.Move;
+import com.board.games.domain.move.MoveType;
+import com.board.games.domain.move.SLMove;
+import com.board.games.domain.token.Token;
+import com.board.games.domain.token.TokenColour;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
@@ -25,11 +28,11 @@ class SnakeCellTest {
     static void setUp() {
         boardCell = Mockito.spy(new SLBoardCell(35));
         snakeEndCell = Mockito.spy(new SLBoardCell(20));
-        token = new Token(1, "Red", 30);
+        token = new Token(1, TokenColour.GREEN, 30);
         snakeCell = Mockito.spy(new SnakeCell(boardCell, snakeEndCell));
     }
-    
-    
+
+
     @Test
     void acceptToken() {
         Move move = snakeCell.acceptToken(token);

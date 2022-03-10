@@ -1,9 +1,12 @@
 package com.board.games.domain.cell;
 
-import com.board.games.domain.player.Move;
-import com.board.games.domain.player.MoveType;
-import com.board.games.domain.player.SLMove;
-import com.board.games.domain.player.Token;
+import com.board.games.domain.cell.sl.LadderCell;
+import com.board.games.domain.cell.sl.SLBoardCell;
+import com.board.games.domain.move.Move;
+import com.board.games.domain.move.MoveType;
+import com.board.games.domain.move.SLMove;
+import com.board.games.domain.token.Token;
+import com.board.games.domain.token.TokenColour;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
@@ -28,7 +31,7 @@ class LadderCellTest {
     static void setUp() {
         boardCell = Mockito.spy(new SLBoardCell(10));
         ladderEndCell = Mockito.spy(new SLBoardCell(25));
-        token = new Token(1, "Red", 0);
+        token = new Token(1, TokenColour.RED, 0);
         ladderCell = Mockito.spy(new LadderCell(boardCell, ladderEndCell));
     }
 

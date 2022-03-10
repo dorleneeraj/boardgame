@@ -1,4 +1,4 @@
-package com.board.games.domain.player;
+package com.board.games.domain.move;
 
 import com.board.games.domain.cell.Cell;
 

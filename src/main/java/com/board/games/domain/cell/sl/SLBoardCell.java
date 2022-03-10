@@ -1,9 +1,10 @@
-package com.board.games.domain.cell;
+package com.board.games.domain.cell.sl;
 
+import com.board.games.domain.cell.Cell;
 import com.board.games.domain.game.SnakeAndLadder;
-import com.board.games.domain.player.Move;
-import com.board.games.domain.player.Token;
-import com.board.games.factory.MovesFactory;
+import com.board.games.domain.move.Move;
+import com.board.games.domain.token.Token;
+import com.board.games.domain.move.MovesFactory;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,7 +18,8 @@ public class SLBoardCell implements Cell {
 
     private Integer cellNumber;
     private final Set<Token> currentTokensOnCell = new HashSet<>();
-
+    
+    public SLBoardCell(){}
     public SLBoardCell(Integer cellNumber) {
         this.cellNumber = cellNumber;
     }

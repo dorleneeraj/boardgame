@@ -1,11 +1,12 @@
-package com.board.games.strategy;
+package com.board.games.domain.board.sl;
 
 import com.board.games.domain.board.Board;
+import com.board.games.domain.board.BoardGenerator;
 import com.board.games.domain.board.Dimension;
-import com.board.games.domain.cell.Cell;
-import com.board.games.domain.cell.LadderCell;
-import com.board.games.domain.cell.SLBoardCell;
-import com.board.games.domain.cell.SnakeCell;
+import com.board.games.domain.cell.sl.LadderCell;
+import com.board.games.domain.cell.sl.SLBoardCell;
+import com.board.games.domain.cell.sl.SLFinalCell;
+import com.board.games.domain.cell.sl.SnakeCell;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,16 +14,18 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 /**
- * Auto - generates a board for Snake and Ladder
+ * <p>
+ * An implementation for {@link BoardGenerator} to generate a default board for Snake and Ladder Game
+ * </p>
  */
-public class DefaultBoardGenerationStrategy implements BoardGenerationStrategy {
+public class DefaultSLBoardGenerator implements BoardGenerator {
 
-    private Dimension boardDimension = new Dimension(10,10);
+    private Dimension boardDimension = new Dimension(10, 10);
 
     @Override
     public Board generateBoard() {
 
-        List<Cell> boardCells = new ArrayList<>();
+        List<SLBoardCell> boardCells = new ArrayList<>();
         int size = this.boardDimension.getColumn() * this.boardDimension.getRow();
         IntStream.range(1, size + 1).forEach(cellNumber -> {
             boardCells.add(new SLBoardCell(cellNumber));
@@ -40,8 +43,8 @@ public class DefaultBoardGenerationStrategy implements BoardGenerationStrategy {
                         ", ladder start cannot be greater than ladder end");
             }
 
-            Cell ladderStartCell = boardCells.get(tuple.start - 1);
-            Cell ladderEndCell = boardCells.get(tuple.end - 1);
+            SLBoardCell ladderStartCell = boardCells.get(tuple.start - 1);
+            SLBoardCell ladderEndCell = boardCells.get(tuple.end - 1);
             boardCells.set(tuple.start - 1, new LadderCell(ladderStartCell, ladderEndCell));
         });
 
@@ -51,12 +54,14 @@ public class DefaultBoardGenerationStrategy implements BoardGenerationStrategy {
                         ", snake start cannot be less than snake end");
             }
 
-            Cell snakeStartCell = boardCells.get(tuple.start - 1);
-            Cell snakeEndCell = boardCells.get(tuple.end - 1);
+            SLBoardCell snakeStartCell = boardCells.get(tuple.start - 1);
+            SLBoardCell snakeEndCell = boardCells.get(tuple.end - 1);
             boardCells.set(tuple.start - 1, new SnakeCell(snakeStartCell, snakeEndCell));
         });
 
-        return new Board(this.boardDimension, boardCells);
+        boardCells.set(size - 1, new SLFinalCell(boardCells.get(size - 1)));
+
+        return new SLBoard(this.boardDimension, boardCells);
     }
 
     class Tuple {

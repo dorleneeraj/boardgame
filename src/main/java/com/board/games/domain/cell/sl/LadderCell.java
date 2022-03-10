@@ -1,20 +1,19 @@
-package com.board.games.domain.cell;
+package com.board.games.domain.cell.sl;
 
-import com.board.games.domain.player.Move;
-import com.board.games.domain.player.SLMove;
-import com.board.games.domain.player.Token;
-import com.board.games.factory.MovesFactory;
+import com.board.games.domain.move.Move;
+import com.board.games.domain.token.Token;
+import com.board.games.domain.move.MovesFactory;
 
 import java.util.List;
 
 /**
- * Ladder decorator for the BoardCell
+ *
  */
-public class LadderCell implements Cell {
-    protected Cell boardCell;
-    protected Cell ladderEndCell;
+public class LadderCell extends SLBoardCell {
+    protected SLBoardCell boardCell;
+    protected SLBoardCell ladderEndCell;
 
-    public LadderCell(Cell boardCell, Cell ladderEndCell) {
+    public LadderCell(SLBoardCell boardCell, SLBoardCell ladderEndCell) {
         this.boardCell = boardCell;
         this.ladderEndCell = ladderEndCell;
     }
