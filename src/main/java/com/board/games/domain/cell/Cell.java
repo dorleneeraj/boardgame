@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * <p>
- * Declares the contract for a Board cell.
+ * Declares the contract for a Board cell for any Board Game
  * </p>
  */
 public interface Cell {

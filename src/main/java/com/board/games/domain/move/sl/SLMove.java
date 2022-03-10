@@ -1,7 +1,6 @@
-package com.board.games.domain.move;
+package com.board.games.domain.move.sl;
 
 import com.board.games.domain.move.Move;
-import com.board.games.domain.move.MoveType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +12,18 @@ import java.util.Map;
  */
 public class SLMove implements Move {
 
-    private final MoveType moveType;
+    public static final String MOVE_TYPE = "MOVE_TYPE";
+    public static final String MOVE_FROM_POSITION = "MOVE_FROM_POSITION";
+    public static final String MOVE_TO_POSITION = "MOVE_TO_POSITION";
+    public static final String MOVE_EXTRA_DETAILS = "MOVE_EXTRA_DETAILS";
+    public static final String MOVE_TOTAL_TILES = "MOVE_TOTAL_TILES";
+    public static final String MOVE_TOTAL_CLIMBED = "MOVE_TOTAL_CLIMBED";
+    public static final String MOVE_TOTAL_DESCENDED = "MOVE_TOTAL_DESCENDED";
+    public static final String MOVE_INTERMEDIATE_MOVE = "MOVE_INTERMEDIATE_MOVE";
+    public static final String MOVE_INTERMEDIATE_POSITION = "MOVE_INTERMEDIATED_POSITION";
+
+
+    private final SLMoveType SLMoveType;
     private final String moveComments;
     private final Map<String, Object> moveDetails = new HashMap<>();
     private int fromPosition = 0;
@@ -25,14 +35,14 @@ public class SLMove implements Move {
     private int totalTilesDescended = 0;
     private int diceRoll = 0;
 
-    public SLMove(MoveType moveType, int fromPosition, int toPosition, String comments) {
-        this.moveType = moveType;
+    public SLMove(SLMoveType SLMoveType, int fromPosition, int toPosition, String comments) {
+        this.SLMoveType = SLMoveType;
         this.fromPosition = fromPosition;
         this.toPosition = toPosition;
         this.moveComments = comments;
         this.totalTilesMoved = Math.abs(toPosition - fromPosition);
 
-        moveDetails.put(MOVE_TYPE, this.moveType);
+        moveDetails.put(MOVE_TYPE, this.SLMoveType);
         moveDetails.put(MOVE_FROM_POSITION, this.fromPosition);
         moveDetails.put(MOVE_TO_POSITION, this.toPosition);
         moveDetails.put(MOVE_EXTRA_DETAILS, this.moveComments);
@@ -56,8 +66,8 @@ public class SLMove implements Move {
         return toPosition;
     }
 
-    public MoveType getMoveType() {
-        return moveType;
+    public SLMoveType getMoveType() {
+        return SLMoveType;
     }
 
     public String getMoveComments() {

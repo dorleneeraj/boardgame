@@ -1,7 +1,7 @@
 package com.board.games.domain.game;
 
 import com.board.games.domain.board.BoardFactory;
-import com.board.games.domain.player.SLDefaultPlayerGenerator;
+import com.board.games.domain.player.sl.SLDefaultPlayerGenerator;
 
 public class GamesFactory {
 

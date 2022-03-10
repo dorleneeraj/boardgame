@@ -1,5 +1,7 @@
-package com.board.games.domain.player;
+package com.board.games.domain.player.sl;
 
+import com.board.games.domain.player.Player;
+import com.board.games.domain.player.PlayerGenerator;
 import com.board.games.domain.token.Token;
 import com.board.games.domain.token.TokenColour;
 

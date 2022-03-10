@@ -2,11 +2,11 @@ package com.board.games.domain.game;
 
 import com.board.games.domain.cell.Cell;
 import com.board.games.domain.move.Move;
-import com.board.games.domain.move.MoveType;
-import com.board.games.domain.move.SLMove;
-import com.board.games.domain.player.SLPlayer;
+import com.board.games.domain.move.sl.SLMoveType;
+import com.board.games.domain.move.sl.SLMove;
+import com.board.games.domain.player.sl.SLPlayer;
 import com.board.games.domain.token.Token;
-import com.board.games.domain.move.MovesFactory;
+import com.board.games.domain.move.sl.SLMovesFactory;
 import com.board.games.domain.board.BoardGenerator;
 import com.board.games.domain.player.PlayerGenerator;
 
@@ -62,7 +62,7 @@ public class SnakeAndLadder extends BoardGame {
         if (null != toCell) {
             currentMove = (SLMove) toCell.acceptToken(currentPlayerToken);
         } else {
-            currentMove = MovesFactory.getUnluckyMove(currentPlayerToken.getPosition());
+            currentMove = SLMovesFactory.getUnluckyMove(currentPlayerToken.getPosition());
         }
         currentMove.setDiceRoll(diceRoll);
         return currentMove;
@@ -73,7 +73,7 @@ public class SnakeAndLadder extends BoardGame {
         GameState nextGameState = gameStates.peek();
         if (nextGameState.equals(GameState.PLAYING)) {
             SLMove move = (SLMove) currentPlayer.getLastMove();
-            if (MoveType.ADVANCE_LUCKY_MOVE.equals(move.getMoveType())) {
+            if (SLMoveType.ADVANCE_LUCKY_MOVE.equals(move.getMoveType())) {
                 return GameState.GAME_COMPLETED;
             }
             if (move.getDiceRoll() != 6) {

@@ -3,10 +3,10 @@ package com.board.games.domain.cell.sl;
 import com.board.games.domain.cell.Cell;
 import com.board.games.domain.game.SnakeAndLadder;
 import com.board.games.domain.move.Move;
-import com.board.games.domain.move.MoveType;
-import com.board.games.domain.move.SLMove;
+import com.board.games.domain.move.sl.SLMoveType;
+import com.board.games.domain.move.sl.SLMove;
 import com.board.games.domain.token.Token;
-import com.board.games.domain.move.MovesFactory;
+import com.board.games.domain.move.sl.SLMovesFactory;
 
 import java.util.List;
 
@@ -35,12 +35,12 @@ public class SLFinalCell extends SLBoardCell {
      * </p>
      *
      * @param token The {@link Token} that needs to be accepted
-     * @return {@link SLMove} with move type {@link MoveType#ADVANCE_LUCKY_MOVE}
+     * @return {@link SLMove} with move type {@link SLMoveType#ADVANCE_LUCKY_MOVE}
      */
     @Override
     public Move acceptToken(Token token) {
         SLMove move = (SLMove) boardCell.acceptToken(token);
-        return MovesFactory.getLuckyMove(move.getFromPosition(), move.getToPosition());
+        return SLMovesFactory.getLuckyMove(move.getFromPosition(), move.getToPosition());
     }
 
     @Override

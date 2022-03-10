@@ -30,17 +30,7 @@ import java.util.Map;
  * </p>
  */
 public interface Move {
-
-    public static final String MOVE_TYPE = "MOVE_TYPE";
-    public static final String MOVE_FROM_POSITION = "MOVE_FROM_POSITION";
-    public static final String MOVE_TO_POSITION = "MOVE_TO_POSITION";
-    public static final String MOVE_EXTRA_DETAILS = "MOVE_EXTRA_DETAILS";
-    public static final String MOVE_TOTAL_TILES = "MOVE_TOTAL_TILES";
-    public static final String MOVE_TOTAL_CLIMBED = "MOVE_TOTAL_CLIMBED";
-    public static final String MOVE_TOTAL_DESCENDED = "MOVE_TOTAL_DESCENDED";
-    public static final String MOVE_INTERMEDIATE_MOVE = "MOVE_INTERMEDIATE_MOVE";
-    public static final String MOVE_INTERMEDIATE_POSITION = "MOVE_INTERMEDIATED_POSITION";
-
+    
     Map<String, Object> getMoveDetails();
 
     Object getMoveAttribute(String moveKey);
