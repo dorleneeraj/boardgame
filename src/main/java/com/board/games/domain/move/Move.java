@@ -30,7 +30,7 @@ import java.util.Map;
  * </p>
  */
 public interface Move {
-    
+
     Map<String, Object> getMoveDetails();
 
     Object getMoveAttribute(String moveKey);

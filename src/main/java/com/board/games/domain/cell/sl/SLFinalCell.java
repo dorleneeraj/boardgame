@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class SLFinalCell extends SLBoardCell {
 
-    private SLBoardCell boardCell;
+    private final SLBoardCell boardCell;
 
     public SLFinalCell(SLBoardCell boardCell) {
         this.boardCell = boardCell;

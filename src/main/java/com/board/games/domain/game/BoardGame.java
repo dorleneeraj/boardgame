@@ -5,8 +5,7 @@ import com.board.games.domain.board.BoardGenerator;
 import com.board.games.domain.player.PlayerGenerator;
 
 /**
- * 
- * 
+ *
  */
 public abstract class BoardGame implements Game {
 
@@ -59,7 +58,7 @@ public abstract class BoardGame implements Game {
     ///////////////////////////////////////////////////////////////////////////
     // Abstract Method Declaration
     ///////////////////////////////////////////////////////////////////////////
-    
+
     protected abstract void initializeGameStates();
 
     protected abstract void selectNextPlayer();

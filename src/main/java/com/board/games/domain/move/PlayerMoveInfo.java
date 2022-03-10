@@ -16,12 +16,12 @@ public class PlayerMoveInfo {
         this.turnDetailsMap = turnDetailsMap;
         this.movesPerformed = movesPerformed;
     }
-    
-    public Object get(String turnInformation){
+
+    public Object get(String turnInformation) {
         return turnDetailsMap.get(turnInformation);
     }
-    
-    public Player getPlayer(){
+
+    public Player getPlayer() {
         return this.player;
     }
 

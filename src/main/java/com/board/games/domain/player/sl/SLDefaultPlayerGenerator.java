@@ -19,8 +19,8 @@ import java.util.Stack;
 public class SLDefaultPlayerGenerator implements PlayerGenerator {
 
     private static SLDefaultPlayerGenerator instance;
-    private Queue<SLPlayer> players;
-    private int numberOfPlayers;
+    private final Queue<SLPlayer> players;
+    private final int numberOfPlayers;
     private final int INITIAL_PLAYER_POSITION = 0;
 
     private SLDefaultPlayerGenerator(int numberOfPlayers) {

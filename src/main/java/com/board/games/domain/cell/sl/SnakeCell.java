@@ -27,8 +27,8 @@ import java.util.List;
  */
 public class SnakeCell extends SLBoardCell {
 
-    private SLBoardCell snakeStartCell;
-    private SLBoardCell snakeEndCell;
+    private final SLBoardCell snakeStartCell;
+    private final SLBoardCell snakeEndCell;
 
     public SnakeCell(SLBoardCell snakeStartCell, SLBoardCell snakeEndCell) {
         this.snakeStartCell = snakeStartCell;

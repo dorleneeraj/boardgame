@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
  */
 public class DefaultSLBoardGenerator implements BoardGenerator {
 
-    private Dimension boardDimension = new Dimension(10, 10);
+    private final Dimension boardDimension = new Dimension(10, 10);
 
     @Override
     public Board generateBoard() {

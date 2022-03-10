@@ -3,7 +3,7 @@ package com.board.games.domain.game;
 import java.util.Random;
 
 public class Dice {
-    private Random random = new Random();
+    private final Random random = new Random();
     int max = 6;
     int min = 1;
 
