@@ -1,6 +1,4 @@
-package com.board.games.domain.move.sl;
-
-import com.board.games.domain.move.Move;
+package com.board.games.domain.move;
 
 import java.util.HashMap;
 import java.util.Map;

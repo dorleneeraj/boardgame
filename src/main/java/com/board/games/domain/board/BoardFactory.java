@@ -1,7 +1,5 @@
 package com.board.games.domain.board;
 
-import com.board.games.domain.board.sl.DefaultSLBoardGenerator;
-
 /**
  * Static factory to get {@link BoardGenerator}
  */

@@ -1,12 +1,10 @@
-package com.board.games.domain.board.sl;
+package com.board.games.domain.board;
 
-import com.board.games.domain.board.Board;
-import com.board.games.domain.board.BoardGenerator;
-import com.board.games.domain.board.Dimension;
-import com.board.games.domain.cell.sl.LadderCell;
-import com.board.games.domain.cell.sl.SLBoardCell;
-import com.board.games.domain.cell.sl.SLFinalCell;
-import com.board.games.domain.cell.sl.SnakeCell;
+import com.board.games.domain.cell.Cell;
+import com.board.games.domain.cell.LadderCell;
+import com.board.games.domain.cell.SLBoardCell;
+import com.board.games.domain.cell.SLFinalCell;
+import com.board.games.domain.cell.SnakeCell;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,7 +59,7 @@ public class DefaultSLBoardGenerator implements BoardGenerator {
 
         boardCells.set(size - 1, new SLFinalCell(boardCells.get(size - 1)));
 
-        return new SLBoard(this.boardDimension, boardCells);
+        return new Board(this.boardDimension, boardCells);
     }
 
     class Tuple {

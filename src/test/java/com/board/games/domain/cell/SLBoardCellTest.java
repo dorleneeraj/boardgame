@@ -1,6 +1,5 @@
 package com.board.games.domain.cell;
 
-import com.board.games.domain.cell.sl.SLBoardCell;
 import com.board.games.domain.move.Move;
 import com.board.games.domain.token.Token;
 import com.board.games.domain.token.TokenColour;

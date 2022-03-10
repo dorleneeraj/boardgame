@@ -1,9 +1,8 @@
-package com.board.games.domain.player.sl;
+package com.board.games.domain.player;
 
 import com.board.games.domain.game.Dice;
 import com.board.games.domain.game.Game;
 import com.board.games.domain.game.SnakeAndLadder;
-import com.board.games.domain.player.Player;
 import com.board.games.domain.token.Token;
 
 /**

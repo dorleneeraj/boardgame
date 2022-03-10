@@ -1,9 +1,9 @@
 package com.board.games.factory;
 
 import com.board.games.domain.move.Move;
-import com.board.games.domain.move.sl.SLMove;
-import com.board.games.domain.move.sl.SLMoveType;
-import com.board.games.domain.move.sl.SLMovesFactory;
+import com.board.games.domain.move.SLMove;
+import com.board.games.domain.move.SLMoveType;
+import com.board.games.domain.move.SLMovesFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

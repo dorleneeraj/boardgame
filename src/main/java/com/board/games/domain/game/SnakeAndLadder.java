@@ -2,11 +2,11 @@ package com.board.games.domain.game;
 
 import com.board.games.domain.cell.Cell;
 import com.board.games.domain.move.Move;
-import com.board.games.domain.move.sl.SLMoveType;
-import com.board.games.domain.move.sl.SLMove;
-import com.board.games.domain.player.sl.SLPlayer;
+import com.board.games.domain.move.SLMoveType;
+import com.board.games.domain.move.SLMove;
+import com.board.games.domain.player.SLPlayer;
 import com.board.games.domain.token.Token;
-import com.board.games.domain.move.sl.SLMovesFactory;
+import com.board.games.domain.move.SLMovesFactory;
 import com.board.games.domain.board.BoardGenerator;
 import com.board.games.domain.player.PlayerGenerator;
 

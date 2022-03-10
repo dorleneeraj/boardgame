@@ -1,9 +1,8 @@
 package com.board.games.domain.board;
 
-import com.board.games.domain.board.sl.DefaultSLBoardGenerator;
-import com.board.games.domain.cell.sl.LadderCell;
-import com.board.games.domain.cell.sl.SLBoardCell;
-import com.board.games.domain.cell.sl.SnakeCell;
+import com.board.games.domain.cell.LadderCell;
+import com.board.games.domain.cell.SLBoardCell;
+import com.board.games.domain.cell.SnakeCell;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
