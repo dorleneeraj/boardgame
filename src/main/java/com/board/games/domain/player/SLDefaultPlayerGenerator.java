@@ -17,16 +17,19 @@ import java.util.Stack;
 public class SLDefaultPlayerGenerator implements PlayerGenerator {
 
     private static SLDefaultPlayerGenerator instance;
-    private final Queue<SLPlayer> players;
+    private final List<SLPlayer> players;
     private final int numberOfPlayers;
     private final int INITIAL_PLAYER_POSITION = 0;
 
     private SLDefaultPlayerGenerator(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
-        players = new LinkedList<>();
+        players = new ArrayList<>();
     }
 
     public static SLDefaultPlayerGenerator getInstance(int numberOfPlayers) {
+        if (numberOfPlayers <= 0 || numberOfPlayers > 4) {
+            throw new RuntimeException("Invalid count of players. Player count should be within range of 1 to 4");
+        }
         instance = new SLDefaultPlayerGenerator(numberOfPlayers);
         instance.init();
         return instance;
@@ -37,7 +40,7 @@ public class SLDefaultPlayerGenerator implements PlayerGenerator {
         for (int i = 1; i <= numberOfPlayers; i++) {
             String name = "Player " + i;
             Token token = new Token(i, tokenColours.pop(), INITIAL_PLAYER_POSITION);
-            players.add(new SLPlayer.SLPlayerBuilder().withName(name).withToken(token).build());
+            players.add(new SLPlayer(name, token));
         }
     }
 
@@ -50,13 +53,13 @@ public class SLDefaultPlayerGenerator implements PlayerGenerator {
         }
         Collections.shuffle(list);
         for (int i = 0; i < list.size(); i++) {
-            stack.push(tokenColours.get(list.get(i)));
+            stack.push(tokenColours.get(list.get(i) - 1));
         }
         return stack;
     }
 
     @Override
-    public Queue<? extends Player> getPlayersQueue() {
+    public List<? extends Player> getPlayersQueue() {
         return this.players;
     }
 }

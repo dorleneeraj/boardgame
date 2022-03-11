@@ -38,8 +38,12 @@ public class SLFinalCell extends SLBoardCell {
      */
     @Override
     public Move acceptToken(Token token) {
+        int currentTokenCell = token.getPosition();
         SLMove move = (SLMove) boardCell.acceptToken(token);
-        return SLMovesFactory.getLuckyMove(move.getFromPosition(), move.getToPosition());
+        if (currentTokenCell >= (boardCell.getCellPosition() - 6)) {
+            return SLMovesFactory.getLuckyMove(move.getFromPosition(), move.getToPosition());
+        }
+        return move;
     }
 
     @Override

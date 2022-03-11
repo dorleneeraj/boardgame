@@ -20,18 +20,28 @@ public class SLMove implements Move {
     public static final String MOVE_INTERMEDIATE_MOVE = "MOVE_INTERMEDIATE_MOVE";
     public static final String MOVE_INTERMEDIATE_POSITION = "MOVE_INTERMEDIATED_POSITION";
 
+    protected final Map<String, Object> moveDetails = new HashMap<>();
 
-    private final SLMoveType SLMoveType;
-    private final String moveComments;
-    private final Map<String, Object> moveDetails = new HashMap<>();
-    private int fromPosition = 0;
-    private int toPosition = 0;
-    private int totalTilesMoved = 0;
-    private Move interMediateMove = null;
-    private int intermediatePosition = 0;
-    private int totalTilesClimbed = 0;
-    private int totalTilesDescended = 0;
-    private int diceRoll = 0;
+    ///////////////////////////////////////////////////////////////////////////
+    // Instance Variables to capture the details of the Move
+    ///////////////////////////////////////////////////////////////////////////
+    protected final SLMoveType SLMoveType;
+    protected final String moveComments;
+
+    protected int fromPosition = 0;
+    protected int toPosition = 0;
+
+    protected Move interMediateMove = null;
+    protected int intermediatePosition = 0;
+
+    protected int totalTilesClimbed = 0;
+    protected int totalTilesMoved = 0;
+    protected int totalTilesDescended = 0;
+
+    protected int diceRoll = 0;
+
+    protected boolean missedSnakeLuckily = false;
+    protected boolean rolledASix = false;
 
     public SLMove(SLMoveType SLMoveType, int fromPosition, int toPosition, String comments) {
         this.SLMoveType = SLMoveType;
@@ -133,6 +143,22 @@ public class SLMove implements Move {
 
     public void setDiceRoll(int diceRoll) {
         this.diceRoll = diceRoll;
+    }
+
+    public boolean isMissedSnakeLuckily() {
+        return missedSnakeLuckily;
+    }
+
+    public void setMissedSnakeLuckily(boolean missedSnakeLuckily) {
+        this.missedSnakeLuckily = missedSnakeLuckily;
+    }
+
+    public boolean isRolledASix() {
+        return rolledASix;
+    }
+
+    public void setRolledASix(boolean rolledASix) {
+        this.rolledASix = rolledASix;
     }
 
     @Override

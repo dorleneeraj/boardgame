@@ -2,7 +2,7 @@ package com.board.games.domain.game;
 
 import com.board.games.domain.board.Board;
 import com.board.games.domain.cell.Cell;
-import com.board.games.domain.move.Move;
+import com.board.games.domain.cell.SnakeCell;
 import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMove;
 import com.board.games.domain.player.SLPlayer;
@@ -10,8 +10,12 @@ import com.board.games.domain.token.Token;
 import com.board.games.domain.move.SLMovesFactory;
 import com.board.games.domain.board.BoardGenerator;
 import com.board.games.domain.player.PlayerGenerator;
+import com.board.games.statistics.SLGameStat;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -19,10 +23,13 @@ import java.util.Queue;
  */
 public class SnakeAndLadderGame extends BoardGame {
 
+    private static final Logger LOGGER = LogManager.getLogger(SnakeAndLadderGame.class);
+
     private final Dice dice;
     private final Queue<SLPlayer> playersQueue = new LinkedList<>();
     private SLPlayer currentPlayer;
     private final Queue<GameState> gameStates = new LinkedList<>();
+    private final SLGameStat gameStatistics = new SLGameStat();
 
     protected SnakeAndLadderGame(Board board, int playerCount, Dice dice, Queue<SLPlayer> playersQueue) {
         super(board, playerCount);
@@ -62,12 +69,30 @@ public class SnakeAndLadderGame extends BoardGame {
     }
 
     @Override
-    protected void movePlayer() {
+    protected void takeTurn() {
         Integer diceRoll = currentPlayer.rollDice(this.dice);
-        currentPlayer.addMove(performMove(diceRoll));
+        SLMove turnMove = performMove(diceRoll);
+        Cell currentCell = this.gameBoard.getCellByNumber(turnMove.getToPosition());
+        checkAndUpdateSnakeMiss(turnMove, currentCell.getNeighbours());
+        currentPlayer.addMove(turnMove);
     }
 
-    private Move performMove(int diceRoll) {
+    /**
+     * @param turnMove
+     * @param neighbourCells
+     */
+    private void checkAndUpdateSnakeMiss(SLMove turnMove, List<? extends Cell> neighbourCells) {
+        boolean foundSnakeCell = neighbourCells.stream().anyMatch(neighbour -> neighbour instanceof SnakeCell);
+        if (foundSnakeCell) {
+            turnMove.setMissedSnakeLuckily(true);
+        }
+    }
+
+    /**
+     * @param diceRoll
+     * @return
+     */
+    private SLMove performMove(int diceRoll) {
         Token currentPlayerToken = currentPlayer.getToken();
         Integer currentPosition = currentPlayer.getCurrentPosition();
         Cell fromCell = this.gameBoard.getCellByNumber(currentPlayer.getCurrentPosition());
@@ -82,6 +107,8 @@ public class SnakeAndLadderGame extends BoardGame {
             currentMove = SLMovesFactory.getUnluckyMove(currentPlayerToken.getPosition());
         }
         currentMove.setDiceRoll(diceRoll);
+        LOGGER.debug("Performed move by user: {} , Move Type: {}, Move from Position {} and Move to Position: {}," +
+                " Roll on the dice {}", currentPlayer.getName(), currentMove.getMoveType(), currentMove.getFromPosition(), currentMove.getToPosition(), diceRoll);
         return currentMove;
     }
 
@@ -89,12 +116,15 @@ public class SnakeAndLadderGame extends BoardGame {
     protected GameState updateAndGetNextState() {
         GameState nextGameState = gameStates.peek();
         if (nextGameState.equals(GameState.PLAYING)) {
-            SLMove move = (SLMove) currentPlayer.getLastMove();
+            SLMove move = (SLMove) currentPlayer.getPreviousMove();
             if (SLMoveType.ADVANCE_LUCKY_MOVE.equals(move.getMoveType())) {
+                LOGGER.debug("Game Completed. Final Lucky move performed by the user: {} ", currentPlayer.getName());
                 return GameState.GAME_COMPLETED;
             }
-            if (move.getDiceRoll() != 6) {
+            if (!move.isRolledASix()) {
                 playersQueue.add(playersQueue.poll());
+            } else {
+                LOGGER.debug("Got a 6 on the Dice! Player {} will play another turn! ", currentPlayer.getName());
             }
             return GameState.PLAYING;
         } else {
@@ -105,7 +135,7 @@ public class SnakeAndLadderGame extends BoardGame {
 
     @Override
     public void updateTurnStatistics() {
-        SLMove move = (SLMove) currentPlayer.getLastMove();
+        SLMove move = (SLMove) currentPlayer.getPreviousMove();
     }
 
     @Override

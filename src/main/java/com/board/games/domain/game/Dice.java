@@ -8,6 +8,6 @@ public class Dice {
     int min = 1;
 
     public Integer rollDice() {
-        return random.nextInt(max - min) + min;
+        return random.nextInt((max - min) + 1) + min;
     }
 }

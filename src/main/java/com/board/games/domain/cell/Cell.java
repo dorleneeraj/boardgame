@@ -50,4 +50,8 @@ public interface Cell {
      * @return {@link List} of all the tokens present on the Cell
      */
     List<Token> getCurrentTokensOnCell();
+
+    List<? extends Cell> getNeighbours();
+
+    void setNeighbours(List<? extends Cell> neighbours);
 }

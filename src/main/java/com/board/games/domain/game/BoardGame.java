@@ -1,8 +1,11 @@
 package com.board.games.domain.game;
 
 import com.board.games.domain.board.Board;
-import com.board.games.domain.board.BoardGenerator;
-import com.board.games.domain.player.PlayerGenerator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -13,9 +16,16 @@ public abstract class BoardGame implements Game {
     // Instance Variables
     ///////////////////////////////////////////////////////////////////////////
 
+    private static final Logger LOGGER = LogManager.getLogger(BoardGame.class);
+    protected static Map<String, String> gameRegistry = new HashMap<>();
+
     protected Board gameBoard;
     protected GameState currentGameState = GameState.NOT_STARTED;
     protected Integer playerCount;
+
+    static {
+        gameRegistry.put(SnakeAndLadderGame.class.getSimpleName(), " Snake and Ladders!!");
+    }
 
     public BoardGame(Board gameBoard, Integer playerCount) {
         this.playerCount = playerCount;
@@ -28,6 +38,7 @@ public abstract class BoardGame implements Game {
 
     @Override
     public void startGame() {
+        LOGGER.info("******** Starting a Game of {} ********", gameRegistry.get(this.getClass().getSimpleName()));
         initializeGame();
         playGame();
         endGame();
@@ -68,7 +79,7 @@ public abstract class BoardGame implements Game {
 
     protected abstract void generateGameAnalytics();
 
-    protected abstract void movePlayer();
+    protected abstract void takeTurn();
 
 
     ///////////////////////////////////////////////////////////////////////////
@@ -83,7 +94,7 @@ public abstract class BoardGame implements Game {
 
     protected void playTurn() {
         selectNextPlayer();
-        movePlayer();
+        takeTurn();
     }
 
     protected void setGameState(GameState state) {

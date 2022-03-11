@@ -27,7 +27,7 @@ public class SLMovesFactory {
      * Ladder on the Board.
      * <p>
      * This Move encapsulates all the data related to the {@link SLMoveType#LADDER_ADVANCE} including the
-     * {@link Move#MOVE_INTERMEDIATE_MOVE}, {@link Move#MOVE_TOTAL_CLIMBED} and other basic details
+     * {@link SLMove#MOVE_INTERMEDIATE_MOVE}, {@link SLMove#MOVE_TOTAL_CLIMBED} and other basic details
      * </p>
      * </p>
      *
@@ -63,7 +63,7 @@ public class SLMovesFactory {
      * Snake on the Board.
      * <p>
      * This Move encapsulates all the data related to the {@link SLMoveType#SNAKE_DESCEND} including the
-     * {@link Move#MOVE_INTERMEDIATE_MOVE}, {@link Move#MOVE_TOTAL_DESCENDED} and other basic details
+     * {@link SLMove#MOVE_INTERMEDIATE_MOVE}, {@link SLMove#MOVE_TOTAL_DESCENDED} and other basic details
      * </p>
      * </p>
      *

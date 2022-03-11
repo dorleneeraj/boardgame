@@ -30,7 +30,7 @@ public abstract class Player {
         this.playerMoves.push(playerMove);
     }
 
-    public Move getLastMove() {
+    public Move getPreviousMove() {
         return playerMoves.peek();
     }
 
