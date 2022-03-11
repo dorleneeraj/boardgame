@@ -43,12 +43,16 @@ public class SLMove implements Move {
     protected boolean missedSnakeLuckily = false;
     protected boolean rolledASix = false;
 
-    public SLMove(SLMoveType SLMoveType, int fromPosition, int toPosition, String comments) {
+    public SLMove(SLMoveType SLMoveType, int fromPosition, int toPosition, String comments, int diceRoll) {
         this.SLMoveType = SLMoveType;
         this.fromPosition = fromPosition;
         this.toPosition = toPosition;
         this.moveComments = comments;
         this.totalTilesMoved = Math.abs(toPosition - fromPosition);
+        this.diceRoll = diceRoll;
+        if (this.diceRoll == 6) {
+            rolledASix = true;
+        }
 
         moveDetails.put(MOVE_TYPE, this.SLMoveType);
         moveDetails.put(MOVE_FROM_POSITION, this.fromPosition);

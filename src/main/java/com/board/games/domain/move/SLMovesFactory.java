@@ -14,8 +14,8 @@ public class SLMovesFactory {
      * @param toPosition   Final position of the Token
      * @return {@link SLMove} that captures the details of the advancement
      */
-    public static Move getAdvanceMove(Integer fromPosition, Integer toPosition) {
-        return new SLMove(SLMoveType.NORMAL_ADVANCE, fromPosition, toPosition, "Normal Token Advance");
+    public static SLMove getAdvanceMove(Integer fromPosition, Integer toPosition) {
+        return new SLMove(SLMoveType.NORMAL_ADVANCE, fromPosition, toPosition, "Normal Token Advance", toPosition - fromPosition);
     }
 
     /**
@@ -35,7 +35,7 @@ public class SLMovesFactory {
      * @param ladderStep       {@link Move} from the intermediate position after encountering a Ladder
      * @return
      */
-    public static Move getLadderAdvanceMove(Move intermediateStep, Move ladderStep) {
+    public static SLMove getLadderAdvanceMove(Move intermediateStep, Move ladderStep) {
 
         if (!(intermediateStep instanceof SLMove || ladderStep instanceof SLMove)) {
             throw new RuntimeException("Invalid steps received. Need step of type SLType");
@@ -45,8 +45,9 @@ public class SLMovesFactory {
         Integer intermediatePosition = ((SLMove) intermediateStep).getToPosition();
         Integer finalPosition = ((SLMove) ladderStep).getToPosition();
         Integer totalStepsClimbed = finalPosition - intermediatePosition;
+        Integer diceRoll = intermediatePosition - initialPosition;
 
-        SLMove ladderMove = new SLMove(SLMoveType.LADDER_ADVANCE, initialPosition, finalPosition, "Encountered Ladder at position:" + intermediatePosition);
+        SLMove ladderMove = new SLMove(SLMoveType.LADDER_ADVANCE, initialPosition, finalPosition, "Encountered Ladder at position:" + intermediatePosition, diceRoll);
         ladderMove.setIntermediatePosition(intermediatePosition);
         ladderMove.setTotalTilesClimbed(totalStepsClimbed);
         ladderMove.setInterMediateMove(intermediateStep);
@@ -71,7 +72,7 @@ public class SLMovesFactory {
      * @param snakeStep
      * @return
      */
-    public static Move getSnakeDescendMove(Move intermediateStep, Move snakeStep) {
+    public static SLMove getSnakeDescendMove(Move intermediateStep, Move snakeStep) {
 
         if (!(intermediateStep instanceof SLMove || snakeStep instanceof SLMove)) {
             throw new RuntimeException("Invalid steps received. Need step of type SLType");
@@ -83,8 +84,9 @@ public class SLMovesFactory {
         Integer totalStepsDescended = Math.abs(finalPosition - intermediatePosition);
         Integer totalTilesMoved = intermediatePosition - initialPosition;
         totalTilesMoved = totalTilesMoved + Math.abs(finalPosition - intermediatePosition);
+        Integer diceRoll = intermediatePosition - initialPosition;
 
-        SLMove snakeMove = new SLMove(SLMoveType.SNAKE_DESCEND, initialPosition, finalPosition, "Encountered Snake at position:" + intermediatePosition);
+        SLMove snakeMove = new SLMove(SLMoveType.SNAKE_DESCEND, initialPosition, finalPosition, "Encountered Snake at position:" + intermediatePosition, diceRoll);
         snakeMove.setIntermediatePosition(intermediatePosition);
         snakeMove.setTotalTilesDescended(totalStepsDescended);
         snakeMove.setInterMediateMove(intermediateStep);
@@ -102,8 +104,8 @@ public class SLMovesFactory {
      * @param position current position of the Token
      * @return
      */
-    public static SLMove getUnluckyMove(Integer position) {
-        return new SLMove(SLMoveType.UNLUCKY_MOVE, position, position, "Encountered an Unlucky Move at: " + position);
+    public static SLMove getUnluckyMove(Integer position, Integer diceRoll) {
+        return new SLMove(SLMoveType.UNLUCKY_MOVE, position, position, "Encountered an Unlucky Move at: " + position, diceRoll);
     }
 
     /**
@@ -112,6 +114,6 @@ public class SLMovesFactory {
      * @return
      */
     public static SLMove getLuckyMove(Integer fromPosition, Integer toPosition) {
-        return new SLMove(SLMoveType.ADVANCE_LUCKY_MOVE, fromPosition, toPosition, "Encountered an Lucky Move at: " + fromPosition);
+        return new SLMove(SLMoveType.ADVANCE_LUCKY_MOVE, fromPosition, toPosition, "Encountered an Lucky Move at: " + fromPosition, toPosition - fromPosition);
     }
 }

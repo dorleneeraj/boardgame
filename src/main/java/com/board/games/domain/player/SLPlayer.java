@@ -16,7 +16,8 @@ public class SLPlayer extends Player {
     private final Token token;
 
     ///////////////////////////////////////////////////////////////////////////
-    // Instance Variables to capture the statistics of a player
+    // Instance Variables to capture the statistics of a player for a 
+    // particular Snake Ladder Game
     ///////////////////////////////////////////////////////////////////////////
     private int totalLadderMoves = 0;
     private int totalTilesClimbed = 0;
@@ -59,7 +60,7 @@ public class SLPlayer extends Player {
         if (SLMoveType.SNAKE_DESCEND.equals(playerMoveType)) {
             totalUnluckyMoves += 1;
             totalSnakeMoves += 1;
-            totalTilesDescended = currentMove.getTotalTilesDescended();
+            totalTilesDescended += currentMove.getTotalTilesDescended();
         }
         if (currentMove.isMissedSnakeLuckily() || SLMoveType.ADVANCE_LUCKY_MOVE.equals(playerMoveType)) {
             totalLuckyMoves += 1;
@@ -77,8 +78,7 @@ public class SLPlayer extends Player {
         int currentDiceRoll = currentMove.getDiceRoll();
         boolean isCurrentRollASix = false;
 
-        if (currentDiceRoll == 6) {
-            currentMove.setRolledASix(true);
+        if (currentMove.isRolledASix()) {
             isCurrentRollASix = true;
             totalDiceRollsWithSix += 1;
         }
@@ -154,6 +154,50 @@ public class SLPlayer extends Player {
 
     public ConsecutiveTurns getConsecutiveTurnState() {
         return consecutiveTurnState;
+    }
+
+    public void setTotalLadderMoves(int totalLadderMoves) {
+        this.totalLadderMoves = totalLadderMoves;
+    }
+
+    public void setTotalTilesClimbed(int totalTilesClimbed) {
+        this.totalTilesClimbed = totalTilesClimbed;
+    }
+
+    public void setTotalSnakeMoves(int totalSnakeMoves) {
+        this.totalSnakeMoves = totalSnakeMoves;
+    }
+
+    public void setTotalTilesDescended(int totalTilesDescended) {
+        this.totalTilesDescended = totalTilesDescended;
+    }
+
+    public void setTotalLuckyMoves(int totalLuckyMoves) {
+        this.totalLuckyMoves = totalLuckyMoves;
+    }
+
+    public void setTotalUnluckyMoves(int totalUnluckyMoves) {
+        this.totalUnluckyMoves = totalUnluckyMoves;
+    }
+
+    public void setTotalTurnsPlayed(int totalTurnsPlayed) {
+        this.totalTurnsPlayed = totalTurnsPlayed;
+    }
+
+    public void setTotalDiceRollsWithSix(int totalDiceRollsWithSix) {
+        this.totalDiceRollsWithSix = totalDiceRollsWithSix;
+    }
+
+    public void setMaxConsecutiveStreak(int maxConsecutiveStreak) {
+        this.maxConsecutiveStreak = maxConsecutiveStreak;
+    }
+
+    public void setCurrentConsecutiveStreak(int currentConsecutiveStreak) {
+        this.currentConsecutiveStreak = currentConsecutiveStreak;
+    }
+
+    public void setConsecutiveTurnState(ConsecutiveTurns consecutiveTurnState) {
+        this.consecutiveTurnState = consecutiveTurnState;
     }
 
     @Override

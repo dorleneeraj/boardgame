@@ -15,7 +15,7 @@ class SLMoveTest {
 
     @Test
     public void test_basicSLMoveData() {
-        SLMove slMove = new SLMove(SLMoveType.NORMAL_ADVANCE, 10, 15, "Normal Advance Move");
+        SLMove slMove = new SLMove(SLMoveType.NORMAL_ADVANCE, 10, 15, "Normal Advance Move", 5);
         assertEquals(10, slMove.getFromPosition());
         assertEquals(15, slMove.getToPosition());
         assertEquals(5, slMove.getTotalTilesMoved());
@@ -28,7 +28,7 @@ class SLMoveTest {
 
     @Test
     public void test_SLMoveSettersGetters() {
-        SLMove slMove = new SLMove(SLMoveType.NORMAL_ADVANCE, 10, 15, "Normal Advance Move");
+        SLMove slMove = new SLMove(SLMoveType.NORMAL_ADVANCE, 10, 15, "Normal Advance Move", 5);
         SLMove intermediateStep = (SLMove) SLMovesFactory.getAdvanceMove(45, 60);
 
         slMove.setTotalTilesClimbed(8);

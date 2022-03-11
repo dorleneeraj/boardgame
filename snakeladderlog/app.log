@@ -127,3 +127,5 @@
 2022-03-11T20:33:12,358 DEBUG main games.domain.game.SnakeAndLadderGame:110 - Performed move by user: Player 1 , Move Type: ADVANCE_LUCKY_MOVE, Move from Position 94 and Move to Position: 100, Roll on the dice 6
 2022-03-11T20:33:12,358 DEBUG main games.domain.game.SnakeAndLadderGame:121 - Game Completed. Final Lucky move performed by the user: Player 1 
 2022-03-11T20:33:12,358 DEBUG main games.domain.game.SnakeAndLadderGame:121 - Game Completed. Final Lucky move performed by the user: Player 1 
+2022-03-11T22:50:03,194  INFO Test worker games.domain.game.BoardGame:41 - ******** Starting a Game of null ********
+2022-03-11T23:06:06,063  INFO Test worker games.domain.game.BoardGame:41 - ******** Starting a Game of null ********

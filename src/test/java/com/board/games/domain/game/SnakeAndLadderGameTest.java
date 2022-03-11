@@ -2,16 +2,23 @@ package com.board.games.domain.game;
 
 import com.board.games.domain.board.Board;
 import com.board.games.domain.board.BoardGenerator;
+import com.board.games.domain.cell.SLBoardCell;
+import com.board.games.domain.cell.SnakeCell;
+import com.board.games.domain.move.SLMove;
+import com.board.games.domain.move.SLMovesFactory;
 import com.board.games.domain.player.PlayerGenerator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test class for {@link SnakeAndLadderGame}
@@ -66,5 +73,13 @@ class SnakeAndLadderGameTest {
 
     @Test
     void addNewPlayerToGame() {
+    }
+
+    @Test
+    void checkAndUpdateSnakeMiss() {
+        SLMove move = SLMovesFactory.getAdvanceMove(10, 16);
+        List<SLBoardCell> snakeCell = Arrays.asList(new SnakeCell(new SLBoardCell(6), new SLBoardCell(2)));
+        snakeAndLadderGame.checkAndUpdateSnakeMiss(move, snakeCell);
+        assertTrue(move.isMissedSnakeLuckily());
     }
 }

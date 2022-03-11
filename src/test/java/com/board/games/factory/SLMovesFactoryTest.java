@@ -59,7 +59,7 @@ class SLMovesFactoryTest {
 
     @Test
     void getUnluckyMove() {
-        Move unluckyMove = SLMovesFactory.getUnluckyMove(98);
+        Move unluckyMove = SLMovesFactory.getUnluckyMove(98, 4);
         assertEquals(SLMoveType.UNLUCKY_MOVE, unluckyMove.getMoveAttribute(SLMove.MOVE_TYPE));
         assertEquals(98, unluckyMove.getMoveAttribute(SLMove.MOVE_FROM_POSITION));
         assertEquals(98, unluckyMove.getMoveAttribute(SLMove.MOVE_TO_POSITION));

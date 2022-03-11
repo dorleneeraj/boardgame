@@ -81,7 +81,7 @@ public class SnakeAndLadderGame extends BoardGame {
      * @param turnMove
      * @param neighbourCells
      */
-    private void checkAndUpdateSnakeMiss(SLMove turnMove, List<? extends Cell> neighbourCells) {
+    protected void checkAndUpdateSnakeMiss(SLMove turnMove, List<? extends Cell> neighbourCells) {
         boolean foundSnakeCell = neighbourCells.stream().anyMatch(neighbour -> neighbour instanceof SnakeCell);
         if (foundSnakeCell) {
             turnMove.setMissedSnakeLuckily(true);
@@ -92,7 +92,7 @@ public class SnakeAndLadderGame extends BoardGame {
      * @param diceRoll
      * @return
      */
-    private SLMove performMove(int diceRoll) {
+    protected SLMove performMove(int diceRoll) {
         Token currentPlayerToken = currentPlayer.getToken();
         Integer currentPosition = currentPlayer.getCurrentPosition();
         Cell fromCell = this.gameBoard.getCellByNumber(currentPlayer.getCurrentPosition());
@@ -104,9 +104,8 @@ public class SnakeAndLadderGame extends BoardGame {
         if (null != toCell) {
             currentMove = (SLMove) toCell.acceptToken(currentPlayerToken);
         } else {
-            currentMove = SLMovesFactory.getUnluckyMove(currentPlayerToken.getPosition());
+            currentMove = SLMovesFactory.getUnluckyMove(currentPlayerToken.getPosition(), diceRoll);
         }
-        currentMove.setDiceRoll(diceRoll);
         LOGGER.debug("Performed move by user: {} , Move Type: {}, Move from Position {} and Move to Position: {}," +
                 " Roll on the dice {}", currentPlayer.getName(), currentMove.getMoveType(), currentMove.getFromPosition(), currentMove.getToPosition(), diceRoll);
         return currentMove;
