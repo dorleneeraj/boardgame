@@ -7,17 +7,18 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.LinkedList;
 import java.util.Queue;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
- * Test class for {@link SnakeAndLadder}
+ * Test class for {@link SnakeAndLadderGame}
  */
-class SnakeAndLadderTest {
+class SnakeAndLadderGameTest {
 
-    private static SnakeAndLadder snakeAndLadder;
+    private static SnakeAndLadderGame snakeAndLadderGame;
     private static Board board;
     private static int playerCount;
     private static BoardGenerator boardGenerator;
@@ -32,7 +33,7 @@ class SnakeAndLadderTest {
         playerGenerator = Mockito.mock(PlayerGenerator.class);
         playerCount = 4;
 
-        snakeAndLadder = Mockito.spy(new SnakeAndLadder(boardGenerator, playerCount, dice, playerGenerator));
+        snakeAndLadderGame = Mockito.spy(new SnakeAndLadderGame(board, playerCount, dice, new LinkedList<>()));
     }
 
     @Test
@@ -41,24 +42,11 @@ class SnakeAndLadderTest {
     }
 
     @Test
-    void addPlayersToTheGame() {
-        snakeAndLadder.addPlayersToTheGame();
-        Mockito.verify(snakeAndLadder, Mockito.times(playerCount)).addNewPlayerToGame();
-    }
-
-    @Test
-    void generateBoard() {
-        snakeAndLadder.generateBoard(snakeAndLadder.generationStrategy);
-        Mockito.verify(snakeAndLadder.generationStrategy).generateBoard();
-    }
-
-    @Test
     void initializeGameStates() {
-        snakeAndLadder.initializeGameStates();
-        Queue<GameState> gameStates = snakeAndLadder.getGameStates();
+        snakeAndLadderGame.initializeGameStates();
+        Queue<GameState> gameStates = snakeAndLadderGame.getGameStates();
         assertNotNull(gameStates);
-        assertEquals(6, gameStates.size());
-        assertEquals(GameState.NOT_STARTED, gameStates.poll());
+        assertEquals(5, gameStates.size());
         assertEquals(GameState.INITIALIZED, gameStates.poll());
         assertEquals(GameState.STARTED, gameStates.poll());
         assertEquals(GameState.PLAYING, gameStates.poll());

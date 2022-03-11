@@ -2,11 +2,11 @@ package com.board.games.domain.player;
 
 import com.board.games.domain.game.Dice;
 import com.board.games.domain.game.Game;
-import com.board.games.domain.game.SnakeAndLadder;
+import com.board.games.domain.game.SnakeAndLadderGame;
 import com.board.games.domain.token.Token;
 
 /**
- * Player for {@link SnakeAndLadder} game
+ * Player for {@link SnakeAndLadderGame} game
  */
 public class SLPlayer extends Player {
 

@@ -13,16 +13,13 @@ public abstract class BoardGame implements Game {
     // Instance Variables
     ///////////////////////////////////////////////////////////////////////////
 
-    protected BoardGenerator generationStrategy;
     protected Board gameBoard;
     protected GameState currentGameState = GameState.NOT_STARTED;
     protected Integer playerCount;
-    protected PlayerGenerator playerGenerator;
 
-    public BoardGame(BoardGenerator generationStrategy, Integer playerCount, PlayerGenerator playerGenerator) {
-        this.generationStrategy = generationStrategy;
+    public BoardGame(Board gameBoard, Integer playerCount) {
         this.playerCount = playerCount;
-        this.playerGenerator = playerGenerator;
+        this.gameBoard = gameBoard;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -61,6 +58,8 @@ public abstract class BoardGame implements Game {
 
     protected abstract void initializeGameStates();
 
+    protected abstract void validateGameState();
+
     protected abstract void selectNextPlayer();
 
     protected abstract GameState updateAndGetNextState();
@@ -69,9 +68,8 @@ public abstract class BoardGame implements Game {
 
     protected abstract void generateGameAnalytics();
 
-    protected abstract void addNewPlayerToGame();
-
     protected abstract void movePlayer();
+
 
     ///////////////////////////////////////////////////////////////////////////
     // Default implementations
@@ -79,28 +77,17 @@ public abstract class BoardGame implements Game {
 
     protected void initializeGame() {
         initializeGameStates();
-        this.gameBoard = generateBoard(this.generationStrategy);
-        addPlayersToTheGame();
+        validateGameState();
         setGameState(updateAndGetNextState());
-    }
-
-    protected void addPlayersToTheGame() {
-        for (int i = 0; i < this.playerCount; i++) {
-            addNewPlayerToGame();
-        }
-    }
-
-    protected void setGameState(GameState state) {
-        this.currentGameState = state;
-    }
-
-    protected Board generateBoard(BoardGenerator boardGenerator) {
-        return boardGenerator.generateBoard();
     }
 
     protected void playTurn() {
         selectNextPlayer();
         movePlayer();
+    }
+
+    protected void setGameState(GameState state) {
+        this.currentGameState = state;
     }
 
     ///////////////////////////////////////////////////////////////////////////

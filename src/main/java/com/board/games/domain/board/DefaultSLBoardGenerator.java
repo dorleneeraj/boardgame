@@ -20,6 +20,14 @@ public class DefaultSLBoardGenerator implements BoardGenerator {
 
     private final Dimension boardDimension = new Dimension(10, 10);
 
+    private DefaultSLBoardGenerator() {
+
+    }
+
+    public static DefaultSLBoardGenerator getInstance() {
+        return new DefaultSLBoardGenerator();
+    }
+
     @Override
     public Board generateBoard() {
 

@@ -56,10 +56,7 @@ public class SLDefaultPlayerGenerator implements PlayerGenerator {
     }
 
     @Override
-    public Player getNextPlayer() {
-        if (null == this.players || this.players.isEmpty()) {
-            throw new RuntimeException("No more players found");
-        }
-        return this.players.poll();
+    public Queue<? extends Player> getPlayersQueue() {
+        return this.players;
     }
 }

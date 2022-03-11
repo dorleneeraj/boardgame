@@ -1,5 +1,6 @@
 package com.board.games.domain.game;
 
+import com.board.games.domain.board.Board;
 import com.board.games.domain.cell.Cell;
 import com.board.games.domain.move.Move;
 import com.board.games.domain.move.SLMoveType;
@@ -16,16 +17,17 @@ import java.util.Queue;
 /**
  * {@link BoardGame} implementation for Snake and Ladder game
  */
-public class SnakeAndLadder extends BoardGame {
+public class SnakeAndLadderGame extends BoardGame {
 
     private final Dice dice;
     private final Queue<SLPlayer> playersQueue = new LinkedList<>();
     private SLPlayer currentPlayer;
     private final Queue<GameState> gameStates = new LinkedList<>();
 
-    protected SnakeAndLadder(BoardGenerator generationStrategy, int playerCount, Dice dice, PlayerGenerator playerGenerator) {
-        super(generationStrategy, playerCount, playerGenerator);
+    protected SnakeAndLadderGame(Board board, int playerCount, Dice dice, Queue<SLPlayer> playersQueue) {
+        super(board, playerCount);
         this.dice = dice;
+        this.playersQueue.addAll(playersQueue);
     }
 
     @Override
@@ -35,6 +37,21 @@ public class SnakeAndLadder extends BoardGame {
         gameStates.add(GameState.PLAYING);
         gameStates.add(GameState.GAME_COMPLETED);
         gameStates.add(GameState.FINISHED);
+    }
+
+    @Override
+    protected void validateGameState() {
+        if (null == this.gameBoard) {
+            throw new RuntimeException("Board cannot be null for a board game");
+        }
+
+        if (null == this.playersQueue || this.playersQueue.isEmpty() || this.playerCount == 0) {
+            throw new RuntimeException("Game needs to have at least 1 player to start with");
+        }
+
+        if (null == this.dice) {
+            throw new RuntimeException("Snake and Ladder game needs an instance of Dice");
+        }
     }
 
     @Override
@@ -96,11 +113,6 @@ public class SnakeAndLadder extends BoardGame {
 
     }
 
-    @Override
-    protected void addNewPlayerToGame() {
-        playersQueue.add((SLPlayer) this.playerGenerator.getNextPlayer());
-    }
-
     public Dice getDice() {
         return dice;
     }
@@ -124,46 +136,51 @@ public class SnakeAndLadder extends BoardGame {
     /**
      *
      */
-    public static class SnakeAndLadderBuilder {
+    public static class SLGameBuilder {
+        private BoardGenerator boardGenerator;
+        private Board gameBoard;
+        private Queue<SLPlayer> players = new LinkedList<>();
+        private int playerCount;
+        private PlayerGenerator playerGenerator;
+        private Dice dice;
 
-        BoardGenerator generationStrategy;
-        int playerCount;
-        Dice dice;
-        PlayerGenerator playerGenerator;
+        public SLGameBuilder buildBoardWith(BoardGenerator boardGenerator) {
 
-        public SnakeAndLadderBuilder(int playerCount) {
-            this.playerCount = playerCount;
-        }
-
-        public SnakeAndLadderBuilder withBoardGenerator(BoardGenerator boardGenerator) {
-            this.generationStrategy = boardGenerator;
+            this.boardGenerator = boardGenerator;
             return this;
         }
 
-        public SnakeAndLadderBuilder withPlayerGenerator(PlayerGenerator playerGenerator) {
+        public SLGameBuilder addPlayersUsing(PlayerGenerator playerGenerator) {
             this.playerGenerator = playerGenerator;
             return this;
         }
 
-        public SnakeAndLadderBuilder withDice(Dice dice) {
+        public SLGameBuilder withDice(Dice dice) {
             this.dice = dice;
             return this;
         }
 
-        public SnakeAndLadder build() {
-            validateGame();
-            return new SnakeAndLadder(generationStrategy, playerCount, dice, playerGenerator);
+        public SnakeAndLadderGame build() {
+            generateBoard();
+            generatePlayers();
+            playerCount = this.players.size();
+            return new SnakeAndLadderGame(this.gameBoard, this.playerCount, this.dice, this.players);
         }
 
-        private void validateGame() {
-            if (null == this.dice) {
-                throw new RuntimeException("Snake and Ladder game cannot start without a dice");
+        private void generateBoard() {
+            if (null != boardGenerator) {
+                this.gameBoard = boardGenerator.generateBoard();
             }
-            if (null == this.generationStrategy) {
-                throw new RuntimeException("Game needs to have a Board Generation Strategy");
-            }
-            if (playerCount <= 0 || playerCount > 4) {
-                throw new RuntimeException("Game needs at least 1 player to start the game. There can be no more that 4 players ");
+        }
+
+        private void generatePlayers() {
+            if (null != playerGenerator) {
+                playerGenerator.getPlayersQueue().stream().forEach(player -> {
+                    if (!(player instanceof SLPlayer)) {
+                        throw new RuntimeException("Invalid player received for Snake and Ladder game. It has to be an instance of SLPlayer");
+                    }
+                    this.players.add((SLPlayer) player);
+                });
             }
         }
     }

@@ -1,9 +1,10 @@
 package com.board.games.domain.player;
 
-import com.board.games.domain.player.Player;
+import java.util.Queue;
 
-import java.util.List;
-
+/**
+ * 
+ */
 public interface PlayerGenerator {
-    Player getNextPlayer();
+    Queue<? extends Player> getPlayersQueue();
 }
