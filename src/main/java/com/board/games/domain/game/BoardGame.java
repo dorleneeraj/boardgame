@@ -29,7 +29,7 @@ public abstract class BoardGame implements Game {
     private List<GameTracker> gameTrackerTrackers = new ArrayList<>();
 
     static {
-        gameRegistry.put(SnakeAndLadderGame.class.getSimpleName(), " Snake and Ladders!!");
+        gameRegistry.put(SLGame.class.getSimpleName(), " Snake and Ladders!!");
     }
 
     public BoardGame(Board gameBoard, Integer playerCount) {

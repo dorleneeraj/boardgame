@@ -5,7 +5,6 @@ import com.board.games.domain.cell.SLBoardCell;
 import com.board.games.domain.cell.SnakeCell;
 import com.board.games.domain.move.SLMove;
 import com.board.games.domain.move.SLMovesFactory;
-import com.board.games.domain.player.PlayerGenerator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -20,26 +19,24 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Test class for {@link SnakeAndLadderGame}
+ * Test class for {@link SLGame}
  */
-class SnakeAndLadderGameTest {
+class SLGameTest {
 
-    private static SnakeAndLadderGame snakeAndLadderGame;
+    private static SLGame slGame;
     private static Board board;
     private static int playerCount;
-    private static BoardGenerator boardGenerator;
     private static Dice dice;
     private static PlayerGenerator playerGenerator;
 
     @BeforeAll
     public static void setUp() {
         board = Mockito.mock(Board.class);
-        boardGenerator = Mockito.mock(BoardGenerator.class);
         dice = Mockito.mock(Dice.class);
         playerGenerator = Mockito.mock(PlayerGenerator.class);
         playerCount = 4;
 
-        snakeAndLadderGame = Mockito.spy(new SnakeAndLadderGame(board, playerCount, dice, new LinkedList<>()));
+        slGame = Mockito.spy(new SLGame(board, playerCount, dice, new LinkedList<>()));
     }
 
     @Test
@@ -49,8 +46,8 @@ class SnakeAndLadderGameTest {
 
     @Test
     void initializeGameStates() {
-        snakeAndLadderGame.initializeGameStates();
-        Queue<GameState> gameStates = snakeAndLadderGame.getGameStates();
+        slGame.initializeGameStates();
+        Queue<GameState> gameStates = slGame.getGameStates();
         assertNotNull(gameStates);
         assertEquals(5, gameStates.size());
         assertEquals(GameState.INITIALIZED, gameStates.poll());
@@ -77,8 +74,7 @@ class SnakeAndLadderGameTest {
     @Test
     void checkAndUpdateSnakeMiss() {
         SLMove move = SLMovesFactory.getAdvanceMove(10, 16);
-        List<SLBoardCell> snakeCell = Arrays.asList(new SnakeCell(new SLBoardCell(6), new SLBoardCell(2)));
-        snakeAndLadderGame.hasASnakeCell(snakeCell);
-        assertTrue(move.isMissedSnakeLuckily());
+        List<SLBoardCell> snakeCells = Arrays.asList(new SnakeCell(new SLBoardCell(6), new SLBoardCell(2)));
+        assertTrue(slGame.hasASnakeCell(snakeCells));
     }
 }

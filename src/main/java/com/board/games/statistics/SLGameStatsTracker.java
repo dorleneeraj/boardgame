@@ -1,7 +1,7 @@
 package com.board.games.statistics;
 
 import com.board.games.domain.game.Game;
-import com.board.games.domain.game.SnakeAndLadderGame;
+import com.board.games.domain.game.SLGame;
 import com.board.games.domain.player.Player;
 import com.board.games.domain.player.SLPlayer;
 import org.apache.logging.log4j.LogManager;
@@ -45,7 +45,7 @@ public class SLGameStatsTracker implements GameTracker {
     }
 
     public GameStatisticsData buildStats(Game game) {
-        GameStatisticsData data = new GameStatisticsData((SnakeAndLadderGame) game);
+        GameStatisticsData data = new GameStatisticsData((SLGame) game);
         data.analyzeData();
         return data;
     }
@@ -121,16 +121,16 @@ public class SLGameStatsTracker implements GameTracker {
 
         protected SLPlayer winner;
 
-        private final SnakeAndLadderGame game;
+        private final SLGame game;
 
-        public GameStatisticsData(SnakeAndLadderGame game) {
+        public GameStatisticsData(SLGame game) {
             this.game = game;
         }
 
         protected void analyzeData() {
-            SnakeAndLadderGame slGame = (SnakeAndLadderGame) game;
+            SLGame slGame = (SLGame) game;
             this.winner = slGame.getCurrentPlayer();
-            List<? extends Player> players = ((SnakeAndLadderGame) game).getGamePlayers();
+            List<? extends Player> players = ((SLGame) game).getGamePlayers();
 
             totalTurnsInTheGame = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getTotalTurnsPlayed()).sum();
 

@@ -1,6 +1,6 @@
 package com.board.games.domain.cell;
 
-import com.board.games.domain.game.SnakeAndLadderGame;
+import com.board.games.domain.game.SLGame;
 import com.board.games.domain.move.Move;
 import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMove;
@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * <p>
- * Implementation of the {@link Cell} indicating that this is the final/ winning cell for {@link SnakeAndLadderGame}.
+ * Implementation of the {@link Cell} indicating that this is the final/ winning cell for {@link SLGame}.
  * Once a {@link Token} is arrived at this cell, the game ends.
  * </p>
  *

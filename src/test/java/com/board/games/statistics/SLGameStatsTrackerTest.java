@@ -1,6 +1,6 @@
 package com.board.games.statistics;
 
-import com.board.games.domain.game.SnakeAndLadderGame;
+import com.board.games.domain.game.SLGame;
 import com.board.games.domain.player.SLPlayer;
 import com.board.games.domain.token.Token;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,20 +12,21 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static com.board.games.statistics.SLGameStatsTracker.GameStatisticsData;
 
 /**
  *
  */
 class SLGameStatsTrackerTest {
 
-    private static SnakeAndLadderGame game;
+    private static SLGame game;
     private static List<SLPlayer> players;
-    private static SLGameStatsTracker.GameStatisticsData gameStatistics;
+    private static GameStatisticsData gameStatisticsData;
 
     @BeforeAll
     public static void setUp() {
-        game = mock(SnakeAndLadderGame.class);
-        gameStatistics = new SLGameStatsTracker.GameStatisticsData(game);
+        game = mock(SLGame.class);
+        gameStatisticsData = new SLGameStatsTracker.GameStatisticsData(game);
         players = new ArrayList<>();
         addPlayers(players);
         Mockito.doReturn(players).when(game).getGamePlayers();
@@ -52,34 +53,29 @@ class SLGameStatsTrackerTest {
 
     @Test
     void performOperation() {
-        gameStatistics.analyzeData();
+        gameStatisticsData.analyzeData();
 
-        assertEquals(64, gameStatistics.totalTurnsInTheGame);
-
-        assertEquals(7, gameStatistics.totalLadderAdvanceMoves);
-        assertEquals(91, gameStatistics.totalTilesClimbed);
-        assertEquals(23, gameStatistics.longestLadderClimb);
-        assertEquals(3, gameStatistics.minimumLadderClimb);
-        assertEquals(13, gameStatistics.averageLadderClimb);
-
-        assertEquals(7, gameStatistics.totalSnakeDescendMoves);
-        assertEquals(52, gameStatistics.totalTilesDescended);
-        assertEquals(11, gameStatistics.steepestSnakeDescend);
-        assertEquals(1, gameStatistics.minimumSnakeDescend);
-        assertEquals(7, gameStatistics.averageSnakeDescend);
-
-        assertEquals(27, gameStatistics.longestTurn);
-        assertEquals(10, gameStatistics.totalRollsWithSix);
-        assertEquals(24, gameStatistics.totalUnluckyRolls);
-        assertEquals(40, gameStatistics.totalLuckyRolls);
-
-        assertEquals(7, gameStatistics.minLuckyRolls);
-        assertEquals(14, gameStatistics.maxLuckyRolls);
-        assertEquals(10, gameStatistics.averageLuckyRolls);
-
-        assertEquals(0, gameStatistics.minUnluckyRolls);
-        assertEquals(12, gameStatistics.maxUnluckyRolls);
-        assertEquals(6, gameStatistics.averageUnluckyRolls);
+        assertEquals(64, gameStatisticsData.totalTurnsInTheGame);
+        assertEquals(7, gameStatisticsData.totalLadderAdvanceMoves);
+        assertEquals(91, gameStatisticsData.totalTilesClimbed);
+        assertEquals(23, gameStatisticsData.longestLadderClimb);
+        assertEquals(3, gameStatisticsData.minimumLadderClimb);
+        assertEquals(13, gameStatisticsData.averageLadderClimb);
+        assertEquals(7, gameStatisticsData.totalSnakeDescendMoves);
+        assertEquals(52, gameStatisticsData.totalTilesDescended);
+        assertEquals(11, gameStatisticsData.steepestSnakeDescend);
+        assertEquals(1, gameStatisticsData.minimumSnakeDescend);
+        assertEquals(7, gameStatisticsData.averageSnakeDescend);
+        assertEquals(27, gameStatisticsData.longestTurn);
+        assertEquals(10, gameStatisticsData.totalRollsWithSix);
+        assertEquals(24, gameStatisticsData.totalUnluckyRolls);
+        assertEquals(40, gameStatisticsData.totalLuckyRolls);
+        assertEquals(7, gameStatisticsData.minLuckyRolls);
+        assertEquals(14, gameStatisticsData.maxLuckyRolls);
+        assertEquals(10, gameStatisticsData.averageLuckyRolls);
+        assertEquals(0, gameStatisticsData.minUnluckyRolls);
+        assertEquals(12, gameStatisticsData.maxUnluckyRolls);
+        assertEquals(6, gameStatisticsData.averageUnluckyRolls);
     }
 
 

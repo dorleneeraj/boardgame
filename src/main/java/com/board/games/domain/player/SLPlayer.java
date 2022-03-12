@@ -2,14 +2,14 @@ package com.board.games.domain.player;
 
 import com.board.games.domain.game.Dice;
 import com.board.games.domain.game.Game;
-import com.board.games.domain.game.SnakeAndLadderGame;
+import com.board.games.domain.game.SLGame;
 import com.board.games.domain.move.Move;
 import com.board.games.domain.move.SLMove;
 import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.token.Token;
 
 /**
- * Player for {@link SnakeAndLadderGame} game
+ * Player for {@link SLGame} game
  */
 public class SLPlayer extends Player {
 

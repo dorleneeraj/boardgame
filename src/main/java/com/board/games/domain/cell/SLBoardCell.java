@@ -1,6 +1,6 @@
 package com.board.games.domain.cell;
 
-import com.board.games.domain.game.SnakeAndLadderGame;
+import com.board.games.domain.game.SLGame;
 import com.board.games.domain.move.Move;
 import com.board.games.domain.move.SLMovesFactory;
 import com.board.games.domain.token.Token;
@@ -12,7 +12,7 @@ import java.util.Set;
 
 /**
  * <p>
- * A board cell for {@link SnakeAndLadderGame}
+ * A board cell for {@link SLGame}
  * </p>
  */
 public class SLBoardCell implements Cell {

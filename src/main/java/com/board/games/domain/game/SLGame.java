@@ -9,7 +9,6 @@ import com.board.games.domain.player.Player;
 import com.board.games.domain.player.SLPlayer;
 import com.board.games.domain.token.Token;
 import com.board.games.domain.move.SLMovesFactory;
-import com.board.games.domain.player.PlayerGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,16 +20,16 @@ import java.util.Queue;
 /**
  * {@link BoardGame} implementation for Snake and Ladder game
  */
-public class SnakeAndLadderGame extends BoardGame {
+public class SLGame extends BoardGame {
 
-    private static final Logger LOGGER = LogManager.getLogger(SnakeAndLadderGame.class);
+    private static final Logger LOGGER = LogManager.getLogger(SLGame.class);
 
     private final Dice dice;
     private final Queue<SLPlayer> playersQueue = new LinkedList<>();
     private SLPlayer currentPlayer;
     private final Queue<GameState> gameStates = new LinkedList<>();
 
-    protected SnakeAndLadderGame(Board board, int playerCount, Dice dice, Queue<SLPlayer> playersQueue) {
+    protected SLGame(Board board, int playerCount, Dice dice, Queue<SLPlayer> playersQueue) {
         super(board, playerCount);
         this.dice = dice;
         this.playersQueue.addAll(playersQueue);
@@ -167,16 +166,15 @@ public class SnakeAndLadderGame extends BoardGame {
         private Board gameBoard;
         private Queue<SLPlayer> players = new LinkedList<>();
         private int playerCount;
-        private PlayerGenerator playerGenerator;
         private Dice dice;
 
-        public SLGameBuilder buildBoardWith(Board board) {
+        public SLGameBuilder withGameBoard(Board board) {
             this.gameBoard = board;
             return this;
         }
 
-        public SLGameBuilder addPlayersUsing(PlayerGenerator playerGenerator) {
-            this.playerGenerator = playerGenerator;
+        public SLGameBuilder addPlayers(List<SLPlayer> players) {
+            this.players.addAll(players);
             return this;
         }
 
@@ -185,21 +183,9 @@ public class SnakeAndLadderGame extends BoardGame {
             return this;
         }
 
-        public SnakeAndLadderGame build() {
-            generatePlayers();
+        public SLGame build() {
             playerCount = this.players.size();
-            return new SnakeAndLadderGame(this.gameBoard, this.playerCount, this.dice, this.players);
-        }
-
-        private void generatePlayers() {
-            if (null != playerGenerator) {
-                playerGenerator.getPlayersQueue().stream().forEach(player -> {
-                    if (!(player instanceof SLPlayer)) {
-                        throw new RuntimeException("Invalid player received for Snake and Ladder game. It has to be an instance of SLPlayer");
-                    }
-                    this.players.add((SLPlayer) player);
-                });
-            }
+            return new SLGame(this.gameBoard, this.playerCount, this.dice, this.players);
         }
     }
 }
