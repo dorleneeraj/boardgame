@@ -3,7 +3,6 @@ package com.board.games.statistics;
 import com.board.games.domain.game.SnakeAndLadderGame;
 import com.board.games.domain.player.SLPlayer;
 import com.board.games.domain.token.Token;
-import com.board.games.domain.token.TokenColour;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -36,18 +35,18 @@ class SLGameStatsTrackerTest {
 
     private static void addPlayers(List<SLPlayer> players) {
 
-        players.add(buildPlayerWithData("player1", new Token(1, TokenColour.GREEN, 65), 14, 2,
+        players.add(buildPlayerWithData("player1", new Token(1, Token.TokenColour.GREEN, 65), 14, 2,
                 20, 15, 3, 1, 14, 10,
                 7, 8, 3, 14, 3));
 
-        players.add(buildPlayerWithData("player2", new Token(2, TokenColour.BLUE, 73), 21, 1,
+        players.add(buildPlayerWithData("player2", new Token(2, Token.TokenColour.BLUE, 73), 21, 1,
                 18, 8, 4, 3, 7, 11,
                 11, 7, 9, 7, 2));
 
-        players.add(buildPlayerWithData("player3", new Token(3, TokenColour.YELLOW, 89), 18, 1, 22,
+        players.add(buildPlayerWithData("player3", new Token(3, Token.TokenColour.YELLOW, 89), 18, 1, 22,
                 23, 18, 2, 16, 9, 4, 11, 12, 22, 4));
 
-        players.add(buildPlayerWithData("player4", new Token(4, TokenColour.RED, 100), 11, 3, 31, 16, 5,
+        players.add(buildPlayerWithData("player4", new Token(4, Token.TokenColour.RED, 100), 11, 3, 31, 16, 5,
                 1, 15, 8, 1, 14, 0, 27, 1));
     }
 

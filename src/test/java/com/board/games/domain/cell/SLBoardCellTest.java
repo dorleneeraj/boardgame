@@ -2,7 +2,6 @@ package com.board.games.domain.cell;
 
 import com.board.games.domain.move.Move;
 import com.board.games.domain.token.Token;
-import com.board.games.domain.token.TokenColour;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -22,8 +21,8 @@ class SLBoardCellTest {
     @BeforeAll
     static void setUp() {
         slBoardCell = new SLBoardCell(10);
-        token1 = new Token(1, TokenColour.BLUE, 0);
-        token2 = new Token(2, TokenColour.YELLOW, 0);
+        token1 = new Token(1, Token.TokenColour.BLUE, 0);
+        token2 = new Token(2, Token.TokenColour.YELLOW, 0);
     }
 
     @Test

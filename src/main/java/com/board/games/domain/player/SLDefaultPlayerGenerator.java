@@ -1,14 +1,11 @@
 package com.board.games.domain.player;
 
 import com.board.games.domain.token.Token;
-import com.board.games.domain.token.TokenColour;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -36,7 +33,7 @@ public class SLDefaultPlayerGenerator implements PlayerGenerator {
     }
 
     private void init() {
-        Stack<TokenColour> tokenColours = getRandomTokenColours();
+        Stack<Token.TokenColour> tokenColours = getRandomTokenColours();
         for (int i = 1; i <= numberOfPlayers; i++) {
             String name = "Player " + i;
             Token token = new Token(i, tokenColours.pop(), INITIAL_PLAYER_POSITION);
@@ -44,9 +41,9 @@ public class SLDefaultPlayerGenerator implements PlayerGenerator {
         }
     }
 
-    private Stack<TokenColour> getRandomTokenColours() {
-        List<TokenColour> tokenColours = Arrays.asList(TokenColour.RED, TokenColour.GREEN, TokenColour.BLUE, TokenColour.YELLOW);
-        Stack<TokenColour> stack = new Stack<>();
+    private Stack<Token.TokenColour> getRandomTokenColours() {
+        List<Token.TokenColour> tokenColours = Arrays.asList(Token.TokenColour.RED, Token.TokenColour.GREEN, Token.TokenColour.BLUE, Token.TokenColour.YELLOW);
+        Stack<Token.TokenColour> stack = new Stack<>();
         List<Integer> list = new ArrayList<>();
         for (int i = 1; i <= numberOfPlayers; i++) {
             list.add(i);

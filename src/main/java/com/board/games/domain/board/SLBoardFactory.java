@@ -1,0 +1,91 @@
+package com.board.games.domain.board;
+
+import com.board.games.domain.cell.Cell;
+import com.board.games.domain.cell.LadderCell;
+import com.board.games.domain.cell.SLBoardCell;
+import com.board.games.domain.cell.SLFinalCell;
+import com.board.games.domain.cell.SnakeCell;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
+
+/**
+ *
+ */
+public class SLBoardFactory {
+
+    public static Board getDefaultBoard() {
+        List<SLTuple> ladderTuples = Arrays.asList(new SLTuple(4, 25), new SLTuple(13, 46), new SLTuple(42, 63),
+                new SLTuple(50, 69), new SLTuple(62, 81), new SLTuple(74, 92));
+        List<SLTuple> snakeTuples = Arrays.asList(new SLTuple(99, 41), new SLTuple(89, 53), new SLTuple(76, 58),
+                new SLTuple(66, 45), new SLTuple(54, 31), new SLTuple(43, 18), new SLTuple(40, 3), new SLTuple(27, 5));
+        Dimension dimension = new Dimension(10, 10);
+        return getConfigurableBoard(ladderTuples, snakeTuples, dimension);
+    }
+
+    public static Board getConfigurableBoard(List<SLTuple> ladderTuples, List<SLTuple> snakeTuples, Dimension dimension) {
+
+        if (dimension.getColumn() != dimension.getRow()) {
+            throw new RuntimeException("Snake and Ladder board is a square. Row and Column in the dimension should be equal");
+        }
+
+        if (dimension.getColumn() <= 0 || dimension.getRow() <= 0) {
+            throw new RuntimeException("Snake and Ladder board needs to have a positive row and column dimensions");
+        }
+
+        int size = dimension.getColumn() * dimension.getRow();
+        List<SLBoardCell> boardCells = new ArrayList<>();
+        IntStream.range(1, size + 1).forEach(cellNumber -> {
+            boardCells.add(new SLBoardCell(cellNumber));
+        });
+
+        addLadders(ladderTuples, boardCells);
+        addSnakes(snakeTuples, boardCells);
+        boardCells.set(size - 1, new SLFinalCell(boardCells.get(size - 1)));
+        setNeighbours(boardCells);
+        return new Board(dimension, boardCells);
+    }
+
+    private static void setNeighbours(List<SLBoardCell> boardCells) {
+        for (Cell cell : boardCells) {
+            List<SLBoardCell> neighbours = new ArrayList<>();
+            int cellNumber = cell.getCellPosition();
+            List<Integer> neighbourIndices = Arrays.asList(cellNumber - 1, cellNumber - 2, cellNumber + 1, cellNumber + 1);
+            neighbourIndices.forEach(index -> {
+                if (index >= 0 && index < boardCells.size()) {
+                    neighbours.add(boardCells.get(index));
+                }
+            });
+            cell.setNeighbours(neighbours);
+        }
+    }
+
+    private static void addSnakes(List<SLTuple> snakeTuples, List<SLBoardCell> boardCells) {
+        snakeTuples.forEach(tuple -> {
+            if (tuple.getStart() < tuple.getEnd()) {
+                throw new RuntimeException("Invalid snake configuration - end: " + tuple.getEnd() + ", start: " + tuple.getStart() +
+                        ", snake start cannot be less than snake end");
+            }
+
+            SLBoardCell snakeStartCell = boardCells.get(tuple.getStart() - 1);
+            SLBoardCell snakeEndCell = boardCells.get(tuple.getEnd() - 1);
+            boardCells.set(tuple.getStart() - 1, new SnakeCell(snakeStartCell, snakeEndCell));
+        });
+    }
+
+    private static void addLadders(List<SLTuple> ladderTuples, List<SLBoardCell> boardCells) {
+        ladderTuples.forEach(tuple -> {
+            if (tuple.getStart() > tuple.getEnd()) {
+                throw new RuntimeException("Invalid ladder configuration - start: " + tuple.getStart() + ", end: " + tuple.getEnd() +
+                        ", ladder start cannot be greater than ladder end");
+            }
+
+            SLBoardCell ladderStartCell = boardCells.get(tuple.getStart() - 1);
+            SLBoardCell ladderEndCell = boardCells.get(tuple.getEnd() - 1);
+            boardCells.set(tuple.getStart() - 1, new LadderCell(ladderStartCell, ladderEndCell));
+        });
+    }
+
+}

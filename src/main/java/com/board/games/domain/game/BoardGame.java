@@ -103,7 +103,7 @@ public abstract class BoardGame implements Game {
 
     protected void generateGameAnalytics() {
         for (GameTracker gameTracker : gameTrackerTrackers) {
-            gameTracker.trackeGameProgress(this);
+            gameTracker.trackGameProgress(this);
         }
     }
 

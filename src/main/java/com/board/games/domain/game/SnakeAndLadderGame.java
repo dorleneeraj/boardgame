@@ -9,7 +9,6 @@ import com.board.games.domain.player.Player;
 import com.board.games.domain.player.SLPlayer;
 import com.board.games.domain.token.Token;
 import com.board.games.domain.move.SLMovesFactory;
-import com.board.games.domain.board.BoardGenerator;
 import com.board.games.domain.player.PlayerGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -165,16 +164,14 @@ public class SnakeAndLadderGame extends BoardGame {
      *
      */
     public static class SLGameBuilder {
-        private BoardGenerator boardGenerator;
         private Board gameBoard;
         private Queue<SLPlayer> players = new LinkedList<>();
         private int playerCount;
         private PlayerGenerator playerGenerator;
         private Dice dice;
 
-        public SLGameBuilder buildBoardWith(BoardGenerator boardGenerator) {
-
-            this.boardGenerator = boardGenerator;
+        public SLGameBuilder buildBoardWith(Board board) {
+            this.gameBoard = board;
             return this;
         }
 
@@ -189,16 +186,9 @@ public class SnakeAndLadderGame extends BoardGame {
         }
 
         public SnakeAndLadderGame build() {
-            generateBoard();
             generatePlayers();
             playerCount = this.players.size();
             return new SnakeAndLadderGame(this.gameBoard, this.playerCount, this.dice, this.players);
-        }
-
-        private void generateBoard() {
-            if (null != boardGenerator) {
-                this.gameBoard = boardGenerator.generateBoard();
-            }
         }
 
         private void generatePlayers() {

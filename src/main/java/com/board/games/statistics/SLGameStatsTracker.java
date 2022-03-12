@@ -38,7 +38,7 @@ public class SLGameStatsTracker implements GameTracker {
     }
 
     @Override
-    public void trackeGameProgress(Game game) {
+    public void trackGameProgress(Game game) {
         GameStatisticsData data = buildStats(game);
         printReport(data);
         gamesData.add(data);

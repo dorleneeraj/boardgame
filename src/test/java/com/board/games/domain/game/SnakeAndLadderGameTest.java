@@ -1,7 +1,6 @@
 package com.board.games.domain.game;
 
 import com.board.games.domain.board.Board;
-import com.board.games.domain.board.BoardGenerator;
 import com.board.games.domain.cell.SLBoardCell;
 import com.board.games.domain.cell.SnakeCell;
 import com.board.games.domain.move.SLMove;
