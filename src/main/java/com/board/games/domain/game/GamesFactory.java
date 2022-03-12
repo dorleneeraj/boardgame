@@ -13,7 +13,7 @@ import static com.board.games.domain.game.SnakeAndLadderGame.*;
 public class GamesFactory {
 
     public static SnakeAndLadderGame getDefaultSLGame() {
-        return getSLGame(DefaultSLBoardGenerator.getInstance(), SLDefaultPlayerGenerator.getInstance(2), 2);
+        return getSLGame(DefaultSLBoardGenerator.getInstance(), SLDefaultPlayerGenerator.getInstance(4), 4);
     }
 
     public static SnakeAndLadderGame getSLGame(BoardGenerator boardGenerator, PlayerGenerator playerGenerator, int playerCount) {

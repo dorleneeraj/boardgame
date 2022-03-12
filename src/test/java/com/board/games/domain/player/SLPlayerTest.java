@@ -119,21 +119,17 @@ class SLPlayerTest {
     @Test
     void test_addConsecutiveMoves() {
         SLMove advance1 = SLMovesFactory.getAdvanceMove(10, 16);
-        advance1.setDiceRoll(6);
         player.addMove(advance1);
         assertEquals(SLPlayer.ConsecutiveTurns.STARTED, player.getConsecutiveTurnState());
 
         SLMove advance2 = SLMovesFactory.getAdvanceMove(16, 22);
-        advance2.setDiceRoll(6);
         player.addMove(advance2);
 
         SLMove advance3 = SLMovesFactory.getAdvanceMove(22, 28);
-        advance3.setDiceRoll(6);
         player.addMove(advance3);
         assertEquals(18, player.getCurrentConsecutiveStreak());
 
         SLMove advance4 = SLMovesFactory.getAdvanceMove(28, 32);
-        advance4.setDiceRoll(4);
         player.addMove(advance4);
 
         assertEquals(4, player.getTotalTurnsPlayed());
@@ -151,17 +147,14 @@ class SLPlayerTest {
 
     private void addConsecutiveMovesWithLessTurns() {
         SLMove advance5 = SLMovesFactory.getAdvanceMove(32, 38);
-        advance5.setDiceRoll(6);
         player.addMove(advance5);
         assertEquals(SLPlayer.ConsecutiveTurns.STARTED, player.getConsecutiveTurnState());
 
         SLMove advance6 = SLMovesFactory.getAdvanceMove(38, 44);
-        advance6.setDiceRoll(6);
         player.addMove(advance6);
         assertEquals(12, player.getCurrentConsecutiveStreak());
 
         SLMove advance7 = SLMovesFactory.getAdvanceMove(44, 47);
-        advance7.setDiceRoll(3);
         player.addMove(advance7);
 
         assertEquals(7, player.getTotalTurnsPlayed());
@@ -172,25 +165,20 @@ class SLPlayerTest {
 
     private void addConsecutiveMovesWithMoreTurns() {
         SLMove advance8 = SLMovesFactory.getAdvanceMove(47, 53);
-        advance8.setDiceRoll(6);
         player.addMove(advance8);
         assertEquals(SLPlayer.ConsecutiveTurns.STARTED, player.getConsecutiveTurnState());
 
         SLMove advance9 = SLMovesFactory.getAdvanceMove(53, 59);
-        advance9.setDiceRoll(6);
         player.addMove(advance9);
 
         SLMove advance10 = SLMovesFactory.getAdvanceMove(59, 65);
-        advance10.setDiceRoll(6);
         player.addMove(advance10);
         assertEquals(18, player.getCurrentConsecutiveStreak());
 
         SLMove advance11 = SLMovesFactory.getAdvanceMove(65, 71);
-        advance11.setDiceRoll(6);
         player.addMove(advance11);
 
         SLMove advance12 = SLMovesFactory.getAdvanceMove(71, 74);
-        advance12.setDiceRoll(3);
         player.addMove(advance12);
 
         assertEquals(12, player.getTotalTurnsPlayed());
@@ -203,16 +191,13 @@ class SLPlayerTest {
     void test_addConsecutiveTurnsWithSameTurnsDifferentValue() {
 
         SLMove advance1 = SLMovesFactory.getAdvanceMove(10, 16);
-        advance1.setDiceRoll(6);
         player.addMove(advance1);
         assertEquals(SLPlayer.ConsecutiveTurns.STARTED, player.getConsecutiveTurnState());
 
         SLMove advance2 = SLMovesFactory.getAdvanceMove(16, 22);
-        advance2.setDiceRoll(6);
         player.addMove(advance2);
 
         SLMove advance3 = SLMovesFactory.getAdvanceMove(22, 26);
-        advance3.setDiceRoll(4);
         player.addMove(advance3);
 
         assertEquals(3, player.getTotalTurnsPlayed());
@@ -221,22 +206,18 @@ class SLPlayerTest {
         assertEquals(16, player.getMaxConsecutiveStreak());
 
         SLMove advance4 = SLMovesFactory.getAdvanceMove(26, 32);
-        advance4.setDiceRoll(6);
         player.addMove(advance4);
         assertEquals(SLPlayer.ConsecutiveTurns.STARTED, player.getConsecutiveTurnState());
 
         SLMove advance5 = SLMovesFactory.getAdvanceMove(32, 38);
-        advance5.setDiceRoll(6);
         player.addMove(advance5);
 
         SLMove advance6 = SLMovesFactory.getAdvanceMove(38, 40);
-        advance6.setDiceRoll(2);
         player.addMove(advance6);
 
         assertEquals(6, player.getTotalTurnsPlayed());
         assertEquals(4, player.getTotalDiceRollsWithSix());
         assertEquals(SLPlayer.ConsecutiveTurns.COMPLETED, player.getConsecutiveTurnState());
         assertEquals(16, player.getMaxConsecutiveStreak());
-
     }
 }

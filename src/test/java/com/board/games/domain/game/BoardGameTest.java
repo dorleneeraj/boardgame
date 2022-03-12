@@ -61,7 +61,7 @@ class BoardGameTest {
         inOrder.verify(boardGame).setGameState(GameState.STARTED);
         for (int i = 0; i < 5; i++) {
             inOrder.verify(boardGame).playTurn();
-            inOrder.verify(boardGame).updateTurnStatistics();
+            inOrder.verify(boardGame).updateMoveStatistics();
             inOrder.verify(boardGame).updateAndGetNextState();
             inOrder.verify(boardGame).setGameState(Mockito.any());
         }

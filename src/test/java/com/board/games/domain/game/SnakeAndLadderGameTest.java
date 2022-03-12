@@ -79,7 +79,7 @@ class SnakeAndLadderGameTest {
     void checkAndUpdateSnakeMiss() {
         SLMove move = SLMovesFactory.getAdvanceMove(10, 16);
         List<SLBoardCell> snakeCell = Arrays.asList(new SnakeCell(new SLBoardCell(6), new SLBoardCell(2)));
-        snakeAndLadderGame.checkAndUpdateSnakeMiss(move, snakeCell);
+        snakeAndLadderGame.hasASnakeCell(snakeCell);
         assertTrue(move.isMissedSnakeLuckily());
     }
 }

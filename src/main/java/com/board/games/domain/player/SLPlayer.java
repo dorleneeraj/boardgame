@@ -31,11 +31,17 @@ public class SLPlayer extends Player {
     private int totalTurnsPlayed = 0;
 
     private int totalDiceRollsWithSix = 0;
-    private int maxConsecutiveStreak = 0;
     private int currentConsecutiveStreak = 0;
     private ConsecutiveTurns consecutiveTurnState = ConsecutiveTurns.NOT_STARTED;
 
-    protected SLPlayer(String name, Token token) {
+    private int maxConsecutiveStreak = 0;
+    private int longestLadderClimb = 0;
+    private int steepestSnakeDescend = 0;
+
+    private int lowestLadderClimb = 0;
+    private int minimumSnakeDescend = 0;
+
+    public SLPlayer(String name, Token token) {
         super(name);
         this.token = token;
     }
@@ -43,6 +49,7 @@ public class SLPlayer extends Player {
     @Override
     public void addMove(Move playerMove) {
         captureTurnStats((SLMove) playerMove);
+        captureConsecutiveTurnDetails((SLMove) playerMove);
         super.addMove(playerMove);
     }
 
@@ -56,11 +63,27 @@ public class SLPlayer extends Player {
             totalLadderMoves += 1;
             totalLuckyMoves += 1;
             totalTilesClimbed += currentMove.getTotalTilesClimbed();
+            if (currentMove.getTotalTilesClimbed() > this.longestLadderClimb) {
+                this.longestLadderClimb = currentMove.getTotalTilesClimbed();
+            }
+            if (lowestLadderClimb == 0) {
+                this.lowestLadderClimb = currentMove.getTotalTilesClimbed();
+            } else if (currentMove.getTotalTilesClimbed() < this.lowestLadderClimb) {
+                this.lowestLadderClimb = currentMove.getTotalTilesClimbed();
+            }
         }
         if (SLMoveType.SNAKE_DESCEND.equals(playerMoveType)) {
             totalUnluckyMoves += 1;
             totalSnakeMoves += 1;
             totalTilesDescended += currentMove.getTotalTilesDescended();
+            if (currentMove.getTotalTilesDescended() > this.steepestSnakeDescend) {
+                this.steepestSnakeDescend = currentMove.getTotalTilesDescended();
+            }
+            if (minimumSnakeDescend == 0) {
+                this.minimumSnakeDescend = currentMove.getTotalTilesDescended();
+            } else if (currentMove.getTotalTilesDescended() < this.minimumSnakeDescend) {
+                this.minimumSnakeDescend = currentMove.getTotalTilesDescended();
+            }
         }
         if (currentMove.isMissedSnakeLuckily() || SLMoveType.ADVANCE_LUCKY_MOVE.equals(playerMoveType)) {
             totalLuckyMoves += 1;
@@ -68,7 +91,6 @@ public class SLPlayer extends Player {
         if (SLMoveType.UNLUCKY_MOVE.equals(playerMoveType)) {
             totalUnluckyMoves += 1;
         }
-        captureConsecutiveTurnDetails(currentMove);
     }
 
     /**
@@ -187,7 +209,8 @@ public class SLPlayer extends Player {
     public void setTotalDiceRollsWithSix(int totalDiceRollsWithSix) {
         this.totalDiceRollsWithSix = totalDiceRollsWithSix;
     }
-
+    
+    
     public void setMaxConsecutiveStreak(int maxConsecutiveStreak) {
         this.maxConsecutiveStreak = maxConsecutiveStreak;
     }
@@ -198,6 +221,38 @@ public class SLPlayer extends Player {
 
     public void setConsecutiveTurnState(ConsecutiveTurns consecutiveTurnState) {
         this.consecutiveTurnState = consecutiveTurnState;
+    }
+
+    public int getLongestLadderClimb() {
+        return longestLadderClimb;
+    }
+
+    public void setLongestLadderClimb(int longestLadderClimb) {
+        this.longestLadderClimb = longestLadderClimb;
+    }
+
+    public int getSteepestSnakeDescend() {
+        return steepestSnakeDescend;
+    }
+
+    public void setSteepestSnakeDescend(int steepestSnakeDescend) {
+        this.steepestSnakeDescend = steepestSnakeDescend;
+    }
+
+    public int getMinimumSnakeDescend() {
+        return minimumSnakeDescend;
+    }
+
+    public void setMinimumSnakeDescend(int minimumSnakeDescend) {
+        this.minimumSnakeDescend = minimumSnakeDescend;
+    }
+
+    public int getLowestLadderClimb() {
+        return lowestLadderClimb;
+    }
+
+    public void setLowestLadderClimb(int lowestLadderClimb) {
+        this.lowestLadderClimb = lowestLadderClimb;
     }
 
     @Override

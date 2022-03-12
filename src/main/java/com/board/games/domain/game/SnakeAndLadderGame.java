@@ -5,15 +5,16 @@ import com.board.games.domain.cell.Cell;
 import com.board.games.domain.cell.SnakeCell;
 import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMove;
+import com.board.games.domain.player.Player;
 import com.board.games.domain.player.SLPlayer;
 import com.board.games.domain.token.Token;
 import com.board.games.domain.move.SLMovesFactory;
 import com.board.games.domain.board.BoardGenerator;
 import com.board.games.domain.player.PlayerGenerator;
-import com.board.games.statistics.SLGameStat;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -29,7 +30,6 @@ public class SnakeAndLadderGame extends BoardGame {
     private final Queue<SLPlayer> playersQueue = new LinkedList<>();
     private SLPlayer currentPlayer;
     private final Queue<GameState> gameStates = new LinkedList<>();
-    private final SLGameStat gameStatistics = new SLGameStat();
 
     protected SnakeAndLadderGame(Board board, int playerCount, Dice dice, Queue<SLPlayer> playersQueue) {
         super(board, playerCount);
@@ -71,21 +71,12 @@ public class SnakeAndLadderGame extends BoardGame {
     @Override
     protected void takeTurn() {
         Integer diceRoll = currentPlayer.rollDice(this.dice);
-        SLMove turnMove = performMove(diceRoll);
-        Cell currentCell = this.gameBoard.getCellByNumber(turnMove.getToPosition());
-        checkAndUpdateSnakeMiss(turnMove, currentCell.getNeighbours());
-        currentPlayer.addMove(turnMove);
-    }
-
-    /**
-     * @param turnMove
-     * @param neighbourCells
-     */
-    protected void checkAndUpdateSnakeMiss(SLMove turnMove, List<? extends Cell> neighbourCells) {
-        boolean foundSnakeCell = neighbourCells.stream().anyMatch(neighbour -> neighbour instanceof SnakeCell);
-        if (foundSnakeCell) {
-            turnMove.setMissedSnakeLuckily(true);
+        SLMove currentMove = performMove(diceRoll);
+        Cell currentCell = this.gameBoard.getCellByNumber(currentMove.getToPosition());
+        if (hasASnakeCell(currentCell.getNeighbours())) {
+            currentMove.setMissedSnakeLuckily(true);
         }
+        currentPlayer.addMove(currentMove);
     }
 
     /**
@@ -106,9 +97,27 @@ public class SnakeAndLadderGame extends BoardGame {
         } else {
             currentMove = SLMovesFactory.getUnluckyMove(currentPlayerToken.getPosition(), diceRoll);
         }
-        LOGGER.debug("Performed move by user: {} , Move Type: {}, Move from Position {} and Move to Position: {}," +
-                " Roll on the dice {}", currentPlayer.getName(), currentMove.getMoveType(), currentMove.getFromPosition(), currentMove.getToPosition(), diceRoll);
+
         return currentMove;
+    }
+
+    @Override
+    public List<? extends Player> getGamePlayers() {
+        return new ArrayList<>(this.playersQueue);
+    }
+
+    @Override
+    public void updateMoveStatistics() {
+        SLMove currentMove = (SLMove) currentPlayer.getPreviousMove();
+        LOGGER.debug("Performed move by user: {} , Move Type: {}, Move from Position {} and Move to Position: {}," +
+                " Roll on the dice {}", currentPlayer.getName(), currentMove.getMoveType(), currentMove.getFromPosition(), currentMove.getToPosition(), currentMove.getDiceRoll());
+    }
+
+    /**
+     * @param neighbourCells
+     */
+    protected boolean hasASnakeCell(List<? extends Cell> neighbourCells) {
+        return neighbourCells.stream().anyMatch(neighbour -> neighbour instanceof SnakeCell);
     }
 
     @Override
@@ -130,16 +139,6 @@ public class SnakeAndLadderGame extends BoardGame {
             nextGameState = gameStates.poll();
         }
         return nextGameState;
-    }
-
-    @Override
-    public void updateTurnStatistics() {
-        SLMove move = (SLMove) currentPlayer.getPreviousMove();
-    }
-
-    @Override
-    protected void generateGameAnalytics() {
-
     }
 
     public Dice getDice() {

@@ -1,10 +1,14 @@
 package com.board.games.domain.game;
 
 import com.board.games.domain.board.Board;
+import com.board.games.domain.player.Player;
+import com.board.games.statistics.GameTracker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,6 +26,7 @@ public abstract class BoardGame implements Game {
     protected Board gameBoard;
     protected GameState currentGameState = GameState.NOT_STARTED;
     protected Integer playerCount;
+    private List<GameTracker> gameTrackerTrackers = new ArrayList<>();
 
     static {
         gameRegistry.put(SnakeAndLadderGame.class.getSimpleName(), " Snake and Ladders!!");
@@ -49,7 +54,7 @@ public abstract class BoardGame implements Game {
         setGameState(updateAndGetNextState());
         while (!GameState.GAME_COMPLETED.equals(currentGameState)) {
             playTurn();
-            updateTurnStatistics();
+            updateMoveStatistics();
             setGameState(updateAndGetNextState());
         }
     }
@@ -59,7 +64,7 @@ public abstract class BoardGame implements Game {
         if (!GameState.GAME_COMPLETED.equals(currentGameState)) {
 
         }
-        this.generateGameAnalytics();
+        generateGameAnalytics();
         setGameState(updateAndGetNextState());
     }
 
@@ -75,12 +80,11 @@ public abstract class BoardGame implements Game {
 
     protected abstract GameState updateAndGetNextState();
 
-    public abstract void updateTurnStatistics();
-
-    protected abstract void generateGameAnalytics();
+    public abstract void updateMoveStatistics();
 
     protected abstract void takeTurn();
 
+    public abstract List<? extends Player> getGamePlayers();
 
     ///////////////////////////////////////////////////////////////////////////
     // Default implementations
@@ -97,8 +101,19 @@ public abstract class BoardGame implements Game {
         takeTurn();
     }
 
+    protected void generateGameAnalytics() {
+        for (GameTracker gameTracker : gameTrackerTrackers) {
+            gameTracker.trackeGameProgress(this);
+        }
+    }
+
     protected void setGameState(GameState state) {
         this.currentGameState = state;
+    }
+    
+    @Override
+    public void addGameStatisticTracker(GameTracker gameTracker) {
+        this.gameTrackerTrackers.add(gameTracker);
     }
 
     ///////////////////////////////////////////////////////////////////////////
