@@ -27,13 +27,11 @@ class SLGameTest {
     private static Board board;
     private static int playerCount;
     private static Dice dice;
-    private static PlayerGenerator playerGenerator;
 
     @BeforeAll
     public static void setUp() {
         board = Mockito.mock(Board.class);
         dice = Mockito.mock(Dice.class);
-        playerGenerator = Mockito.mock(PlayerGenerator.class);
         playerCount = 4;
 
         slGame = Mockito.spy(new SLGame(board, playerCount, dice, new LinkedList<>()));
