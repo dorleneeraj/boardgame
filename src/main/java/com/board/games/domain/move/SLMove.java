@@ -1,5 +1,7 @@
 package com.board.games.domain.move;
 
+import com.board.games.JacocoExcludeGenerated;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,34 +68,42 @@ public class SLMove implements Move {
     }
 
     @Override
+    @JacocoExcludeGenerated
     public Map<String, Object> getMoveDetails() {
         return this.moveDetails;
     }
-
+    
+    @JacocoExcludeGenerated
     public int getFromPosition() {
         return fromPosition;
     }
 
+    @JacocoExcludeGenerated
     public int getToPosition() {
         return toPosition;
     }
 
+    @JacocoExcludeGenerated
     public SLMoveType getMoveType() {
         return SLMoveType;
     }
 
+    @JacocoExcludeGenerated
     public String getMoveComments() {
         return moveComments;
     }
 
+    @JacocoExcludeGenerated
     public int getTotalTilesMoved() {
         return totalTilesMoved;
     }
 
+    @JacocoExcludeGenerated
     public Move getInterMediateMove() {
         return interMediateMove;
     }
 
+    @JacocoExcludeGenerated
     public void setTotalTilesMoved(int totalTilesMoved) {
         if (totalTilesMoved != 0) {
             this.totalTilesMoved = totalTilesMoved;
@@ -101,6 +111,7 @@ public class SLMove implements Move {
         }
     }
 
+    @JacocoExcludeGenerated
     public void setInterMediateMove(Move interMediateMove) {
         if (null != interMediateMove) {
             this.interMediateMove = interMediateMove;
@@ -108,10 +119,12 @@ public class SLMove implements Move {
         }
     }
 
+    @JacocoExcludeGenerated
     public int getTotalTilesClimbed() {
         return totalTilesClimbed;
     }
 
+    @JacocoExcludeGenerated
     public void setTotalTilesClimbed(int totalTilesClimbed) {
         if (totalTilesClimbed != 0) {
             this.totalTilesClimbed = totalTilesClimbed;
@@ -119,10 +132,12 @@ public class SLMove implements Move {
         }
     }
 
+    @JacocoExcludeGenerated
     public int getTotalTilesDescended() {
         return totalTilesDescended;
     }
 
+    @JacocoExcludeGenerated
     public void setTotalTilesDescended(int totalTilesDescended) {
         if (totalTilesDescended != 0) {
             this.totalTilesDescended = totalTilesDescended;
@@ -130,10 +145,12 @@ public class SLMove implements Move {
         }
     }
 
+    @JacocoExcludeGenerated
     public int getIntermediatePosition() {
         return intermediatePosition;
     }
 
+    @JacocoExcludeGenerated
     public void setIntermediatePosition(int intermediatePosition) {
         if (intermediatePosition != 0) {
             this.intermediatePosition = intermediatePosition;
@@ -141,42 +158,50 @@ public class SLMove implements Move {
         }
     }
 
+    @JacocoExcludeGenerated
     public int getDiceRoll() {
         return diceRoll;
     }
 
+    @JacocoExcludeGenerated
     public void setDiceRoll(int diceRoll) {
         this.diceRoll = diceRoll;
     }
 
+    @JacocoExcludeGenerated
     public boolean isMissedSnakeLuckily() {
         return missedSnakeLuckily;
     }
 
+    @JacocoExcludeGenerated
     public void setMissedSnakeLuckily(boolean missedSnakeLuckily) {
         this.missedSnakeLuckily = missedSnakeLuckily;
     }
 
+    @JacocoExcludeGenerated
     public boolean isRolledASix() {
         return rolledASix;
     }
 
+    @JacocoExcludeGenerated
     public void setRolledASix(boolean rolledASix) {
         this.rolledASix = rolledASix;
     }
 
     @Override
+    @JacocoExcludeGenerated
     public Object getMoveAttribute(String moveKey) {
-
         return moveDetails.get(moveKey);
     }
 
     @Override
+    @JacocoExcludeGenerated
     public void addMoveAttribute(String moveKey, Object moveAttribute) {
         moveDetails.put(moveKey, moveAttribute);
     }
 
     @Override
+    @JacocoExcludeGenerated
     public String toString() {
         return "TokenMove{" +
                 "moveDetails=" + moveDetails +

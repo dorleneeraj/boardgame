@@ -16,7 +16,7 @@ public class GameSimulator {
 
     public static void main(String[] args) {
         GameTracker tracker = SLGameStatsTracker.getTracker();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             Game game = GamesFactory.getDefaultSLGame();
             game.addGameStatisticTracker(tracker);
             game.startGame();

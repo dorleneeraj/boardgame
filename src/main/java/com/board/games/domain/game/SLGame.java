@@ -2,7 +2,7 @@ package com.board.games.domain.game;
 
 import com.board.games.domain.board.Board;
 import com.board.games.domain.cell.Cell;
-import com.board.games.domain.cell.SnakeCell;
+import com.board.games.domain.cell.SLBoardCell;
 import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMove;
 import com.board.games.domain.player.Player;
@@ -70,8 +70,8 @@ public class SLGame extends BoardGame {
     protected void takeTurn() {
         Integer diceRoll = currentPlayer.rollDice(this.dice);
         SLMove currentMove = performMove(diceRoll);
-        Cell currentCell = this.gameBoard.getCellByNumber(currentMove.getToPosition());
-        if (hasASnakeCell(currentCell.getNeighbours())) {
+        SLBoardCell currentCell = (SLBoardCell) this.gameBoard.getCellByNumber(currentMove.getToPosition());
+        if (currentCell.hasASnakeNeighbours()) {
             currentMove.setMissedSnakeLuckily(true);
         }
         currentPlayer.addMove(currentMove);
@@ -106,16 +106,11 @@ public class SLGame extends BoardGame {
 
     @Override
     public void updateMoveStatistics() {
-        SLMove currentMove = (SLMove) currentPlayer.getPreviousMove();
-        LOGGER.debug("Performed move by user: {} , Move Type: {}, Move from Position {} and Move to Position: {}," +
-                " Roll on the dice {}", currentPlayer.getName(), currentMove.getMoveType(), currentMove.getFromPosition(), currentMove.getToPosition(), currentMove.getDiceRoll());
-    }
-
-    /**
-     * @param neighbourCells
-     */
-    protected boolean hasASnakeCell(List<? extends Cell> neighbourCells) {
-        return neighbourCells.stream().anyMatch(neighbour -> neighbour instanceof SnakeCell);
+        if (GameState.PLAYING.equals(currentGameState)) {
+            SLMove currentMove = (SLMove) currentPlayer.getPreviousMove();
+            LOGGER.debug("Performed move by user: {} , Move Type: {}, Move from Position {} and Move to Position: {}," +
+                    " Roll on the dice {}", currentPlayer.getName(), currentMove.getMoveType(), currentMove.getFromPosition(), currentMove.getToPosition(), currentMove.getDiceRoll());
+        }
     }
 
     @Override
@@ -125,34 +120,23 @@ public class SLGame extends BoardGame {
             SLMove move = (SLMove) currentPlayer.getPreviousMove();
             if (SLMoveType.ADVANCE_LUCKY_MOVE.equals(move.getMoveType())) {
                 LOGGER.debug("Game Completed. Final Lucky move performed by the user: {} ", currentPlayer.getName());
-                return GameState.GAME_COMPLETED;
+                gameStates.poll();
+                return gameStates.peek();
             }
             if (!move.isRolledASix()) {
                 playersQueue.add(playersQueue.poll());
             } else {
                 LOGGER.debug("Got a 6 on the Dice! Player {} will play another turn! ", currentPlayer.getName());
             }
-            return GameState.PLAYING;
+            return gameStates.peek();
         } else {
             nextGameState = gameStates.poll();
         }
         return nextGameState;
     }
 
-    public Dice getDice() {
-        return dice;
-    }
-
-    public Queue<SLPlayer> getPlayersQueue() {
-        return playersQueue;
-    }
-
     public SLPlayer getCurrentPlayer() {
         return currentPlayer;
-    }
-
-    public void setCurrentPlayer(SLPlayer currentPlayer) {
-        this.currentPlayer = currentPlayer;
     }
 
     public Queue<GameState> getGameStates() {

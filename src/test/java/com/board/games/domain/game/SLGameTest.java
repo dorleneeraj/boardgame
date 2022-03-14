@@ -69,10 +69,4 @@ class SLGameTest {
     void addNewPlayerToGame() {
     }
 
-    @Test
-    void checkAndUpdateSnakeMiss() {
-        SLMove move = SLMovesFactory.getAdvanceMove(10, 16);
-        List<SLBoardCell> snakeCells = Arrays.asList(new SnakeCell(new SLBoardCell(6), new SLBoardCell(2)));
-        assertTrue(slGame.hasASnakeCell(snakeCells));
-    }
 }

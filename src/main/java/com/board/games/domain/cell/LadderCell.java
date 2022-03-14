@@ -29,6 +29,7 @@ public class LadderCell extends SLBoardCell {
     protected SLBoardCell ladderEndCell;
 
     public LadderCell(SLBoardCell ladderStartCell, SLBoardCell ladderEndCell) {
+        super(ladderEndCell.getCellPosition());
         this.ladderStartCell = ladderStartCell;
         this.ladderEndCell = ladderEndCell;
     }

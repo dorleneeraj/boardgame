@@ -68,7 +68,7 @@ public class SLGameStatsTracker implements GameTracker {
         LOGGER.info("Minimum descend in a single game: " + data.minimumSnakeDescend);
         LOGGER.info("Average descend in a single game (Total Tiles Descended / Total Snake Descend Moves): " + data.averageSnakeDescend);
 
-        LOGGER.info("\nTotal lucky rolls in the game: " + data.totalLuckyRolls);
+        LOGGER.info("Total lucky rolls in the game: " + data.totalLuckyRolls);
         LOGGER.info("Total unlucky rolls in the game: " + data.totalUnluckyRolls);
         LOGGER.info("Tiles covered in longest turn of the game: " + data.longestTurn);
         LOGGER.info("Total Rolls with 6 in the game: " + data.totalRollsWithSix);

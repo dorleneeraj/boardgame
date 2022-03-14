@@ -23,9 +23,6 @@ public class SLBoardCell implements Cell {
     // The list of all the Tokens the current cell has
     private final Set<Token> currentTokensOnCell = new HashSet<>();
 
-    public SLBoardCell() {
-    }
-
     public SLBoardCell(Integer cellNumber) {
         this.cellNumber = cellNumber;
     }
@@ -62,5 +59,11 @@ public class SLBoardCell implements Cell {
         return this.neighbours;
     }
 
+    /**
+     *
+     */
+    public boolean hasASnakeNeighbours() {
+        return neighbours.stream().anyMatch(neighbour -> neighbour instanceof SnakeCell);
+    }
 
 }

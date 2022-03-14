@@ -30,6 +30,7 @@ public class SnakeCell extends SLBoardCell {
     private final SLBoardCell snakeEndCell;
 
     public SnakeCell(SLBoardCell snakeStartCell, SLBoardCell snakeEndCell) {
+        super(snakeStartCell.getCellPosition());
         this.snakeStartCell = snakeStartCell;
         this.snakeEndCell = snakeEndCell;
     }

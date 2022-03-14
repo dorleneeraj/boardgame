@@ -1,5 +1,6 @@
 package com.board.games.domain.cell;
 
+import com.board.games.JacocoExcludeGenerated;
 import com.board.games.domain.game.SLGame;
 import com.board.games.domain.move.Move;
 import com.board.games.domain.move.SLMoveType;
@@ -24,6 +25,7 @@ public class SLFinalCell extends SLBoardCell {
     private final SLBoardCell boardCell;
 
     public SLFinalCell(SLBoardCell boardCell) {
+        super(boardCell.getCellPosition());
         this.boardCell = boardCell;
     }
 
@@ -47,16 +49,19 @@ public class SLFinalCell extends SLBoardCell {
     }
 
     @Override
+    @JacocoExcludeGenerated
     public Boolean removeToken(Token token) {
         return false;
     }
 
     @Override
+    @JacocoExcludeGenerated
     public Integer getCellPosition() {
         return boardCell.getCellPosition();
     }
 
     @Override
+    @JacocoExcludeGenerated
     public List<Token> getCurrentTokensOnCell() {
         return boardCell.getCurrentTokensOnCell();
     }

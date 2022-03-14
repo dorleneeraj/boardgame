@@ -1,6 +1,8 @@
 plugins {
     id 'java'
+    id 'jacoco'
 }
+
 
 group 'com.board.games'
 version '1.0-SNAPSHOT'
@@ -20,3 +22,24 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "com/board/games/domain/board/**",
+                    "com/board/games/domain/player/Player.class",
+                    "com/board/games/domain/player/SLPlayersFactory.class",
+                    "com/board/games/domain/game/GamesFactory.class",
+                    "com/board/games/exception/**"
+            ])
+        }))
+    }
+}
+
+
+
+test.finalizedBy jacocoTestReport
+check.dependsOn jacocoTestCoverageVerification
