@@ -1,5 +1,6 @@
 package com.board.games.domain.game;
 
+import com.board.games.statistics.GameTracker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,10 @@ import org.mockito.InOrder;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Test class for {@link BoardGame}
@@ -79,5 +84,35 @@ class BoardGameTest {
         inOrder.verify(boardGame).updateAndGetNextState();
         inOrder.verify(boardGame).setGameState(GameState.FINISHED);
         Assertions.assertEquals(GameState.FINISHED, boardGame.currentGameState);
+    }
+
+    @Test
+    void initializeGame() {
+        InOrder inOrder = Mockito.inOrder(boardGame);
+        Mockito.doCallRealMethod().when(boardGame).initializeGame();
+        boardGame.initializeGame();
+        inOrder.verify(boardGame).initializeGameStates();
+        inOrder.verify(boardGame).validateGameState();
+        inOrder.verify(boardGame).updateAndGetNextState();
+        inOrder.verify(boardGame).setGameState(Mockito.any());
+    }
+
+    @Test
+    void playTurn() {
+        InOrder inOrder = Mockito.inOrder(boardGame);
+        Mockito.doCallRealMethod().when(boardGame).playTurn();
+        boardGame.playTurn();
+        inOrder.verify(boardGame).selectNextPlayer();
+        inOrder.verify(boardGame).takeTurn();
+    }
+
+    @Test
+    void generateGameAnalytics() {
+        GameTracker gametracker = Mockito.mock(GameTracker.class);
+        List<GameTracker> gameTrackers = Arrays.asList(gametracker);
+        Mockito.when(boardGame.getGameTrackers()).thenReturn(gameTrackers);
+        Mockito.doCallRealMethod().when(boardGame).generateGameAnalytics();
+        boardGame.generateGameAnalytics();
+        Mockito.verify(gametracker).trackGameProgress(boardGame);
     }
 }

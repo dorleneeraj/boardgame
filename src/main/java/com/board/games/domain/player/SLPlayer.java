@@ -1,5 +1,6 @@
 package com.board.games.domain.player;
 
+import com.board.games.JacocoExcludeGenerated;
 import com.board.games.domain.game.Dice;
 import com.board.games.domain.game.Game;
 import com.board.games.domain.game.SLGame;
@@ -126,131 +127,162 @@ public class SLPlayer extends Player {
      *
      * @return
      */
+    @JacocoExcludeGenerated
     public Integer rollDice(Dice dice) {
         return dice.rollDice();
     }
 
+    @JacocoExcludeGenerated
     public Integer getCurrentPosition() {
         return this.token.getPosition();
     }
 
+    @JacocoExcludeGenerated
     public int getTotalLadderMoves() {
         return totalLadderMoves;
     }
 
+    @JacocoExcludeGenerated
     public int getTotalTilesClimbed() {
         return totalTilesClimbed;
     }
 
+    @JacocoExcludeGenerated
     public int getTotalSnakeMoves() {
         return totalSnakeMoves;
     }
 
+    @JacocoExcludeGenerated
     public int getTotalTilesDescended() {
         return totalTilesDescended;
     }
 
+    @JacocoExcludeGenerated
     public int getTotalLuckyMoves() {
         return totalLuckyMoves;
     }
 
+    @JacocoExcludeGenerated
     public int getTotalUnluckyMoves() {
         return totalUnluckyMoves;
     }
 
+    @JacocoExcludeGenerated
     public int getTotalTurnsPlayed() {
         return totalTurnsPlayed;
     }
 
+    @JacocoExcludeGenerated
     public int getTotalDiceRollsWithSix() {
         return totalDiceRollsWithSix;
     }
 
+    @JacocoExcludeGenerated
     public int getMaxConsecutiveStreak() {
         return maxConsecutiveStreak;
     }
 
+    @JacocoExcludeGenerated
     public int getCurrentConsecutiveStreak() {
         return currentConsecutiveStreak;
     }
 
+    @JacocoExcludeGenerated
     public ConsecutiveTurns getConsecutiveTurnState() {
         return consecutiveTurnState;
     }
 
+    @JacocoExcludeGenerated
     public void setTotalLadderMoves(int totalLadderMoves) {
         this.totalLadderMoves = totalLadderMoves;
     }
 
+    @JacocoExcludeGenerated
     public void setTotalTilesClimbed(int totalTilesClimbed) {
         this.totalTilesClimbed = totalTilesClimbed;
     }
 
+    @JacocoExcludeGenerated
     public void setTotalSnakeMoves(int totalSnakeMoves) {
         this.totalSnakeMoves = totalSnakeMoves;
     }
 
+    @JacocoExcludeGenerated
     public void setTotalTilesDescended(int totalTilesDescended) {
         this.totalTilesDescended = totalTilesDescended;
     }
 
+    @JacocoExcludeGenerated
     public void setTotalLuckyMoves(int totalLuckyMoves) {
         this.totalLuckyMoves = totalLuckyMoves;
     }
 
+    @JacocoExcludeGenerated
     public void setTotalUnluckyMoves(int totalUnluckyMoves) {
         this.totalUnluckyMoves = totalUnluckyMoves;
     }
 
+    @JacocoExcludeGenerated
     public void setTotalTurnsPlayed(int totalTurnsPlayed) {
         this.totalTurnsPlayed = totalTurnsPlayed;
     }
 
+    @JacocoExcludeGenerated
     public void setTotalDiceRollsWithSix(int totalDiceRollsWithSix) {
         this.totalDiceRollsWithSix = totalDiceRollsWithSix;
     }
-    
-    
+
+    @JacocoExcludeGenerated
     public void setMaxConsecutiveStreak(int maxConsecutiveStreak) {
         this.maxConsecutiveStreak = maxConsecutiveStreak;
     }
 
+    @JacocoExcludeGenerated
     public void setCurrentConsecutiveStreak(int currentConsecutiveStreak) {
         this.currentConsecutiveStreak = currentConsecutiveStreak;
     }
 
+    @JacocoExcludeGenerated
     public void setConsecutiveTurnState(ConsecutiveTurns consecutiveTurnState) {
         this.consecutiveTurnState = consecutiveTurnState;
     }
 
+    @JacocoExcludeGenerated
     public int getLongestLadderClimb() {
         return longestLadderClimb;
     }
 
+    @JacocoExcludeGenerated
     public void setLongestLadderClimb(int longestLadderClimb) {
         this.longestLadderClimb = longestLadderClimb;
     }
 
+    @JacocoExcludeGenerated
     public int getSteepestSnakeDescend() {
         return steepestSnakeDescend;
     }
 
+    @JacocoExcludeGenerated
     public void setSteepestSnakeDescend(int steepestSnakeDescend) {
         this.steepestSnakeDescend = steepestSnakeDescend;
     }
 
+    @JacocoExcludeGenerated
     public int getMinimumSnakeDescend() {
         return minimumSnakeDescend;
     }
 
+    @JacocoExcludeGenerated
     public void setMinimumSnakeDescend(int minimumSnakeDescend) {
         this.minimumSnakeDescend = minimumSnakeDescend;
     }
 
+    @JacocoExcludeGenerated
     public int getLowestLadderClimb() {
         return lowestLadderClimb;
     }
 
+    @JacocoExcludeGenerated
     public void setLowestLadderClimb(int lowestLadderClimb) {
         this.lowestLadderClimb = lowestLadderClimb;
     }
@@ -260,6 +292,7 @@ public class SLPlayer extends Player {
 
     }
 
+    @JacocoExcludeGenerated
     public Token getToken() {
         return token;
     }

@@ -1,7 +1,10 @@
 package com.board.games.domain.game;
 
+import com.board.games.JacocoExcludeGenerated;
+
 import java.util.Random;
 
+@JacocoExcludeGenerated
 public class Dice {
     private final Random random = new Random();
     int max = 6;

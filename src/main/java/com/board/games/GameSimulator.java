@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * Main Driver code. Simulates an execution of the Game
  */
+@JacocoExcludeGenerated
 public class GameSimulator {
 
     private static final Logger LOGGER = LogManager.getLogger(GameSimulator.class);

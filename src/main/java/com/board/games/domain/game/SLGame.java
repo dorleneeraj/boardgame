@@ -1,5 +1,6 @@
 package com.board.games.domain.game;
 
+import com.board.games.JacocoExcludeGenerated;
 import com.board.games.domain.board.Board;
 import com.board.games.domain.cell.Cell;
 import com.board.games.domain.cell.SLBoardCell;
@@ -100,11 +101,13 @@ public class SLGame extends BoardGame {
     }
 
     @Override
+    @JacocoExcludeGenerated
     public List<? extends Player> getGamePlayers() {
         return new ArrayList<>(this.playersQueue);
     }
 
     @Override
+    @JacocoExcludeGenerated
     public void updateMoveStatistics() {
         if (GameState.PLAYING.equals(currentGameState)) {
             SLMove currentMove = (SLMove) currentPlayer.getPreviousMove();
@@ -146,6 +149,7 @@ public class SLGame extends BoardGame {
     /**
      *
      */
+    @JacocoExcludeGenerated
     public static class SLGameBuilder {
         private Board gameBoard;
         private Queue<SLPlayer> players = new LinkedList<>();

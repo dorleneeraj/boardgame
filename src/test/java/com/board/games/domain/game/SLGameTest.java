@@ -1,11 +1,18 @@
 package com.board.games.domain.game;
 
 import com.board.games.domain.board.Board;
+import com.board.games.domain.cell.Cell;
 import com.board.games.domain.cell.SLBoardCell;
 import com.board.games.domain.cell.SnakeCell;
+import com.board.games.domain.move.Move;
 import com.board.games.domain.move.SLMove;
+import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMovesFactory;
+import com.board.games.domain.player.SLPlayer;
+import com.board.games.domain.player.SLPlayersFactory;
+import com.board.games.domain.token.Token;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -16,6 +23,8 @@ import java.util.Queue;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -23,27 +32,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class SLGameTest {
 
-    private static SLGame slGame;
-    private static Board board;
-    private static int playerCount;
-    private static Dice dice;
+    private SLGame slGame;
+    private Board board;
+    private int playerCount;
+    private Dice dice;
+    private Queue<SLPlayer> players;
 
-    @BeforeAll
-    public static void setUp() {
+    @BeforeEach
+    public void setUp() {
         board = Mockito.mock(Board.class);
         dice = Mockito.mock(Dice.class);
         playerCount = 4;
-
-        slGame = Mockito.spy(new SLGame(board, playerCount, dice, new LinkedList<>()));
-    }
-
-    @Test
-    void initializeGame() {
-
+        players = new LinkedList<>();
     }
 
     @Test
     void initializeGameStates() {
+        slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
         slGame.initializeGameStates();
         Queue<GameState> gameStates = slGame.getGameStates();
         assertNotNull(gameStates);
@@ -57,16 +62,254 @@ class SLGameTest {
 
     @Test
     void selectNextPlayer() {
-
-
+        players.add(new SLPlayer("Player 1", Mockito.mock(Token.class)));
+        slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
+        slGame.selectNextPlayer();
+        assertEquals("Player 1", slGame.getCurrentPlayer().getName());
     }
 
     @Test
-    void movePlayer() {
+    void test_selectNextPlayerEmptyQueue() {
+        slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
+        slGame.selectNextPlayer();
+        assertNull(slGame.getCurrentPlayer());
     }
 
     @Test
-    void addNewPlayerToGame() {
+    void test_performMove() {
+        SLPlayer player = Mockito.mock(SLPlayer.class);
+        Token token = new Token(1, Token.TokenColour.BLUE, 35);
+        Cell fromCell = new SLBoardCell(35);
+        Cell toCell = Mockito.spy(new SLBoardCell(39));
+
+        Mockito.when(player.getToken()).thenReturn(token);
+        Mockito.when(player.getCurrentPosition()).thenReturn(35);
+        Mockito.when(board.getCellByNumber(35)).thenReturn(fromCell);
+        Mockito.when(board.getCellByNumber(39)).thenReturn(toCell);
+
+        players.add(player);
+        slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
+        slGame.selectNextPlayer();
+        Move move = slGame.performMove(4);
+
+        assertNotNull(move);
+        assertEquals(SLMoveType.NORMAL_ADVANCE, move.getMoveAttribute(SLMove.MOVE_TYPE));
+        Mockito.verify(toCell).acceptToken(token);
+    }
+
+    @Test
+    void test_performStartMove() {
+        SLPlayer player = Mockito.mock(SLPlayer.class);
+        Token token = new Token(1, Token.TokenColour.BLUE, 0);
+        Cell fromCell = null;
+        Cell toCell = Mockito.spy(new SLBoardCell(3));
+
+        Mockito.when(player.getToken()).thenReturn(token);
+        Mockito.when(player.getCurrentPosition()).thenReturn(0);
+        Mockito.when(board.getCellByNumber(0)).thenReturn(fromCell);
+        Mockito.when(board.getCellByNumber(3)).thenReturn(toCell);
+
+        players.add(player);
+        slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
+        slGame.selectNextPlayer();
+        Move move = slGame.performMove(3);
+
+        assertNotNull(move);
+        assertEquals(SLMoveType.NORMAL_ADVANCE, move.getMoveAttribute(SLMove.MOVE_TYPE));
+        Mockito.verify(toCell).acceptToken(token);
+    }
+
+    @Test
+    void test_performUnluckyMove() {
+        SLPlayer player = Mockito.mock(SLPlayer.class);
+        Token token = new Token(1, Token.TokenColour.BLUE, 0);
+        Cell fromCell = new SLBoardCell(98);
+        Cell toCell = null;
+
+        Mockito.when(player.getToken()).thenReturn(token);
+        Mockito.when(player.getCurrentPosition()).thenReturn(0);
+        Mockito.when(board.getCellByNumber(98)).thenReturn(fromCell);
+        Mockito.when(board.getCellByNumber(101)).thenReturn(toCell);
+
+        players.add(player);
+        slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
+        slGame.selectNextPlayer();
+        Move move = slGame.performMove(3);
+
+        assertNotNull(move);
+        assertEquals(SLMoveType.UNLUCKY_MOVE, move.getMoveAttribute(SLMove.MOVE_TYPE));
+    }
+
+    @Test
+    void test_takeNormalTurn() {
+        SLPlayer player = Mockito.mock(SLPlayer.class);
+        SLMove move = Mockito.mock(SLMove.class);
+        SLBoardCell cell = Mockito.mock(SLBoardCell.class);
+
+        Mockito.when(move.getToPosition()).thenReturn(9);
+        Mockito.when(board.getCellByNumber(9)).thenReturn(cell);
+        Mockito.when(cell.hasASnakeNeighbours()).thenReturn(false);
+        Mockito.when(player.rollDice(dice)).thenReturn(4);
+
+        players.add(player);
+        slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
+        Mockito.doReturn(move).when(slGame).performMove(4);
+
+        slGame.selectNextPlayer();
+        slGame.takeTurn();
+
+        Mockito.verify(player, Mockito.times(1)).addMove(move);
+    }
+
+    @Test
+    void test_missedSnakeLuckily() {
+        SLPlayer player = Mockito.mock(SLPlayer.class);
+        SLMove move = Mockito.mock(SLMove.class);
+        SLBoardCell cell = Mockito.mock(SLBoardCell.class);
+
+        Mockito.when(move.getToPosition()).thenReturn(9);
+        Mockito.when(board.getCellByNumber(9)).thenReturn(cell);
+        Mockito.when(cell.hasASnakeNeighbours()).thenReturn(true);
+        Mockito.when(player.rollDice(dice)).thenReturn(4);
+
+        players.add(player);
+        slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
+        Mockito.doReturn(move).when(slGame).performMove(4);
+
+        slGame.selectNextPlayer();
+        slGame.takeTurn();
+
+        Mockito.verify(move).setMissedSnakeLuckily(true);
+        Mockito.verify(player, Mockito.times(1)).addMove(move);
+    }
+
+    @Test
+    public void test_validateGameState() {
+        players.add(new SLPlayer("player 1", new Token(1, Token.TokenColour.BLUE,0)));
+        slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
+        slGame.validateGameState();
+    }
+    
+    @Test
+    public void test_validateGameState_nullBoard() {
+        slGame = Mockito.spy(new SLGame(null, playerCount, dice, players));
+
+        Throwable throwable = assertThrows(RuntimeException.class, () -> {
+            slGame.validateGameState();
+        });
+
+        assertEquals("Board cannot be null for a board game", throwable.getMessage());
+    }
+
+    @Test
+    public void test_validateGameState_emptyPlayerQueue() {
+        slGame = Mockito.spy(new SLGame(board, playerCount, dice, new LinkedList<>()));
+
+        Throwable throwable = assertThrows(RuntimeException.class, () -> {
+            slGame.validateGameState();
+        });
+
+        assertEquals("Game needs to have at least 1 player to start with", throwable.getMessage());
+    }
+
+    @Test
+    public void test_validateGameState_nullDice() {
+        SLPlayer player = Mockito.mock(SLPlayer.class);
+        players.add(player);
+        slGame = Mockito.spy(new SLGame(board, playerCount, null, players));
+
+        Throwable throwable = assertThrows(RuntimeException.class, () -> {
+            slGame.validateGameState();
+        });
+
+        assertEquals("Snake and Ladder game needs an instance of Dice", throwable.getMessage());
+    }
+
+    @Test
+    public void test_updateAndGetNextState_prePlaying() {
+        SLPlayer player = Mockito.mock(SLPlayer.class);
+        players.add(player);
+        slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
+        slGame.initializeGameStates();
+
+        assertEquals(GameState.INITIALIZED, slGame.updateAndGetNextState());
+        assertEquals(GameState.STARTED, slGame.updateAndGetNextState());
+    }
+
+    @Test
+    public void test_updateAndGetNextState_nextTurnPlayerDifferent() {
+        SLPlayer player1 = Mockito.mock(SLPlayer.class);
+        SLPlayer player2 = Mockito.mock(SLPlayer.class);
+
+        SLMove move = Mockito.mock(SLMove.class);
+        Mockito.when(move.getMoveType()).thenReturn(SLMoveType.NORMAL_ADVANCE);
+        Mockito.when(move.isRolledASix()).thenReturn(false);
+
+        Mockito.when(player1.getPreviousMove()).thenReturn(move);
+        Mockito.when(player2.getPreviousMove()).thenReturn(move);
+
+        players.add(player1);
+        players.add(player2);
+        slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
+        slGame.initializeGameStates();
+
+        assertEquals(GameState.INITIALIZED, slGame.updateAndGetNextState());
+        assertEquals(GameState.STARTED, slGame.updateAndGetNextState());
+        slGame.selectNextPlayer();
+        assertEquals(GameState.PLAYING, slGame.updateAndGetNextState());
+        slGame.selectNextPlayer();
+        assertEquals(player2, slGame.getCurrentPlayer());
+        assertEquals(GameState.PLAYING, slGame.updateAndGetNextState());
+        slGame.selectNextPlayer();
+        assertEquals(player1, slGame.getCurrentPlayer());
+        assertEquals(GameState.PLAYING, slGame.updateAndGetNextState());
+        slGame.selectNextPlayer();
+        assertEquals(player2, slGame.getCurrentPlayer());
+    }
+    
+    @Test
+    public void test_updateAndGetNextState_rolledASix_nextTurnPlayerSame() {
+        SLPlayer player1 = Mockito.mock(SLPlayer.class);
+        SLPlayer player2 = Mockito.mock(SLPlayer.class);
+
+        SLMove move = Mockito.mock(SLMove.class);
+        Mockito.when(move.getMoveType()).thenReturn(SLMoveType.NORMAL_ADVANCE);
+        Mockito.when(move.isRolledASix()).thenReturn(true);
+
+        Mockito.when(player1.getPreviousMove()).thenReturn(move);
+        Mockito.when(player2.getPreviousMove()).thenReturn(move);
+
+        players.add(player1);
+        players.add(player2);
+        slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
+        slGame.initializeGameStates();
+
+        assertEquals(GameState.INITIALIZED, slGame.updateAndGetNextState());
+        assertEquals(GameState.STARTED, slGame.updateAndGetNextState());
+        slGame.selectNextPlayer();
+        assertEquals(GameState.PLAYING, slGame.updateAndGetNextState());
+        slGame.selectNextPlayer();
+        assertEquals(player1, slGame.getCurrentPlayer()); // here is the difference, it will be player 1
+    }
+
+    @Test
+    public void test_updateAndGetNextState_rolledLuckyMove_gameCompleted() {
+        SLPlayer player1 = Mockito.mock(SLPlayer.class);
+
+        SLMove move = Mockito.mock(SLMove.class);
+        Mockito.when(move.getMoveType()).thenReturn(SLMoveType.ADVANCE_LUCKY_MOVE);
+        Mockito.when(move.isRolledASix()).thenReturn(true);
+
+        Mockito.when(player1.getPreviousMove()).thenReturn(move);
+       
+        players.add(player1);
+        slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
+        slGame.initializeGameStates();
+
+        assertEquals(GameState.INITIALIZED, slGame.updateAndGetNextState());
+        assertEquals(GameState.STARTED, slGame.updateAndGetNextState());
+        slGame.selectNextPlayer();
+        assertEquals(GameState.GAME_COMPLETED, slGame.updateAndGetNextState());
     }
 
 }

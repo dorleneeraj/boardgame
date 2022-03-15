@@ -1,5 +1,6 @@
 package com.board.games.domain.game;
 
+import com.board.games.JacocoExcludeGenerated;
 import com.board.games.domain.board.Board;
 import com.board.games.domain.player.Player;
 import com.board.games.statistics.GameTracker;
@@ -26,7 +27,7 @@ public abstract class BoardGame implements Game {
     protected Board gameBoard;
     protected GameState currentGameState = GameState.NOT_STARTED;
     protected Integer playerCount;
-    private List<GameTracker> gameTrackerTrackers = new ArrayList<>();
+    protected List<GameTracker> gameTrackerTrackers = new ArrayList<>();
 
     static {
         gameRegistry.put(SLGame.class.getSimpleName(), " Snake and Ladders!!");
@@ -102,16 +103,22 @@ public abstract class BoardGame implements Game {
     }
 
     protected void generateGameAnalytics() {
-        for (GameTracker gameTracker : gameTrackerTrackers) {
+        for (GameTracker gameTracker : getGameTrackers()) {
             gameTracker.trackGameProgress(this);
         }
+    }
+
+    @JacocoExcludeGenerated
+    protected List<GameTracker> getGameTrackers() {
+        return this.gameTrackerTrackers;
     }
 
     protected void setGameState(GameState state) {
         this.currentGameState = state;
     }
-    
+
     @Override
+    @JacocoExcludeGenerated
     public void addGameStatisticTracker(GameTracker gameTracker) {
         this.gameTrackerTrackers.add(gameTracker);
     }
@@ -120,10 +127,12 @@ public abstract class BoardGame implements Game {
     // Getter - Setters
     ///////////////////////////////////////////////////////////////////////////
 
+    @JacocoExcludeGenerated
     public Board getGameBoard() {
         return gameBoard;
     }
 
+    @JacocoExcludeGenerated
     public void setGameBoard(Board gameBoard) {
         this.gameBoard = gameBoard;
     }

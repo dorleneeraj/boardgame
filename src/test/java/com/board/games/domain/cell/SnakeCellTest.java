@@ -5,6 +5,7 @@ import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMove;
 import com.board.games.domain.token.Token;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
@@ -16,13 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SnakeCellTest {
 
-    private static SnakeCell snakeCell;
-    private static SLBoardCell boardCell;
-    private static SLBoardCell snakeEndCell;
-    private static Token token;
+    private SnakeCell snakeCell;
+    private SLBoardCell boardCell;
+    private SLBoardCell snakeEndCell;
+    private Token token;
 
-    @BeforeAll
-    static void setUp() {
+    @BeforeEach
+    void setUp() {
         boardCell = Mockito.spy(new SLBoardCell(35));
         snakeEndCell = Mockito.spy(new SLBoardCell(20));
         token = new Token(1, Token.TokenColour.GREEN, 30);
@@ -49,11 +50,8 @@ class SnakeCellTest {
     }
 
     @Test
-    void removeToken() {
-    }
-
-    @Test
     void getCellPosition() {
+        assertEquals(35, snakeCell.getCellPosition());
     }
 
     @Test

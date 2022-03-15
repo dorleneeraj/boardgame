@@ -1,5 +1,6 @@
 package com.board.games.domain.cell;
 
+import com.board.games.JacocoExcludeGenerated;
 import com.board.games.domain.game.SLGame;
 import com.board.games.domain.move.Move;
 import com.board.games.domain.move.SLMoveType;
@@ -43,6 +44,7 @@ public class LadderCell extends SLBoardCell {
     }
 
     @Override
+    @JacocoExcludeGenerated
     public Boolean removeToken(Token token) {
         return ladderStartCell.removeToken(token);
     }

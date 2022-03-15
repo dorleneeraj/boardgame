@@ -1,5 +1,6 @@
 package com.board.games.statistics;
 
+import com.board.games.JacocoExcludeGenerated;
 import com.board.games.domain.game.Game;
 import com.board.games.domain.game.SLGame;
 import com.board.games.domain.player.Player;
@@ -15,6 +16,7 @@ import java.util.List;
  * A class that maintains the state of the game in progress
  * </p>
  */
+@JacocoExcludeGenerated
 public class SLGameStatsTracker implements GameTracker {
 
     private static final Logger LOGGER = LogManager.getLogger(SLGameStatsTracker.class);

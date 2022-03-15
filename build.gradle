@@ -30,6 +30,7 @@ jacocoTestReport {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
                     "com/board/games/domain/board/**",
+                    "com/board/games/domain/token/**",
                     "com/board/games/domain/player/Player.class",
                     "com/board/games/domain/player/SLPlayersFactory.class",
                     "com/board/games/domain/game/GamesFactory.class",

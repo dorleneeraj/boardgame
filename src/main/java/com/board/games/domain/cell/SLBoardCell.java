@@ -1,5 +1,6 @@
 package com.board.games.domain.cell;
 
+import com.board.games.JacocoExcludeGenerated;
 import com.board.games.domain.game.SLGame;
 import com.board.games.domain.move.Move;
 import com.board.games.domain.move.SLMovesFactory;
@@ -41,20 +42,24 @@ public class SLBoardCell implements Cell {
     }
 
     @Override
+    @JacocoExcludeGenerated
     public Integer getCellPosition() {
         return cellNumber;
     }
 
+    @JacocoExcludeGenerated
     public List<Token> getCurrentTokensOnCell() {
         return new ArrayList<>(currentTokensOnCell);
     }
 
     @Override
+    @JacocoExcludeGenerated
     public void setNeighbours(List<? extends Cell> neighbours) {
         neighbours.forEach(neighbour -> this.neighbours.add((SLBoardCell) neighbour));
     }
 
     @Override
+    @JacocoExcludeGenerated
     public List<? extends Cell> getNeighbours() {
         return this.neighbours;
     }
@@ -62,6 +67,7 @@ public class SLBoardCell implements Cell {
     /**
      *
      */
+    @JacocoExcludeGenerated
     public boolean hasASnakeNeighbours() {
         return neighbours.stream().anyMatch(neighbour -> neighbour instanceof SnakeCell);
     }

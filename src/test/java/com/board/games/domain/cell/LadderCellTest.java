@@ -50,6 +50,12 @@ class LadderCellTest {
         assertTrue(ladderEndCell.getCurrentTokensOnCell().contains(token));
     }
 
+
+    @Test
+    void getCellPosition() {
+        assertEquals(10, ladderCell.getCellPosition());
+    }
+    
     @Test
     void testGetCurrentTokensOnCell() {
         Throwable throwable = assertThrows(RuntimeException.class, () -> {
