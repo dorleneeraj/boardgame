@@ -6,6 +6,8 @@ import com.board.games.domain.move.Move;
 import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMovesFactory;
 import com.board.games.domain.token.Token;
+import com.board.games.exception.ExceptionUtil;
+import com.board.games.exception.GameException;
 
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class LadderCell extends SLBoardCell {
     }
 
     @Override
-    public Move acceptToken(Token token) {
+    public Move acceptToken(Token token) throws GameException {
         Move intermediateMove = ladderStartCell.acceptToken(token);
         removeToken(token);
         Move ladderAcceptMove = ladderEndCell.acceptToken(token);
@@ -55,7 +57,7 @@ public class LadderCell extends SLBoardCell {
     }
 
     @Override
-    public List<Token> getCurrentTokensOnCell() {
-        throw new RuntimeException("Ladder Cells can't have Tokens! Tokens are pushed up!");
+    public List<Token> getCurrentTokensOnCell() throws GameException {
+        throw ExceptionUtil.getInvalidCellOperationException("Ladder cells cannot have any tokens. Once the token is arrived at a ladder cell, it is moved up the ladder");
     }
 }

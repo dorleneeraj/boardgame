@@ -10,6 +10,8 @@ import com.board.games.domain.player.Player;
 import com.board.games.domain.player.SLPlayer;
 import com.board.games.domain.token.Token;
 import com.board.games.domain.move.SLMovesFactory;
+import com.board.games.exception.ExceptionUtil;
+import com.board.games.exception.GameException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,17 +48,17 @@ public class SLGame extends BoardGame {
     }
 
     @Override
-    protected void validateGameState() {
+    protected void validateGameState() throws GameException {
         if (null == this.gameBoard) {
-            throw new RuntimeException("Board cannot be null for a board game");
+            throw ExceptionUtil.getInvalidGameConfigurationException("Board cannot be null for a board game");
         }
 
         if (null == this.playersQueue || this.playersQueue.isEmpty() || this.playerCount == 0) {
-            throw new RuntimeException("Game needs to have at least 1 player to start with");
+            throw ExceptionUtil.getInvalidGameConfigurationException("Game needs to have at least 1 player to start with");
         }
 
         if (null == this.dice) {
-            throw new RuntimeException("Snake and Ladder game needs an instance of Dice");
+            throw ExceptionUtil.getInvalidGameConfigurationException("Snake and Ladder game needs an instance of Dice");
         }
     }
 
@@ -68,7 +70,7 @@ public class SLGame extends BoardGame {
     }
 
     @Override
-    protected void takeTurn() {
+    protected void takeTurn() throws GameException{
         Integer diceRoll = currentPlayer.rollDice(this.dice);
         SLMove currentMove = performMove(diceRoll);
         SLBoardCell currentCell = (SLBoardCell) this.gameBoard.getCellByNumber(currentMove.getToPosition());
@@ -82,7 +84,7 @@ public class SLGame extends BoardGame {
      * @param diceRoll
      * @return
      */
-    protected SLMove performMove(int diceRoll) {
+    protected SLMove performMove(int diceRoll) throws GameException{
         Token currentPlayerToken = currentPlayer.getToken();
         Integer currentPosition = currentPlayer.getCurrentPosition();
         Cell fromCell = this.gameBoard.getCellByNumber(currentPlayer.getCurrentPosition());

@@ -7,6 +7,7 @@ import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMove;
 import com.board.games.domain.token.Token;
 import com.board.games.domain.move.SLMovesFactory;
+import com.board.games.exception.GameException;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class SLFinalCell extends SLBoardCell {
      * @return {@link SLMove} with move type {@link SLMoveType#ADVANCE_LUCKY_MOVE}
      */
     @Override
-    public Move acceptToken(Token token) {
+    public Move acceptToken(Token token) throws GameException{
         int currentTokenCell = token.getPosition();
         SLMove move = (SLMove) boardCell.acceptToken(token);
         if (currentTokenCell >= (boardCell.getCellPosition() - 6)) {
@@ -62,7 +63,7 @@ public class SLFinalCell extends SLBoardCell {
 
     @Override
     @JacocoExcludeGenerated
-    public List<Token> getCurrentTokensOnCell() {
+    public List<Token> getCurrentTokensOnCell() throws GameException {
         return boardCell.getCurrentTokensOnCell();
     }
 }

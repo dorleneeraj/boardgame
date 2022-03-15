@@ -3,6 +3,7 @@ package com.board.games.domain.game;
 import com.board.games.JacocoExcludeGenerated;
 import com.board.games.domain.board.Board;
 import com.board.games.domain.player.Player;
+import com.board.games.exception.GameException;
 import com.board.games.statistics.GameTracker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,7 +44,7 @@ public abstract class BoardGame implements Game {
     ///////////////////////////////////////////////////////////////////////////
 
     @Override
-    public void startGame() {
+    public void startGame() throws GameException {
         LOGGER.info("******** Starting a Game of {} ********", gameRegistry.get(this.getClass().getSimpleName()));
         initializeGame();
         playGame();
@@ -51,7 +52,7 @@ public abstract class BoardGame implements Game {
     }
 
     @Override
-    public void playGame() {
+    public void playGame() throws GameException{
         setGameState(updateAndGetNextState());
         while (!GameState.GAME_COMPLETED.equals(currentGameState)) {
             playTurn();
@@ -75,7 +76,7 @@ public abstract class BoardGame implements Game {
 
     protected abstract void initializeGameStates();
 
-    protected abstract void validateGameState();
+    protected abstract void validateGameState() throws GameException;
 
     protected abstract void selectNextPlayer();
 
@@ -83,7 +84,7 @@ public abstract class BoardGame implements Game {
 
     public abstract void updateMoveStatistics();
 
-    protected abstract void takeTurn();
+    protected abstract void takeTurn() throws GameException;
 
     public abstract List<? extends Player> getGamePlayers();
 
@@ -91,13 +92,13 @@ public abstract class BoardGame implements Game {
     // Default implementations
     ///////////////////////////////////////////////////////////////////////////
 
-    protected void initializeGame() {
+    protected void initializeGame() throws GameException {
         initializeGameStates();
         validateGameState();
         setGameState(updateAndGetNextState());
     }
 
-    protected void playTurn() {
+    protected void playTurn() throws GameException{
         selectNextPlayer();
         takeTurn();
     }

@@ -1,5 +1,6 @@
 package com.board.games.domain.game;
 
+import com.board.games.exception.GameException;
 import com.board.games.statistics.GameTracker;
 
 /**
@@ -8,9 +9,9 @@ import com.board.games.statistics.GameTracker;
 public interface Game {
     void addGameStatisticTracker(GameTracker gameTracker);
 
-    void startGame();
+    void startGame() throws GameException;
 
-    void playGame();
+    void playGame() throws GameException;
 
     void endGame();
 

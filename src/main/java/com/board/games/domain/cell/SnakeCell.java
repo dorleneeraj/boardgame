@@ -6,6 +6,8 @@ import com.board.games.domain.move.Move;
 import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMovesFactory;
 import com.board.games.domain.token.Token;
+import com.board.games.exception.ExceptionUtil;
+import com.board.games.exception.GameException;
 
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class SnakeCell extends SLBoardCell {
     }
 
     @Override
-    public Move acceptToken(Token token) {
+    public Move acceptToken(Token token) throws GameException{
         Move intermediateMove = snakeStartCell.acceptToken(token);
         removeToken(token);
         Move snakeStep = snakeEndCell.acceptToken(token);
@@ -56,7 +58,7 @@ public class SnakeCell extends SLBoardCell {
     }
 
     @Override
-    public List<Token> getCurrentTokensOnCell() {
-        throw new RuntimeException("Snake Cells can't have Tokens! Tokens get eaten");
+    public List<Token> getCurrentTokensOnCell() throws GameException {
+        throw ExceptionUtil.getInvalidCellOperationException("Snake cells cannot have any tokens. Once the token is arrived at a snake cell, it is moved down the snake");
     }
 }

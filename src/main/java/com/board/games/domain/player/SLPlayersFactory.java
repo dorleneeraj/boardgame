@@ -1,6 +1,8 @@
 package com.board.games.domain.player;
 
 import com.board.games.domain.token.Token;
+import com.board.games.exception.ExceptionUtil;
+import com.board.games.exception.GameException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,10 +17,10 @@ public class SLPlayersFactory {
 
     public static final int INITIAL_PLAYER_POSITION = 0;
 
-    public static List<SLPlayer> getSLPlayers(int playerCount) {
+    public static List<SLPlayer> getSLPlayers(int playerCount) throws GameException {
 
         if (playerCount <= 0 || playerCount > 4) {
-            throw new RuntimeException("There should at least be 1 player. Player count above 4 is currently not supported");
+            throw ExceptionUtil.getGamePlayerConfigurationException("There should at least be 1 player. Player count above 4 is currently not supported");
         }
 
         List<SLPlayer> players = new ArrayList<>();

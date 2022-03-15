@@ -36,7 +36,7 @@ class SLPlayerTest {
     }
 
     @Test
-    void test_addLadderMove() {
+    void test_addLadderMove() throws Exception{
         SLMove intermediateMove = SLMovesFactory.getAdvanceMove(10, 15);
         SLMove ladderStep = SLMovesFactory.getAdvanceMove(15, 42);
         SLMove ladderMove = SLMovesFactory.getLadderAdvanceMove(intermediateMove, ladderStep);
@@ -59,7 +59,7 @@ class SLPlayerTest {
     }
 
     @Test
-    void test_addSnakeMove() {
+    void test_addSnakeMove() throws Exception{
         SLMove intermediateMove = SLMovesFactory.getAdvanceMove(10, 15);
         SLMove snakeStep = SLMovesFactory.getAdvanceMove(15, 6);
         SLMove snakeMove = SLMovesFactory.getSnakeDescendMove(intermediateMove, snakeStep);

@@ -28,7 +28,7 @@ class SLBoardCellTest {
     }
 
     @Test
-    void acceptToken() {
+    void acceptToken() throws Exception{
         Move move1 = slBoardCell.acceptToken(token1);
         Move move2 = slBoardCell.acceptToken(token2);
         assertEquals(10, token1.getPosition());
@@ -38,7 +38,7 @@ class SLBoardCellTest {
     }
 
     @Test
-    void removeToken() {
+    void removeToken() throws Exception{
         slBoardCell.removeToken(token1);
         slBoardCell.removeToken(token2);
         assertTrue(slBoardCell.getCurrentTokensOnCell().isEmpty());
@@ -50,7 +50,7 @@ class SLBoardCellTest {
     }
 
     @Test
-    void getCurrentTokensOnCell() {
+    void getCurrentTokensOnCell() throws Exception{
         slBoardCell.acceptToken(token1);
         slBoardCell.acceptToken(token2);
         assertNotNull(slBoardCell.getCurrentTokensOnCell());

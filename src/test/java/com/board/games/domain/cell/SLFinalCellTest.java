@@ -26,7 +26,7 @@ class SLFinalCellTest {
     }
 
     @Test
-    public void test_acceptTokenLuckyAdvance() {
+    public void test_acceptTokenLuckyAdvance() throws Exception{
         token = new Token(1, Token.TokenColour.GREEN, 95);
         Move move = finalCell.acceptToken(token);
         assertTrue(move instanceof SLMove);
@@ -38,7 +38,7 @@ class SLFinalCellTest {
      * On a usual board, this might not be the case
      */
     @Test
-    public void test_acceptTokenLadderAdvance() {
+    public void test_acceptTokenLadderAdvance() throws Exception{
         LadderCell ladderCell = new LadderCell(new SLBoardCell(83), finalCell);
         token = new Token(1, Token.TokenColour.GREEN, 80);
         Move move = ladderCell.acceptToken(token);

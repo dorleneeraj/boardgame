@@ -5,6 +5,8 @@ import com.board.games.domain.cell.LadderCell;
 import com.board.games.domain.cell.SLBoardCell;
 import com.board.games.domain.cell.SLFinalCell;
 import com.board.games.domain.cell.SnakeCell;
+import com.board.games.exception.ExceptionUtil;
+import com.board.games.exception.GameException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +18,7 @@ import java.util.stream.IntStream;
  */
 public class SLBoardFactory {
 
-    public static Board getDefaultBoard() {
+    public static Board getDefaultBoard() throws GameException {
         List<SLTuple> ladderTuples = Arrays.asList(new SLTuple(4, 25), new SLTuple(13, 46), new SLTuple(42, 63),
                 new SLTuple(50, 69), new SLTuple(62, 81), new SLTuple(74, 92));
         List<SLTuple> snakeTuples = Arrays.asList(new SLTuple(99, 41), new SLTuple(89, 53), new SLTuple(76, 58),
@@ -25,15 +27,17 @@ public class SLBoardFactory {
         return getConfigurableBoard(ladderTuples, snakeTuples, dimension);
     }
 
-    public static Board getConfigurableBoard(List<SLTuple> ladderTuples, List<SLTuple> snakeTuples, Dimension dimension) {
+    public static Board getConfigurableBoard(List<SLTuple> ladderTuples, List<SLTuple> snakeTuples, Dimension dimension) throws GameException {
 
         if (dimension.getColumn() != dimension.getRow()) {
-            throw new RuntimeException("Snake and Ladder board is a square. Row and Column in the dimension should be equal");
+            throw ExceptionUtil.getInvalidBoardConfigurationException("Snake and Ladder board is a square. Row and Column in the dimension should be equal");
         }
 
         if (dimension.getColumn() <= 0 || dimension.getRow() <= 0) {
-            throw new RuntimeException("Snake and Ladder board needs to have a positive row and column dimensions");
+            throw ExceptionUtil.getInvalidBoardConfigurationException("Snake and Ladder board needs to have a positive row and column dimensions");
         }
+
+        validateLadderAndSnakeTuples(ladderTuples, snakeTuples);
 
         int size = dimension.getColumn() * dimension.getRow();
         List<SLBoardCell> boardCells = new ArrayList<>();
@@ -41,11 +45,28 @@ public class SLBoardFactory {
             boardCells.add(new SLBoardCell(cellNumber));
         });
 
-        addLadders(ladderTuples, boardCells);
-        addSnakes(snakeTuples, boardCells);
+        try {
+            addLadders(ladderTuples, boardCells);
+            addSnakes(snakeTuples, boardCells);
+        } catch (Exception e) {
+            throw ExceptionUtil.getInvalidCellConfigurationException(e.getMessage());
+        }
         boardCells.set(size - 1, new SLFinalCell(boardCells.get(size - 1)));
         setNeighbours(boardCells);
         return new Board(dimension, boardCells);
+    }
+
+    protected static void validateLadderAndSnakeTuples(List<SLTuple> ladderTuples, List<SLTuple> snakeTuples) throws GameException {
+        if (null == ladderTuples || ladderTuples.isEmpty() || null == snakeTuples || snakeTuples.isEmpty()) {
+            throw ExceptionUtil.getInvalidCellConfigurationException("Snake and Ladder game requires ladder and snake cells");
+        }
+        boolean foundOverlappingCell = ladderTuples.stream().filter(ladderTuple ->
+                snakeTuples.contains(ladderTuple)
+        ).findFirst().isPresent();
+
+        if (foundOverlappingCell) {
+            throw ExceptionUtil.getInvalidCellConfigurationException("Ladder and Snake tuples cannot overlap with each other");
+        }
     }
 
     private static void setNeighbours(List<SLBoardCell> boardCells) {
@@ -65,8 +86,12 @@ public class SLBoardFactory {
     private static void addSnakes(List<SLTuple> snakeTuples, List<SLBoardCell> boardCells) {
         snakeTuples.forEach(tuple -> {
             if (tuple.getStart() < tuple.getEnd()) {
-                throw new RuntimeException("Invalid snake configuration - end: " + tuple.getEnd() + ", start: " + tuple.getStart() +
+                throw new RuntimeException("Snake Cell Configuration error - end: " + tuple.getEnd() + ", start: " + tuple.getStart() +
                         ", snake start cannot be less than snake end");
+            }
+            
+            if (tuple.getStart() == tuple.getEnd()) {
+                throw new RuntimeException("Snake start and Snake end cannot be equal");
             }
 
             SLBoardCell snakeStartCell = boardCells.get(tuple.getStart() - 1);
@@ -78,8 +103,12 @@ public class SLBoardFactory {
     private static void addLadders(List<SLTuple> ladderTuples, List<SLBoardCell> boardCells) {
         ladderTuples.forEach(tuple -> {
             if (tuple.getStart() > tuple.getEnd()) {
-                throw new RuntimeException("Invalid ladder configuration - start: " + tuple.getStart() + ", end: " + tuple.getEnd() +
+                throw new RuntimeException("Ladder Cell Configuration error - start: " + tuple.getStart() + ", end: " + tuple.getEnd() +
                         ", ladder start cannot be greater than ladder end");
+            }
+
+            if (tuple.getStart() == tuple.getEnd()) {
+                throw new RuntimeException("Ladder start and Ladder end cannot be equal");
             }
 
             SLBoardCell ladderStartCell = boardCells.get(tuple.getStart() - 1);

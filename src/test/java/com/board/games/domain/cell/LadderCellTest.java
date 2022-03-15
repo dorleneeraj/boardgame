@@ -4,6 +4,7 @@ import com.board.games.domain.move.Move;
 import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMove;
 import com.board.games.domain.token.Token;
+import com.board.games.exception.GameException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
@@ -33,7 +34,7 @@ class LadderCellTest {
     }
 
     @Test
-    void testAcceptToken() {
+    void testAcceptToken() throws Exception{
         Move move = ladderCell.acceptToken(token);
         assertNotNull(move);
         assertTrue(move instanceof SLMove);
@@ -58,7 +59,7 @@ class LadderCellTest {
     
     @Test
     void testGetCurrentTokensOnCell() {
-        Throwable throwable = assertThrows(RuntimeException.class, () -> {
+        Throwable throwable = assertThrows(GameException.class, () -> {
             ladderCell.getCurrentTokensOnCell();
         });
     }

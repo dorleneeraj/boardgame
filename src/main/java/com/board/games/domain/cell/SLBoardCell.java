@@ -5,6 +5,7 @@ import com.board.games.domain.game.SLGame;
 import com.board.games.domain.move.Move;
 import com.board.games.domain.move.SLMovesFactory;
 import com.board.games.domain.token.Token;
+import com.board.games.exception.GameException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,7 +30,7 @@ public class SLBoardCell implements Cell {
     }
 
     @Override
-    public Move acceptToken(Token token) {
+    public Move acceptToken(Token token) throws GameException {
         Integer currentPosition = token.getPosition();
         token.setPosition(cellNumber);
         currentTokensOnCell.add(token);
@@ -48,7 +49,7 @@ public class SLBoardCell implements Cell {
     }
 
     @JacocoExcludeGenerated
-    public List<Token> getCurrentTokensOnCell() {
+    public List<Token> getCurrentTokensOnCell() throws GameException {
         return new ArrayList<>(currentTokensOnCell);
     }
 

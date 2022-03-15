@@ -1,5 +1,8 @@
 package com.board.games.domain.board;
 
+import com.board.games.exception.ExceptionUtil;
+import com.board.games.exception.GameException;
+
 import java.util.Objects;
 
 /**
@@ -12,11 +15,11 @@ public class Dimension {
     private Integer row;
     private Integer column;
 
-    public Dimension(Integer row, Integer column) {
+    public Dimension(Integer row, Integer column) throws GameException {
         Objects.requireNonNull(row);
         Objects.requireNonNull(column);
         if (row <= 0 || column <= 0) {
-            throw new RuntimeException("Invalid data received for Board Dimension. Board Dimension needs to have positive " +
+            throw ExceptionUtil.getInvalidBoardConfigurationException("Invalid data received for Board Dimension. Board Dimension needs to have positive " +
                     "values for row and column respectively");
         }
         this.row = row;

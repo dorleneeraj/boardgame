@@ -4,6 +4,7 @@ import com.board.games.domain.move.Move;
 import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMove;
 import com.board.games.domain.token.Token;
+import com.board.games.exception.GameException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ class SnakeCellTest {
 
 
     @Test
-    void acceptToken() {
+    void acceptToken() throws Exception{
         Move move = snakeCell.acceptToken(token);
         assertNotNull(move);
         assertTrue(move instanceof SLMove);
@@ -56,7 +57,7 @@ class SnakeCellTest {
 
     @Test
     void getCurrentTokensOnCell() {
-        Throwable throwable = assertThrows(RuntimeException.class, () -> {
+        Throwable throwable = assertThrows(GameException.class, () -> {
             snakeCell.getCurrentTokensOnCell();
         });
     }

@@ -1,5 +1,8 @@
 package com.board.games.domain.move;
 
+import com.board.games.exception.ExceptionUtil;
+import com.board.games.exception.GameException;
+
 /**
  * Simple static factory to articulate Move Types
  */
@@ -35,10 +38,10 @@ public class SLMovesFactory {
      * @param ladderStep       {@link Move} from the intermediate position after encountering a Ladder
      * @return
      */
-    public static SLMove getLadderAdvanceMove(Move intermediateStep, Move ladderStep) {
+    public static SLMove getLadderAdvanceMove(Move intermediateStep, Move ladderStep) throws GameException {
 
         if (!(intermediateStep instanceof SLMove || ladderStep instanceof SLMove)) {
-            throw new RuntimeException("Invalid steps received. Need step of type SLType");
+            throw ExceptionUtil.getInvalidMoveOperationException("Invalid steps received. Need step of type SLType");
         }
 
         Integer initialPosition = ((SLMove) intermediateStep).getFromPosition();
@@ -72,10 +75,10 @@ public class SLMovesFactory {
      * @param snakeStep
      * @return
      */
-    public static SLMove getSnakeDescendMove(Move intermediateStep, Move snakeStep) {
+    public static SLMove getSnakeDescendMove(Move intermediateStep, Move snakeStep) throws GameException {
 
         if (!(intermediateStep instanceof SLMove || snakeStep instanceof SLMove)) {
-            throw new RuntimeException("Invalid steps received. Need step of type SLType");
+            throw ExceptionUtil.getInvalidMoveOperationException("Invalid steps received. Need step of type SLType");
         }
 
         Integer initialPosition = ((SLMove) intermediateStep).getFromPosition();

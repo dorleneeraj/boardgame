@@ -3,6 +3,7 @@ package com.board.games.domain.cell;
 import com.board.games.domain.board.Board;
 import com.board.games.domain.move.Move;
 import com.board.games.domain.token.Token;
+import com.board.games.exception.GameException;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface Cell {
      * @param token The {@link Token} that needs to be accepted
      * @return {@link Move}, represents the move that is performed by the Token while entering the current cell
      */
-    Move acceptToken(Token token);
+    Move acceptToken(Token token) throws GameException;
 
     /**
      * <p>
@@ -49,7 +50,7 @@ public interface Cell {
      *
      * @return {@link List} of all the tokens present on the Cell
      */
-    List<Token> getCurrentTokensOnCell();
+    List<Token> getCurrentTokensOnCell() throws GameException;
 
     List<? extends Cell> getNeighbours();
 

@@ -11,6 +11,7 @@ import com.board.games.domain.move.SLMovesFactory;
 import com.board.games.domain.player.SLPlayer;
 import com.board.games.domain.player.SLPlayersFactory;
 import com.board.games.domain.token.Token;
+import com.board.games.exception.GameException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -76,7 +77,7 @@ class SLGameTest {
     }
 
     @Test
-    void test_performMove() {
+    void test_performMove() throws Exception{
         SLPlayer player = Mockito.mock(SLPlayer.class);
         Token token = new Token(1, Token.TokenColour.BLUE, 35);
         Cell fromCell = new SLBoardCell(35);
@@ -98,7 +99,7 @@ class SLGameTest {
     }
 
     @Test
-    void test_performStartMove() {
+    void test_performStartMove() throws Exception{
         SLPlayer player = Mockito.mock(SLPlayer.class);
         Token token = new Token(1, Token.TokenColour.BLUE, 0);
         Cell fromCell = null;
@@ -120,7 +121,7 @@ class SLGameTest {
     }
 
     @Test
-    void test_performUnluckyMove() {
+    void test_performUnluckyMove() throws Exception{
         SLPlayer player = Mockito.mock(SLPlayer.class);
         Token token = new Token(1, Token.TokenColour.BLUE, 0);
         Cell fromCell = new SLBoardCell(98);
@@ -141,7 +142,7 @@ class SLGameTest {
     }
 
     @Test
-    void test_takeNormalTurn() {
+    void test_takeNormalTurn() throws Exception{
         SLPlayer player = Mockito.mock(SLPlayer.class);
         SLMove move = Mockito.mock(SLMove.class);
         SLBoardCell cell = Mockito.mock(SLBoardCell.class);
@@ -162,7 +163,7 @@ class SLGameTest {
     }
 
     @Test
-    void test_missedSnakeLuckily() {
+    void test_missedSnakeLuckily() throws Exception{
         SLPlayer player = Mockito.mock(SLPlayer.class);
         SLMove move = Mockito.mock(SLMove.class);
         SLBoardCell cell = Mockito.mock(SLBoardCell.class);
@@ -184,32 +185,32 @@ class SLGameTest {
     }
 
     @Test
-    public void test_validateGameState() {
+    public void test_validateGameState() throws Exception{
         players.add(new SLPlayer("player 1", new Token(1, Token.TokenColour.BLUE,0)));
         slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
         slGame.validateGameState();
     }
     
     @Test
-    public void test_validateGameState_nullBoard() {
+    public void test_validateGameState_nullBoard() throws Exception{
         slGame = Mockito.spy(new SLGame(null, playerCount, dice, players));
 
-        Throwable throwable = assertThrows(RuntimeException.class, () -> {
+        Throwable throwable = assertThrows(GameException.class, () -> {
             slGame.validateGameState();
         });
 
-        assertEquals("Board cannot be null for a board game", throwable.getMessage());
+        assertTrue( throwable.getMessage().contains("Board cannot be null for a board game"));
     }
 
     @Test
-    public void test_validateGameState_emptyPlayerQueue() {
+    public void test_validateGameState_emptyPlayerQueue() throws Exception{
         slGame = Mockito.spy(new SLGame(board, playerCount, dice, new LinkedList<>()));
 
-        Throwable throwable = assertThrows(RuntimeException.class, () -> {
+        Throwable throwable = assertThrows(GameException.class, () -> {
             slGame.validateGameState();
         });
 
-        assertEquals("Game needs to have at least 1 player to start with", throwable.getMessage());
+        assertTrue(throwable.getMessage().contains("Game needs to have at least 1 player to start with"));
     }
 
     @Test
@@ -218,11 +219,11 @@ class SLGameTest {
         players.add(player);
         slGame = Mockito.spy(new SLGame(board, playerCount, null, players));
 
-        Throwable throwable = assertThrows(RuntimeException.class, () -> {
+        Throwable throwable = assertThrows(GameException.class, () -> {
             slGame.validateGameState();
         });
 
-        assertEquals("Snake and Ladder game needs an instance of Dice", throwable.getMessage());
+        assertTrue( throwable.getMessage().contains("Snake and Ladder game needs an instance of Dice"));
     }
 
     @Test
