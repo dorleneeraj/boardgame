@@ -58,8 +58,10 @@ public class Token {
     @Override
     @JacocoExcludeGenerated
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Token token = (Token) o;
         return tokenNumber.equals(token.tokenNumber) && tokenColour.equals(token.tokenColour);
     }
@@ -73,11 +75,8 @@ public class Token {
     @Override
     @JacocoExcludeGenerated
     public String toString() {
-        return "Token{" +
-                "tokenNumber=" + tokenNumber +
-                ", tokenColour='" + tokenColour + '\'' +
-                ", position=" + position +
-                '}';
+        return "Token{" + "tokenNumber=" + tokenNumber + ", tokenColour='" + tokenColour + '\'' + ", position=" +
+                position + '}';
     }
 
     public enum TokenColour {

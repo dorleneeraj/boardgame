@@ -12,7 +12,8 @@ import org.apache.logging.log4j.Logger;
  * <p>
  * Main Driver code. Simulates an execution of the Game.
  * <br/>
- * <b>Note:</b> The number of times the simulation can be configured by providing a command line argument
+ * <b>Note:</b> The number of times the simulation can be configured by
+ * providing a command line argument
  * </p>
  */
 @JacocoExcludeGenerated
@@ -36,7 +37,8 @@ public class GameSimulator {
     }
 
     /**
-     * <p>Parses the first argument to get the number of simulations that needs to be run</p>
+     * <p>Parses the first argument to get the number of simulations that
+     * needs to be run</p>
      *
      * @param args CommandLine arguments provided for execution
      * @return number of simulations that needs to be executed
@@ -47,10 +49,12 @@ public class GameSimulator {
             try {
                 simulationRuns = Integer.parseInt(args[0]);
             } catch (NumberFormatException exception) {
-                LOGGER.warn("Entry :: " + args[0] + " is not a valid argument for simulation runs. Running simulation once");
+                LOGGER.warn("Entry :: " + args[0] + " is not a valid argument" + " for simulation runs. Running " +
+                        "simulation once");
             }
         } else {
-            LOGGER.info("Number of simulation runs can be configured by providing a command line argument. Currently simulation will run only once");
+            LOGGER.info("Number of simulation runs can be configured by " + "providing a command line argument. " +
+                    "Currently simulation " + "will run only once");
         }
         return simulationRuns;
     }

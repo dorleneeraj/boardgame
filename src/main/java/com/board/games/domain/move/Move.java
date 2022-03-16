@@ -6,7 +6,8 @@ import java.util.Map;
 
 /**
  * <p>
- * Whenever any token/ piece is moved from a {@link Cell} to another Cell it constitutes a move. Every game will
+ * Whenever any token/ piece is moved from a {@link Cell} to another Cell it
+ * constitutes a move. Every game will
  * have different details of the move.
  * </p>
  * <br/>
@@ -16,13 +17,16 @@ import java.util.Map;
  * </p>
  * <br/>
  * <p>
- * For the game of Snake and Ladder, a move will constitute of various things like:
+ * For the game of Snake and Ladder, a move will constitute of various things
+ * like:
  * <p>
  *         <ol>
  *          <li>The token was moved from which cell</li>
  *          <li>The token was moved to which cell</li>
- *          <li>Did a move involved an intermediate Ladder Cell or a Snake Cell</li>
- *          <li>In case of a Ladder/ Snake Cell, how many tiles were climbed or descended respectively</li>
+ *          <li>Did a move involved an intermediate Ladder Cell or a Snake
+ *          Cell</li>
+ *          <li>In case of a Ladder/ Snake Cell, how many tiles were climbed
+ *          or descended respectively</li>
  *          <li>Total number of tiles moved in either of the cases</li>
  *         </ol>
  *

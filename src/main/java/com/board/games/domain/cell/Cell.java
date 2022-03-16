@@ -20,7 +20,8 @@ public interface Cell {
      * </p>
      *
      * @param token The {@link Token} that needs to be accepted
-     * @return {@link Move}, represents the move that is performed by the Token while entering the current cell
+     * @return {@link Move}, represents the move that is performed by the
+     * Token while entering the current cell
      */
     Move acceptToken(Token token) throws GameException;
 
@@ -30,7 +31,9 @@ public interface Cell {
      * </p>
      *
      * @param token {@link Token} that needs to be removed
-     * @return {@link Boolean} indicating whether the token was removed or not. Returns <code>true</code> if the token was removed, else returns <code>false</code>
+     * @return {@link Boolean} indicating whether the token was removed or
+     * not. Returns <code>true</code> if the token was removed, else returns
+     * <code>false</code>
      */
     Boolean removeToken(Token token);
 

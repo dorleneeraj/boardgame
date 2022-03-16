@@ -13,13 +13,16 @@ import java.util.List;
 
 /**
  * <p>
- * Implementation of the {@link Cell} indicating that this is a Snake cell for {@link SLGame}.
+ * Implementation of the {@link Cell} indicating that this is a Snake cell
+ * for {@link SLGame}.
  * Once a {@link Token} is arrived at this cell, two steps occur in the order:
  * <p>
  *     <ol>
- *         <li>The <code>snakeStartCell</code> first accepts the Token, indicating a move of type {@link SLMoveType#NORMAL_ADVANCE}</li>
+ *         <li>The <code>snakeStartCell</code> first accepts the Token,
+ *         indicating a move of type {@link SLMoveType#NORMAL_ADVANCE}</li>
  *         <li>
- *             The <code>snakeEndCell</code> accepts the token, which moves the token further down the Snake,
+ *             The <code>snakeEndCell</code> accepts the token, which moves
+ *             the token further down the Snake,
  *             indicating a move of type {@link SLMoveType#SNAKE_DESCEND}</li>
  *     </ol>
  * </p>
@@ -39,7 +42,7 @@ public class SnakeCell extends SLBoardCell {
     }
 
     @Override
-    public Move acceptToken(Token token) throws GameException{
+    public Move acceptToken(Token token) throws GameException {
         Move intermediateMove = snakeStartCell.acceptToken(token);
         removeToken(token);
         Move snakeStep = snakeEndCell.acceptToken(token);
@@ -59,6 +62,8 @@ public class SnakeCell extends SLBoardCell {
 
     @Override
     public List<Token> getCurrentTokensOnCell() throws GameException {
-        throw ExceptionUtil.getInvalidCellOperationException("Snake cells cannot have any tokens. Once the token is arrived at a snake cell, it is moved down the snake");
+        throw ExceptionUtil.getInvalidCellOperationException(
+                "Snake cells " + "cannot have any tokens. Once the token" + " is arrived at a snake" +
+                        " cell, it is moved down the snake");
     }
 }

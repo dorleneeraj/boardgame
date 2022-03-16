@@ -71,7 +71,7 @@ class SLGameTest {
     }
 
     @Test
-    void test_performMove() throws Exception{
+    void test_performMove() throws Exception {
         SLPlayer player = Mockito.mock(SLPlayer.class);
         Token token = new Token(1, Token.TokenColour.BLUE, 35);
         Cell fromCell = new SLBoardCell(35);
@@ -93,7 +93,7 @@ class SLGameTest {
     }
 
     @Test
-    void test_performStartMove() throws Exception{
+    void test_performStartMove() throws Exception {
         SLPlayer player = Mockito.mock(SLPlayer.class);
         Token token = new Token(1, Token.TokenColour.BLUE, 0);
         Cell fromCell = null;
@@ -115,7 +115,7 @@ class SLGameTest {
     }
 
     @Test
-    void test_performUnluckyMove() throws Exception{
+    void test_performUnluckyMove() throws Exception {
         SLPlayer player = Mockito.mock(SLPlayer.class);
         Token token = new Token(1, Token.TokenColour.BLUE, 0);
         Cell fromCell = new SLBoardCell(98);
@@ -136,7 +136,7 @@ class SLGameTest {
     }
 
     @Test
-    void test_takeNormalTurn() throws Exception{
+    void test_takeNormalTurn() throws Exception {
         SLPlayer player = Mockito.mock(SLPlayer.class);
         SLMove move = Mockito.mock(SLMove.class);
         SLBoardCell cell = Mockito.mock(SLBoardCell.class);
@@ -157,7 +157,7 @@ class SLGameTest {
     }
 
     @Test
-    void test_missedSnakeLuckily() throws Exception{
+    void test_missedSnakeLuckily() throws Exception {
         SLPlayer player = Mockito.mock(SLPlayer.class);
         SLMove move = Mockito.mock(SLMove.class);
         SLBoardCell cell = Mockito.mock(SLBoardCell.class);
@@ -179,25 +179,25 @@ class SLGameTest {
     }
 
     @Test
-    public void test_validateGameState() throws Exception{
-        players.add(new SLPlayer("player 1", new Token(1, Token.TokenColour.BLUE,0)));
+    public void test_validateGameState() throws Exception {
+        players.add(new SLPlayer("player 1", new Token(1, Token.TokenColour.BLUE, 0)));
         slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
         slGame.validateGameData();
     }
-    
+
     @Test
-    public void test_validateGameState_nullBoard() throws Exception{
+    public void test_validateGameState_nullBoard() throws Exception {
         slGame = Mockito.spy(new SLGame(null, playerCount, dice, players));
 
         Throwable throwable = assertThrows(GameException.class, () -> {
             slGame.validateGameData();
         });
 
-        assertTrue( throwable.getMessage().contains("Board cannot be null for a board game"));
+        assertTrue(throwable.getMessage().contains("Board cannot be null for a board game"));
     }
 
     @Test
-    public void test_validateGameState_emptyPlayerQueue() throws Exception{
+    public void test_validateGameState_emptyPlayerQueue() throws Exception {
         slGame = Mockito.spy(new SLGame(board, playerCount, dice, new LinkedList<>()));
 
         Throwable throwable = assertThrows(GameException.class, () -> {
@@ -217,7 +217,7 @@ class SLGameTest {
             slGame.validateGameData();
         });
 
-        assertTrue( throwable.getMessage().contains("Snake and Ladder game needs an instance of Dice"));
+        assertTrue(throwable.getMessage().contains("Snake and Ladder game needs an instance of Dice"));
     }
 
     @Test
@@ -261,7 +261,7 @@ class SLGameTest {
         slGame.selectNextPlayer();
         assertEquals(player2, slGame.getCurrentPlayer());
     }
-    
+
     @Test
     public void test_updateAndGetNextState_rolledASix_nextTurnPlayerSame() {
         SLPlayer player1 = Mockito.mock(SLPlayer.class);
@@ -296,7 +296,7 @@ class SLGameTest {
         Mockito.when(move.isRolledASix()).thenReturn(true);
 
         Mockito.when(player1.getPreviousMove()).thenReturn(move);
-       
+
         players.add(player1);
         slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
         slGame.initializeGameStates();

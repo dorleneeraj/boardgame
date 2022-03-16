@@ -1,7 +1,7 @@
 package com.board.games.domain.player;
 
-import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMove;
+import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMovesFactory;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +29,7 @@ class SLMoveTest {
     @Test
     public void test_SLMoveSettersGetters() {
         SLMove slMove = new SLMove(SLMoveType.NORMAL_ADVANCE, 10, 15, "Normal Advance Move", 5);
-        SLMove intermediateStep = (SLMove) SLMovesFactory.getAdvanceMove(45, 60);
+        SLMove intermediateStep = SLMovesFactory.getAdvanceMove(45, 60);
 
         slMove.setTotalTilesClimbed(8);
         slMove.setTotalTilesDescended(10);

@@ -20,9 +20,8 @@ import java.util.List;
 public class SLGameStatsTracker implements GameTracker {
 
     private static final Logger LOGGER = LogManager.getLogger(SLGameStatsTracker.class);
-    private List<GameStatisticsData> gamesData = new ArrayList<>();
-
     private volatile static SLGameStatsTracker gameStatsTracker = null;
+    private final List<GameStatisticsData> gamesData = new ArrayList<>();
 
     private SLGameStatsTracker() {
 
@@ -62,13 +61,15 @@ public class SLGameStatsTracker implements GameTracker {
         LOGGER.info("Total tiles climbed by ladder in the game: " + data.totalTilesClimbed);
         LOGGER.info("Longest climb in a single game: " + data.longestLadderClimb);
         LOGGER.info("Minimum climb in a single game: " + data.minimumLadderClimb);
-        LOGGER.info("Average climb in a single game (Total Tiles Climbed / Total Ladder Advance Moves): " + data.averageLadderClimb);
+        LOGGER.info("Average climb in a single game (Total Tiles Climbed / " + "Total Ladder Advance Moves): " +
+                data.averageLadderClimb);
 
         LOGGER.info("Total turns involving a Snake: " + data.totalSnakeDescendMoves);
         LOGGER.info("Total tiles descended by snake in the game: " + data.totalTilesDescended);
         LOGGER.info("Steepest descend in a single game: " + data.steepestSnakeDescend);
         LOGGER.info("Minimum descend in a single game: " + data.minimumSnakeDescend);
-        LOGGER.info("Average descend in a single game (Total Tiles Descended / Total Snake Descend Moves): " + data.averageSnakeDescend);
+        LOGGER.info("Average descend in a single game (Total Tiles Descended " + "/ Total Snake Descend Moves): " +
+                data.averageSnakeDescend);
 
         LOGGER.info("Total lucky rolls in the game: " + data.totalLuckyRolls);
         LOGGER.info("Total unlucky rolls in the game: " + data.totalUnluckyRolls);
@@ -112,75 +113,85 @@ public class SLGameStatsTracker implements GameTracker {
      *
      */
     protected static class GameStatisticsData {
+        private final SLGame game;
         protected int totalTurnsInTheGame;
-
         protected int totalLadderAdvanceMoves;
         protected int totalTilesClimbed;
         protected int longestLadderClimb;
         protected int minimumLadderClimb;
         protected double averageLadderClimb;
-
         protected int totalSnakeDescendMoves;
         protected int totalTilesDescended;
         protected int steepestSnakeDescend;
         protected int minimumSnakeDescend;
         protected double averageSnakeDescend;
-
         protected int longestTurn;
         protected int totalRollsWithSix;
-
         protected int totalUnluckyRolls;
         protected int minUnluckyRolls;
         protected int maxUnluckyRolls;
-        double averageUnluckyRolls;
-
         protected int totalLuckyRolls;
         protected int minLuckyRolls;
         protected int maxLuckyRolls;
-        double averageLuckyRolls;
-
         protected SLPlayer winner;
-
-        private final SLGame game;
+        double averageUnluckyRolls;
+        double averageLuckyRolls;
 
         public GameStatisticsData(SLGame game) {
             this.game = game;
         }
 
         protected void analyzeData() {
-            SLGame slGame = (SLGame) game;
+            SLGame slGame = game;
             this.winner = slGame.getCurrentPlayer();
-            List<? extends Player> players = ((SLGame) game).getGamePlayers();
+            List<? extends Player> players = game.getGamePlayers();
 
-            totalTurnsInTheGame = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getTotalTurnsPlayed()).sum();
+            totalTurnsInTheGame = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getTotalTurnsPlayed()).sum();
 
-            totalLadderAdvanceMoves = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getTotalLadderMoves()).sum();
-            totalTilesClimbed = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getTotalTilesClimbed()).sum();
-            longestLadderClimb = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getLongestLadderClimb()).max().orElse(0);
-            minimumLadderClimb = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getLowestLadderClimb()).min().orElse(0);
+            totalLadderAdvanceMoves = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getTotalLadderMoves()).sum();
+            totalTilesClimbed = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getTotalTilesClimbed()).sum();
+            longestLadderClimb = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getLongestLadderClimb()).max().orElse(0);
+            minimumLadderClimb = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getLowestLadderClimb()).min().orElse(0);
             if (totalLadderAdvanceMoves > 0) {
                 averageLadderClimb = Math.ceil(totalTilesClimbed / totalLadderAdvanceMoves);
             }
 
-            totalSnakeDescendMoves = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getTotalSnakeMoves()).sum();
-            totalTilesDescended = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getTotalTilesDescended()).sum();
-            steepestSnakeDescend = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getSteepestSnakeDescend()).max().orElse(0);
-            minimumSnakeDescend = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getMinimumSnakeDescend()).min().orElse(0);
+            totalSnakeDescendMoves = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getTotalSnakeMoves()).sum();
+            totalTilesDescended = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getTotalTilesDescended()).sum();
+            steepestSnakeDescend = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getSteepestSnakeDescend()).max().orElse(0);
+            minimumSnakeDescend = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getMinimumSnakeDescend()).min().orElse(0);
             if (totalSnakeDescendMoves > 0) {
                 averageSnakeDescend = Math.ceil(totalTilesDescended / totalSnakeDescendMoves);
             }
 
-            longestTurn = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getMaxConsecutiveStreak()).max().orElse(0);
-            totalUnluckyRolls = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getTotalUnluckyMoves()).sum();
-            totalLuckyRolls = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getTotalLuckyMoves()).sum();
-            totalRollsWithSix = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getTotalDiceRollsWithSix()).sum();
+            longestTurn = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getMaxConsecutiveStreak()).max().orElse(0);
+            totalUnluckyRolls = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getTotalUnluckyMoves()).sum();
+            totalLuckyRolls = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getTotalLuckyMoves()).sum();
+            totalRollsWithSix = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getTotalDiceRollsWithSix()).sum();
 
-            minLuckyRolls = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getTotalLuckyMoves()).min().orElse(0);
-            maxLuckyRolls = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getTotalLuckyMoves()).max().orElse(0);
+            minLuckyRolls = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getTotalLuckyMoves()).min().orElse(0);
+            maxLuckyRolls = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getTotalLuckyMoves()).max().orElse(0);
             averageLuckyRolls = Math.ceil(totalLuckyRolls / players.size());
 
-            minUnluckyRolls = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getTotalUnluckyMoves()).min().orElse(0);
-            maxUnluckyRolls = slGame.getGamePlayers().stream().mapToInt(player -> ((SLPlayer) player).getTotalUnluckyMoves()).max().orElse(0);
+            minUnluckyRolls = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getTotalUnluckyMoves()).min().orElse(0);
+            maxUnluckyRolls = slGame.getGamePlayers().stream()
+                    .mapToInt(player -> ((SLPlayer) player).getTotalUnluckyMoves()).max().orElse(0);
             averageUnluckyRolls = Math.ceil(totalUnluckyRolls / players.size());
         }
     }

@@ -3,14 +3,11 @@ package com.board.games.domain.player;
 import com.board.games.domain.move.SLMove;
 import com.board.games.domain.move.SLMovesFactory;
 import com.board.games.domain.token.Token;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * <p>Test class for {@link SLPlayer}</p>
@@ -36,7 +33,7 @@ class SLPlayerTest {
     }
 
     @Test
-    void test_addLadderMove() throws Exception{
+    void test_addLadderMove() throws Exception {
         SLMove intermediateMove = SLMovesFactory.getAdvanceMove(10, 15);
         SLMove ladderStep = SLMovesFactory.getAdvanceMove(15, 42);
         SLMove ladderMove = SLMovesFactory.getLadderAdvanceMove(intermediateMove, ladderStep);
@@ -59,7 +56,7 @@ class SLPlayerTest {
     }
 
     @Test
-    void test_addSnakeMove() throws Exception{
+    void test_addSnakeMove() throws Exception {
         SLMove intermediateMove = SLMovesFactory.getAdvanceMove(10, 15);
         SLMove snakeStep = SLMovesFactory.getAdvanceMove(15, 6);
         SLMove snakeMove = SLMovesFactory.getSnakeDescendMove(intermediateMove, snakeStep);

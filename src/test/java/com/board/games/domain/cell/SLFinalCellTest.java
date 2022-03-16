@@ -8,7 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -26,11 +27,11 @@ class SLFinalCellTest {
     }
 
     @Test
-    public void test_acceptTokenLuckyAdvance() throws Exception{
+    public void test_acceptTokenLuckyAdvance() throws Exception {
         token = new Token(1, Token.TokenColour.GREEN, 95);
         Move move = finalCell.acceptToken(token);
         assertTrue(move instanceof SLMove);
-        assertEquals(SLMoveType.ADVANCE_LUCKY_MOVE, (SLMoveType) move.getMoveAttribute(SLMove.MOVE_TYPE));
+        assertEquals(SLMoveType.ADVANCE_LUCKY_MOVE, move.getMoveAttribute(SLMove.MOVE_TYPE));
     }
 
     /**
@@ -38,12 +39,12 @@ class SLFinalCellTest {
      * On a usual board, this might not be the case
      */
     @Test
-    public void test_acceptTokenLadderAdvance() throws Exception{
+    public void test_acceptTokenLadderAdvance() throws Exception {
         LadderCell ladderCell = new LadderCell(new SLBoardCell(83), finalCell);
         token = new Token(1, Token.TokenColour.GREEN, 80);
         Move move = ladderCell.acceptToken(token);
         assertTrue(move instanceof SLMove);
-        assertEquals(SLMoveType.LADDER_ADVANCE, (SLMoveType) move.getMoveAttribute(SLMove.MOVE_TYPE));
+        assertEquals(SLMoveType.LADDER_ADVANCE, move.getMoveAttribute(SLMove.MOVE_TYPE));
         Mockito.verify(finalCell).acceptToken(token);
     }
 

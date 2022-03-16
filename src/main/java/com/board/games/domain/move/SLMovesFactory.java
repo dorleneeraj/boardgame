@@ -18,30 +18,38 @@ public class SLMovesFactory {
      * @return {@link SLMove} that captures the details of the advancement
      */
     public static SLMove getAdvanceMove(Integer fromPosition, Integer toPosition) {
-        return new SLMove(SLMoveType.NORMAL_ADVANCE, fromPosition, toPosition, "Normal Token Advance", toPosition - fromPosition);
+        return new SLMove(SLMoveType.NORMAL_ADVANCE, fromPosition, toPosition, "Normal Token Advance",
+                toPosition - fromPosition);
     }
 
     /**
      * <p>
-     * Builds a {@link SLMoveType#LADDER_ADVANCE} move. Ladder move has two steps:
+     * Builds a {@link SLMoveType#LADDER_ADVANCE} move. Ladder move has two
+     * steps:
      * <p>
-     * In the first step, it moves from the initial position of the Token till the position rolled on the Dice.
-     * In the second step, it moves UP from the intermediate position to the final position after encountering a
+     * In the first step, it moves from the initial position of the Token
+     * till the position rolled on the Dice.
+     * In the second step, it moves UP from the intermediate position to the
+     * final position after encountering a
      * Ladder on the Board.
      * <p>
-     * This Move encapsulates all the data related to the {@link SLMoveType#LADDER_ADVANCE} including the
-     * {@link SLMove#MOVE_INTERMEDIATE_MOVE}, {@link SLMove#MOVE_TOTAL_CLIMBED} and other basic details
+     * This Move encapsulates all the data related to the
+     * {@link SLMoveType#LADDER_ADVANCE} including the
+     * {@link SLMove#MOVE_INTERMEDIATE_MOVE},
+     * {@link SLMove#MOVE_TOTAL_CLIMBED} and other basic details
      * </p>
      * </p>
      *
      * @param intermediateStep {@link Move} from the initial position
-     * @param ladderStep       {@link Move} from the intermediate position after encountering a Ladder
+     * @param ladderStep       {@link Move} from the intermediate position
+     *                         after encountering a Ladder
      * @return
      */
     public static SLMove getLadderAdvanceMove(Move intermediateStep, Move ladderStep) throws GameException {
 
         if (!(intermediateStep instanceof SLMove || ladderStep instanceof SLMove)) {
-            throw ExceptionUtil.getInvalidMoveOperationException("Invalid steps received. Need step of type SLType");
+            throw ExceptionUtil.getInvalidMoveOperationException(
+                    "Invalid " + "steps received. Need step of type " + "SLType");
         }
 
         Integer initialPosition = ((SLMove) intermediateStep).getFromPosition();
@@ -50,7 +58,8 @@ public class SLMovesFactory {
         Integer totalStepsClimbed = finalPosition - intermediatePosition;
         Integer diceRoll = intermediatePosition - initialPosition;
 
-        SLMove ladderMove = new SLMove(SLMoveType.LADDER_ADVANCE, initialPosition, finalPosition, "Encountered Ladder at position:" + intermediatePosition, diceRoll);
+        SLMove ladderMove = new SLMove(SLMoveType.LADDER_ADVANCE, initialPosition, finalPosition,
+                "Encountered Ladder" + " at " + "position:" + intermediatePosition, diceRoll);
         ladderMove.setIntermediatePosition(intermediatePosition);
         ladderMove.setTotalTilesClimbed(totalStepsClimbed);
         ladderMove.setInterMediateMove(intermediateStep);
@@ -62,12 +71,16 @@ public class SLMovesFactory {
      * <p>
      * Builds a {@link SLMoveType#SNAKE_DESCEND} move. Snake move has two steps:
      * <p>
-     * In the first step, it moves from the initial position of the Token till the position rolled on the Dice.
-     * In the second step, it moves DOWN from the intermediate position to the final position after encountering a
+     * In the first step, it moves from the initial position of the Token
+     * till the position rolled on the Dice.
+     * In the second step, it moves DOWN from the intermediate position to
+     * the final position after encountering a
      * Snake on the Board.
      * <p>
-     * This Move encapsulates all the data related to the {@link SLMoveType#SNAKE_DESCEND} including the
-     * {@link SLMove#MOVE_INTERMEDIATE_MOVE}, {@link SLMove#MOVE_TOTAL_DESCENDED} and other basic details
+     * This Move encapsulates all the data related to the
+     * {@link SLMoveType#SNAKE_DESCEND} including the
+     * {@link SLMove#MOVE_INTERMEDIATE_MOVE},
+     * {@link SLMove#MOVE_TOTAL_DESCENDED} and other basic details
      * </p>
      * </p>
      *
@@ -78,7 +91,8 @@ public class SLMovesFactory {
     public static SLMove getSnakeDescendMove(Move intermediateStep, Move snakeStep) throws GameException {
 
         if (!(intermediateStep instanceof SLMove || snakeStep instanceof SLMove)) {
-            throw ExceptionUtil.getInvalidMoveOperationException("Invalid steps received. Need step of type SLType");
+            throw ExceptionUtil.getInvalidMoveOperationException(
+                    "Invalid " + "steps received. Need step of type " + "SLType");
         }
 
         Integer initialPosition = ((SLMove) intermediateStep).getFromPosition();
@@ -89,7 +103,8 @@ public class SLMovesFactory {
         totalTilesMoved = totalTilesMoved + Math.abs(finalPosition - intermediatePosition);
         Integer diceRoll = intermediatePosition - initialPosition;
 
-        SLMove snakeMove = new SLMove(SLMoveType.SNAKE_DESCEND, initialPosition, finalPosition, "Encountered Snake at position:" + intermediatePosition, diceRoll);
+        SLMove snakeMove = new SLMove(SLMoveType.SNAKE_DESCEND, initialPosition, finalPosition,
+                "Encountered Snake at" + " " + "position:" + intermediatePosition, diceRoll);
         snakeMove.setIntermediatePosition(intermediatePosition);
         snakeMove.setTotalTilesDescended(totalStepsDescended);
         snakeMove.setInterMediateMove(intermediateStep);
@@ -100,15 +115,18 @@ public class SLMovesFactory {
 
     /**
      * <p>
-     * Gets an {@link SLMoveType#UNLUCKY_MOVE} move. It indicates that the player got an Unlucky roll on the Dice
-     * when the Player token could not finish the game in a required single step.
+     * Gets an {@link SLMoveType#UNLUCKY_MOVE} move. It indicates that the
+     * player got an Unlucky roll on the Dice
+     * when the Player token could not finish the game in a required single
+     * step.
      * </p>
      *
      * @param position current position of the Token
      * @return
      */
     public static SLMove getUnluckyMove(Integer position, Integer diceRoll) {
-        return new SLMove(SLMoveType.UNLUCKY_MOVE, position, position, "Encountered an Unlucky Move at: " + position, diceRoll);
+        return new SLMove(SLMoveType.UNLUCKY_MOVE, position, position, "Encountered an Unlucky Move at: " + position,
+                diceRoll);
     }
 
     /**
@@ -117,6 +135,7 @@ public class SLMovesFactory {
      * @return
      */
     public static SLMove getLuckyMove(Integer fromPosition, Integer toPosition) {
-        return new SLMove(SLMoveType.ADVANCE_LUCKY_MOVE, fromPosition, toPosition, "Encountered an Lucky Move at: " + fromPosition, toPosition - fromPosition);
+        return new SLMove(SLMoveType.ADVANCE_LUCKY_MOVE, fromPosition, toPosition,
+                "Encountered an Lucky Move at: " + fromPosition, toPosition - fromPosition);
     }
 }

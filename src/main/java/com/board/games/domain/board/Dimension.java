@@ -1,10 +1,5 @@
 package com.board.games.domain.board;
 
-import com.board.games.exception.ExceptionUtil;
-import com.board.games.exception.GameException;
-
-import java.util.Objects;
-
 /**
  * <p>
  * Stores the dimension for the {@link Board} of the game

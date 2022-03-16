@@ -20,7 +20,9 @@ public class SLPlayersFactory {
     public static List<SLPlayer> getSLPlayers(int playerCount) throws GameException {
 
         if (playerCount <= 0 || playerCount > 4) {
-            throw ExceptionUtil.getGamePlayerConfigurationException("There should at least be 1 player. Player count above 4 is currently not supported");
+            throw ExceptionUtil.getGamePlayerConfigurationException(
+                    "There " + "should at least be 1 player. Player " + "count above 4 is " +
+                            "currently not supported");
         }
 
         List<SLPlayer> players = new ArrayList<>();
@@ -34,7 +36,8 @@ public class SLPlayersFactory {
     }
 
     private static Stack<Token.TokenColour> getRandomTokenColours(int playerCount) {
-        List<Token.TokenColour> tokenColours = Arrays.asList(Token.TokenColour.RED, Token.TokenColour.GREEN, Token.TokenColour.BLUE, Token.TokenColour.YELLOW);
+        List<Token.TokenColour> tokenColours = Arrays.asList(Token.TokenColour.RED, Token.TokenColour.GREEN,
+                Token.TokenColour.BLUE, Token.TokenColour.YELLOW);
         Stack<Token.TokenColour> stack = new Stack<>();
         List<Integer> list = new ArrayList<>();
         for (int i = 1; i <= playerCount; i++) {

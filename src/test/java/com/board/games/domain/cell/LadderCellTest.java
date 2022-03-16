@@ -1,8 +1,8 @@
 package com.board.games.domain.cell;
 
 import com.board.games.domain.move.Move;
-import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMove;
+import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.token.Token;
 import com.board.games.exception.GameException;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,7 +34,7 @@ class LadderCellTest {
     }
 
     @Test
-    void testAcceptToken() throws Exception{
+    void testAcceptToken() throws Exception {
         Move move = ladderCell.acceptToken(token);
         assertNotNull(move);
         assertTrue(move instanceof SLMove);
@@ -56,7 +56,7 @@ class LadderCellTest {
     void getCellPosition() {
         assertEquals(10, ladderCell.getCellPosition());
     }
-    
+
     @Test
     void testGetCurrentTokensOnCell() {
         Throwable throwable = assertThrows(GameException.class, () -> {

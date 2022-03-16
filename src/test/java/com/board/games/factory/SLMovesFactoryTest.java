@@ -6,7 +6,8 @@ import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMovesFactory;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Test class for the {@link SLMovesFactory}

@@ -1,9 +1,8 @@
 package com.board.games.exception;
 
-import com.board.games.domain.game.Game;
-
 /**
- * <p>Simple static factory to generate {@link GameException} with different prefix messages</p>
+ * <p>Simple static factory to generate {@link GameException} with different
+ * prefix messages</p>
  */
 public class ExceptionUtil {
 

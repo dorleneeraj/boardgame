@@ -1,11 +1,10 @@
 package com.board.games.domain.cell;
 
 import com.board.games.domain.move.Move;
-import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMove;
+import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.token.Token;
 import com.board.games.exception.GameException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
@@ -33,7 +32,7 @@ class SnakeCellTest {
 
 
     @Test
-    void acceptToken() throws Exception{
+    void acceptToken() throws Exception {
         Move move = snakeCell.acceptToken(token);
         assertNotNull(move);
         assertTrue(move instanceof SLMove);

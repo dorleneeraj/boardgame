@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 /**
- * <p>A Simple static factory to generate an instance of {@link Board} for the {@link SLGame}</p>
+ * <p>A Simple static factory to generate an instance of {@link Board} for
+ * the {@link SLGame}</p>
  */
 public class SLBoardFactory {
 
@@ -39,15 +40,18 @@ public class SLBoardFactory {
     /**
      * <p>Generates the Board from the given details<p/>
      *
-     * @param ladderTuples {@link LadderCell} tuples that need to be included on the board
-     * @param snakeTuples  {@link SnakeCell} tuples that need to be included on the board
+     * @param ladderTuples {@link LadderCell} tuples that need to be included
+     *                     on the board
+     * @param snakeTuples  {@link SnakeCell} tuples that need to be included
+     *                     on the board
      * @param dimension    {@link Dimension} for the board
      * @return {@link Board} for the game of {@link SLGame}
      * @throws GameException
      */
-    public static Board getConfigurableBoard(List<SLTuple> ladderTuples, List<SLTuple> snakeTuples, Dimension dimension) throws GameException {
+    public static Board getConfigurableBoard(List<SLTuple> ladderTuples, List<SLTuple> snakeTuples, Dimension dimension)
+            throws GameException {
 
-        validateLadderAndSnakeTuples(ladderTuples, snakeTuples, dimension);
+        validateConfiguration(ladderTuples, snakeTuples, dimension);
 
         int size = dimension.getColumn() * dimension.getRow();
         List<SLBoardCell> boardCells = new ArrayList<>();
@@ -72,9 +76,12 @@ public class SLBoardFactory {
      * Following constraints are applied:
      * <ol>
      *     <li>Dimension for the given board cannot be null</li>
-     *     <li>The board for {@link SLGame} is a square, so <code>row</code> and <code>column</code> values should be equal and positive</li>
-     *     <li>There should be at least 1 ladder and snake tuple for the Snake and Ladder game respectively</li>
-     *     <li>Ladders and Snakes should not overlap with each other, meaning, their start and end should not coincide</li>
+     *     <li>The board for {@link SLGame} is a square, so <code>row</code>
+     *     and <code>column</code> values should be equal and positive</li>
+     *     <li>There should be at least 1 ladder and snake tuple for the
+     *     Snake and Ladder game respectively</li>
+     *     <li>Ladders and Snakes should not overlap with each other,
+     *     meaning, their start and end should not coincide</li>
      * </ol>
      * </p>
      *
@@ -82,35 +89,44 @@ public class SLBoardFactory {
      * @param snakeTuples
      * @throws GameException
      */
-    protected static void validateLadderAndSnakeTuples(List<SLTuple> ladderTuples, List<SLTuple> snakeTuples, Dimension dimension) throws GameException {
+    protected static void validateConfiguration(List<SLTuple> ladderTuples, List<SLTuple> snakeTuples,
+                                                Dimension dimension)
+            throws GameException {
 
         if (null == dimension) {
-            throw ExceptionUtil.getInvalidBoardConfigurationException("Dimension cannot be null to construct a Snake and Ladder game board");
+            throw ExceptionUtil.getInvalidBoardConfigurationException(
+                    "Dimension cannot be null to construct a Snake " + "and " + "Ladder" + " game board");
         }
 
         if (dimension.getColumn() != dimension.getRow()) {
-            throw ExceptionUtil.getInvalidBoardConfigurationException("Snake and Ladder board is a square. Row and Column in the dimension should be equal");
+            throw ExceptionUtil.getInvalidBoardConfigurationException(
+                    "Snake " + "and Ladder board is a square. Row " + "and Column in the " + "dimension should be " +
+                            "equal");
         }
 
         if (dimension.getColumn() <= 0 || dimension.getRow() <= 0) {
-            throw ExceptionUtil.getInvalidBoardConfigurationException("Snake and Ladder board needs to have a positive row and column dimensions");
+            throw ExceptionUtil.getInvalidBoardConfigurationException(
+                    "Snake " + "and Ladder board needs to have a " + "positive row and " + "column" + " dimensions");
         }
 
         if (null == ladderTuples || ladderTuples.isEmpty() || null == snakeTuples || snakeTuples.isEmpty()) {
-            throw ExceptionUtil.getInvalidCellConfigurationException("Snake and Ladder game requires ladder and snake cells");
+            throw ExceptionUtil.getInvalidCellConfigurationException(
+                    "Snake " + "and Ladder game requires ladder and " + "snake cells");
         }
-        boolean foundOverlappingCell = ladderTuples.stream().filter(ladderTuple ->
-                snakeTuples.contains(ladderTuple)
-        ).findFirst().isPresent();
+        boolean foundOverlappingCell = ladderTuples.stream().filter(ladderTuple -> snakeTuples.contains(ladderTuple))
+                .findFirst().isPresent();
 
         if (foundOverlappingCell) {
-            throw ExceptionUtil.getInvalidCellConfigurationException("Ladder and Snake tuples cannot overlap with each other");
+            throw ExceptionUtil.getInvalidCellConfigurationException(
+                    "Ladder " + "and Snake tuples cannot overlap " + "with each other");
         }
     }
 
     /**
-     * <p>For each cell on the board, its neighbouring cells are set as its neighbours.</p>
-     * <p>2 cells after and 2 cells before are considered as neighbours for the cell.</p>
+     * <p>For each cell on the board, its neighbouring cells are set as its
+     * neighbours.</p>
+     * <p>2 cells after and 2 cells before are considered as neighbours for
+     * the cell.</p>
      *
      * @param boardCells
      */
@@ -118,7 +134,8 @@ public class SLBoardFactory {
         for (Cell cell : boardCells) {
             List<SLBoardCell> neighbours = new ArrayList<>();
             int cellNumber = cell.getCellPosition();
-            List<Integer> neighbourIndices = Arrays.asList(cellNumber - 1, cellNumber - 2, cellNumber + 1, cellNumber + 1);
+            List<Integer> neighbourIndices = Arrays.asList(cellNumber - 1, cellNumber - 2, cellNumber + 1,
+                    cellNumber + 1);
             neighbourIndices.forEach(index -> {
                 if (index >= 0 && index < boardCells.size()) {
                     neighbours.add(boardCells.get(index));
@@ -137,12 +154,13 @@ public class SLBoardFactory {
     private static void addSnakes(List<SLTuple> snakeTuples, List<SLBoardCell> boardCells) {
         snakeTuples.forEach(tuple -> {
             if (tuple.getStart() < tuple.getEnd()) {
-                throw new RuntimeException("Snake Cell Configuration error - end: " + tuple.getEnd() + ", start: " + tuple.getStart() +
-                        ", snake start cannot be less than snake end");
+                throw new RuntimeException(
+                        "Snake Cell Configuration error - " + "end: " + tuple.getEnd() + ", start" + ":" + " " +
+                                tuple.getStart() + ", snake start cannot be less than snake end");
             }
 
             if (tuple.getStart() == tuple.getEnd()) {
-                throw new RuntimeException("Snake start and Snake end cannot be equal");
+                throw new RuntimeException("Snake start and Snake end cannot " + "be equal");
             }
 
             SLBoardCell snakeStartCell = boardCells.get(tuple.getStart() - 1);
@@ -160,12 +178,13 @@ public class SLBoardFactory {
     private static void addLadders(List<SLTuple> ladderTuples, List<SLBoardCell> boardCells) {
         ladderTuples.forEach(tuple -> {
             if (tuple.getStart() > tuple.getEnd()) {
-                throw new RuntimeException("Ladder Cell Configuration error - start: " + tuple.getStart() + ", end: " + tuple.getEnd() +
-                        ", ladder start cannot be greater than ladder end");
+                throw new RuntimeException(
+                        "Ladder Cell Configuration error " + "-" + " start: " + tuple.getStart() + ", end: " +
+                                tuple.getEnd() + ", ladder start cannot be greater than ladder end");
             }
 
             if (tuple.getStart() == tuple.getEnd()) {
-                throw new RuntimeException("Ladder start and Ladder end cannot be equal");
+                throw new RuntimeException("Ladder start and Ladder end " + "cannot be equal");
             }
 
             SLBoardCell ladderStartCell = boardCells.get(tuple.getStart() - 1);

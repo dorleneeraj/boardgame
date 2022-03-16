@@ -56,7 +56,8 @@ public class SLPlayer extends Player {
 
     /**
      * <p>
-     * The {@link SLMove} encapsulates a lot of information regarding the turn of the player.
+     * The {@link SLMove} encapsulates a lot of information regarding the
+     * turn of the player.
      * Gathers the statistics and updates the local counters for the same
      * </p>
      *
@@ -101,7 +102,8 @@ public class SLPlayer extends Player {
 
     /**
      * <p>
-     * Updates the information related to the consecutive streak of turns for the current Player
+     * Updates the information related to the consecutive streak of turns for
+     * the current Player
      * </p>
      *
      * @param currentMove
@@ -152,58 +154,13 @@ public class SLPlayer extends Player {
     }
 
     @JacocoExcludeGenerated
-    public int getTotalTilesClimbed() {
-        return totalTilesClimbed;
-    }
-
-    @JacocoExcludeGenerated
-    public int getTotalSnakeMoves() {
-        return totalSnakeMoves;
-    }
-
-    @JacocoExcludeGenerated
-    public int getTotalTilesDescended() {
-        return totalTilesDescended;
-    }
-
-    @JacocoExcludeGenerated
-    public int getTotalLuckyMoves() {
-        return totalLuckyMoves;
-    }
-
-    @JacocoExcludeGenerated
-    public int getTotalUnluckyMoves() {
-        return totalUnluckyMoves;
-    }
-
-    @JacocoExcludeGenerated
-    public int getTotalTurnsPlayed() {
-        return totalTurnsPlayed;
-    }
-
-    @JacocoExcludeGenerated
-    public int getTotalDiceRollsWithSix() {
-        return totalDiceRollsWithSix;
-    }
-
-    @JacocoExcludeGenerated
-    public int getMaxConsecutiveStreak() {
-        return maxConsecutiveStreak;
-    }
-
-    @JacocoExcludeGenerated
-    public int getCurrentConsecutiveStreak() {
-        return currentConsecutiveStreak;
-    }
-
-    @JacocoExcludeGenerated
-    public ConsecutiveTurns getConsecutiveTurnState() {
-        return consecutiveTurnState;
-    }
-
-    @JacocoExcludeGenerated
     public void setTotalLadderMoves(int totalLadderMoves) {
         this.totalLadderMoves = totalLadderMoves;
+    }
+
+    @JacocoExcludeGenerated
+    public int getTotalTilesClimbed() {
+        return totalTilesClimbed;
     }
 
     @JacocoExcludeGenerated
@@ -212,8 +169,18 @@ public class SLPlayer extends Player {
     }
 
     @JacocoExcludeGenerated
+    public int getTotalSnakeMoves() {
+        return totalSnakeMoves;
+    }
+
+    @JacocoExcludeGenerated
     public void setTotalSnakeMoves(int totalSnakeMoves) {
         this.totalSnakeMoves = totalSnakeMoves;
+    }
+
+    @JacocoExcludeGenerated
+    public int getTotalTilesDescended() {
+        return totalTilesDescended;
     }
 
     @JacocoExcludeGenerated
@@ -222,8 +189,18 @@ public class SLPlayer extends Player {
     }
 
     @JacocoExcludeGenerated
+    public int getTotalLuckyMoves() {
+        return totalLuckyMoves;
+    }
+
+    @JacocoExcludeGenerated
     public void setTotalLuckyMoves(int totalLuckyMoves) {
         this.totalLuckyMoves = totalLuckyMoves;
+    }
+
+    @JacocoExcludeGenerated
+    public int getTotalUnluckyMoves() {
+        return totalUnluckyMoves;
     }
 
     @JacocoExcludeGenerated
@@ -232,8 +209,18 @@ public class SLPlayer extends Player {
     }
 
     @JacocoExcludeGenerated
+    public int getTotalTurnsPlayed() {
+        return totalTurnsPlayed;
+    }
+
+    @JacocoExcludeGenerated
     public void setTotalTurnsPlayed(int totalTurnsPlayed) {
         this.totalTurnsPlayed = totalTurnsPlayed;
+    }
+
+    @JacocoExcludeGenerated
+    public int getTotalDiceRollsWithSix() {
+        return totalDiceRollsWithSix;
     }
 
     @JacocoExcludeGenerated
@@ -242,13 +229,28 @@ public class SLPlayer extends Player {
     }
 
     @JacocoExcludeGenerated
+    public int getMaxConsecutiveStreak() {
+        return maxConsecutiveStreak;
+    }
+
+    @JacocoExcludeGenerated
     public void setMaxConsecutiveStreak(int maxConsecutiveStreak) {
         this.maxConsecutiveStreak = maxConsecutiveStreak;
     }
 
     @JacocoExcludeGenerated
+    public int getCurrentConsecutiveStreak() {
+        return currentConsecutiveStreak;
+    }
+
+    @JacocoExcludeGenerated
     public void setCurrentConsecutiveStreak(int currentConsecutiveStreak) {
         this.currentConsecutiveStreak = currentConsecutiveStreak;
+    }
+
+    @JacocoExcludeGenerated
+    public ConsecutiveTurns getConsecutiveTurnState() {
+        return consecutiveTurnState;
     }
 
     @JacocoExcludeGenerated

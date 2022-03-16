@@ -15,7 +15,8 @@ import java.util.Map;
 
 /**
  * <p>
- * An abstract implementation of a generic Board Game. It declares various Template methods that govern the overall
+ * An abstract implementation of a generic Board Game. It declares various
+ * Template methods that govern the overall
  * flow of the board game.
  * </p>
  */
@@ -28,14 +29,14 @@ public abstract class BoardGame implements Game {
     private static final Logger LOGGER = LogManager.getLogger(BoardGame.class);
     protected static Map<String, String> gameRegistry = new HashMap<>();
 
+    static {
+        gameRegistry.put(SLGame.class.getSimpleName(), " Snake and Ladders!!");
+    }
+
     protected Board gameBoard;
     protected GameState currentGameState = GameState.NOT_STARTED;
     protected Integer playerCount;
     protected List<GameTracker> gameTrackerTrackers = new ArrayList<>();
-
-    static {
-        gameRegistry.put(SLGame.class.getSimpleName(), " Snake and Ladders!!");
-    }
 
     public BoardGame(Board gameBoard, Integer playerCount) {
         this.playerCount = playerCount;
@@ -78,7 +79,8 @@ public abstract class BoardGame implements Game {
     ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * <p>Initializes the states required by a game to progress in its lifecycle</p>
+     * <p>Initializes the states required by a game to progress in its
+     * lifecycle</p>
      */
     protected abstract void initializeGameStates();
 
@@ -90,12 +92,14 @@ public abstract class BoardGame implements Game {
     protected abstract void validateGameData() throws GameException;
 
     /**
-     * <p>Selects the next player in line depending upon the data-structure used by a game to store its players</p>
+     * <p>Selects the next player in line depending upon the data-structure
+     * used by a game to store its players</p>
      */
     protected abstract void selectNextPlayer();
 
     /**
-     * <p>Depending upon the current state of the game, determines what the next state of the game would be</p>
+     * <p>Depending upon the current state of the game, determines what the
+     * next state of the game would be</p>
      *
      * @return
      */
@@ -120,7 +124,8 @@ public abstract class BoardGame implements Game {
     ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * <p>Template method to initializes the game. Performs any pre-processing if required before starting the game</p>
+     * <p>Template method to initializes the game. Performs any
+     * pre-processing if required before starting the game</p>
      *
      * @throws GameException
      */
@@ -131,7 +136,8 @@ public abstract class BoardGame implements Game {
     }
 
     /**
-     * <p>Template method to process a distinct turn of the player in the game</p>
+     * <p>Template method to process a distinct turn of the player in the
+     * game</p>
      *
      * @throws GameException
      */
@@ -141,7 +147,8 @@ public abstract class BoardGame implements Game {
     }
 
     /**
-     * <p>Generates the game analytics. Processes every {@link GameTracker} object associated with the game</p>
+     * <p>Generates the game analytics. Processes every {@link GameTracker}
+     * object associated with the game</p>
      */
     protected void generateGameAnalytics() {
         for (GameTracker gameTracker : getGameTrackers()) {

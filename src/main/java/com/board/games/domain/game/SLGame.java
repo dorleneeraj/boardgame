@@ -4,12 +4,12 @@ import com.board.games.JacocoExcludeGenerated;
 import com.board.games.domain.board.Board;
 import com.board.games.domain.cell.Cell;
 import com.board.games.domain.cell.SLBoardCell;
-import com.board.games.domain.move.SLMoveType;
 import com.board.games.domain.move.SLMove;
+import com.board.games.domain.move.SLMoveType;
+import com.board.games.domain.move.SLMovesFactory;
 import com.board.games.domain.player.Player;
 import com.board.games.domain.player.SLPlayer;
 import com.board.games.domain.token.Token;
-import com.board.games.domain.move.SLMovesFactory;
 import com.board.games.exception.ExceptionUtil;
 import com.board.games.exception.GameException;
 import org.apache.logging.log4j.LogManager;
@@ -29,8 +29,8 @@ public class SLGame extends BoardGame {
 
     private final Dice dice;
     private final Queue<SLPlayer> playersQueue = new LinkedList<>();
-    private SLPlayer currentPlayer;
     private final Queue<GameState> gameStates = new LinkedList<>();
+    private SLPlayer currentPlayer;
 
     protected SLGame(Board board, int playerCount, Dice dice, Queue<SLPlayer> playersQueue) {
         super(board, playerCount);
@@ -50,15 +50,17 @@ public class SLGame extends BoardGame {
     @Override
     protected void validateGameData() throws GameException {
         if (null == this.gameBoard) {
-            throw ExceptionUtil.getInvalidGameConfigurationException("Board cannot be null for a board game");
+            throw ExceptionUtil.getInvalidGameConfigurationException("Board " + "cannot be null for a board game");
         }
 
         if (null == this.playersQueue || this.playersQueue.isEmpty() || this.playerCount == 0) {
-            throw ExceptionUtil.getInvalidGameConfigurationException("Game needs to have at least 1 player to start with");
+            throw ExceptionUtil.getInvalidGameConfigurationException(
+                    "Game " + "needs to have at least 1 player to " + "start with");
         }
 
         if (null == this.dice) {
-            throw ExceptionUtil.getInvalidGameConfigurationException("Snake and Ladder game needs an instance of Dice");
+            throw ExceptionUtil.getInvalidGameConfigurationException(
+                    "Snake " + "and Ladder game needs an instance of" + " Dice");
         }
     }
 
@@ -114,8 +116,10 @@ public class SLGame extends BoardGame {
     public void updateMoveStatistics() {
         if (GameState.PLAYING.equals(currentGameState)) {
             SLMove currentMove = (SLMove) currentPlayer.getPreviousMove();
-            LOGGER.debug("Performed move by user: {} , Move Type: {}, Move from Position {} and Move to Position: {}," +
-                    " Roll on the dice {}", currentPlayer.getName(), currentMove.getMoveType(), currentMove.getFromPosition(), currentMove.getToPosition(), currentMove.getDiceRoll());
+            LOGGER.debug("Performed move by user: {} , Move Type: {}, Move " + "from Position {} and Move to " +
+                            "Position: {}," + " Roll on " + "the dice {}", currentPlayer.getName(),
+                    currentMove.getMoveType(),
+                    currentMove.getFromPosition(), currentMove.getToPosition(), currentMove.getDiceRoll());
         }
     }
 
@@ -125,14 +129,15 @@ public class SLGame extends BoardGame {
         if (nextGameState.equals(GameState.PLAYING)) {
             SLMove move = (SLMove) currentPlayer.getPreviousMove();
             if (SLMoveType.ADVANCE_LUCKY_MOVE.equals(move.getMoveType())) {
-                LOGGER.debug("Game Completed. Final Lucky move performed by the user: {} ", currentPlayer.getName());
+                LOGGER.debug("Game Completed. Final Lucky move performed by " + "the user: {} ",
+                        currentPlayer.getName());
                 gameStates.poll();
                 return gameStates.peek();
             }
             if (!move.isRolledASix()) {
                 playersQueue.add(playersQueue.poll());
             } else {
-                LOGGER.debug("Got a 6 on the Dice! Player {} will play another turn! ", currentPlayer.getName());
+                LOGGER.debug("Got a 6 on the Dice! Player {} will play " + "another turn! ", currentPlayer.getName());
             }
             return gameStates.peek();
         } else {
@@ -154,8 +159,8 @@ public class SLGame extends BoardGame {
      */
     @JacocoExcludeGenerated
     public static class SLGameBuilder {
+        private final Queue<SLPlayer> players = new LinkedList<>();
         private Board gameBoard;
-        private Queue<SLPlayer> players = new LinkedList<>();
         private int playerCount;
         private Dice dice;
 

@@ -19,10 +19,11 @@ import java.util.Set;
  */
 public class SLBoardCell implements Cell {
 
-    private Integer cellNumber;
+    private final Integer cellNumber;
     private final List<SLBoardCell> neighbours = new ArrayList<>();
 
-    private final Set<Token> currentTokensOnCell = new HashSet<>();  // The list of all the Tokens the current cell has
+    private final Set<Token> currentTokensOnCell = new HashSet<>();  // The 
+    // list of all the Tokens the current cell has
 
     public SLBoardCell(Integer cellNumber) {
         this.cellNumber = cellNumber;
@@ -54,14 +55,14 @@ public class SLBoardCell implements Cell {
 
     @Override
     @JacocoExcludeGenerated
-    public void setNeighbours(List<? extends Cell> neighbours) {
-        neighbours.forEach(neighbour -> this.neighbours.add((SLBoardCell) neighbour));
+    public List<? extends Cell> getNeighbours() {
+        return this.neighbours;
     }
 
     @Override
     @JacocoExcludeGenerated
-    public List<? extends Cell> getNeighbours() {
-        return this.neighbours;
+    public void setNeighbours(List<? extends Cell> neighbours) {
+        neighbours.forEach(neighbour -> this.neighbours.add((SLBoardCell) neighbour));
     }
 
     /**

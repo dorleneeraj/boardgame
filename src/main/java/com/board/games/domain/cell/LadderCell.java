@@ -13,18 +13,22 @@ import java.util.List;
 
 /**
  * <p>
- * Implementation of the {@link Cell} indicating that this is a Ladder cell for {@link SLGame}.
+ * Implementation of the {@link Cell} indicating that this is a Ladder cell
+ * for {@link SLGame}.
  * Once a {@link Token} is arrived at this cell, two steps occur in the order:
  * <p>
  *     <ol>
- *         <li>The <code>ladderStartCell</code> first accepts the Token, indicating a move of type {@link SLMoveType#NORMAL_ADVANCE}</li>
+ *         <li>The <code>ladderStartCell</code> first accepts the Token,
+ *         indicating a move of type {@link SLMoveType#NORMAL_ADVANCE}</li>
  *         <li>
- *             The <code>ladderEndCell</code> accepts the token, which moves the token further up the Ladder,
+ *             The <code>ladderEndCell</code> accepts the token, which moves
+ *             the token further up the Ladder,
  *             indicating a move of type {@link SLMoveType#LADDER_ADVANCE}</li>
  *     </ol>
  * </p>
  * <p>
- * The final position of the Token will be that of the <code>ladderEndCell</code>
+ * The final position of the Token will be that of the
+ * <code>ladderEndCell</code>
  * </p>
  */
 public class LadderCell extends SLBoardCell {
@@ -58,6 +62,8 @@ public class LadderCell extends SLBoardCell {
 
     @Override
     public List<Token> getCurrentTokensOnCell() throws GameException {
-        throw ExceptionUtil.getInvalidCellOperationException("Ladder cells cannot have any tokens. Once the token is arrived at a ladder cell, it is moved up the ladder");
+        throw ExceptionUtil.getInvalidCellOperationException(
+                "Ladder cells " + "cannot have any tokens. Once the " + "token is arrived at a " +
+                        "ladder cell, it is moved up the ladder");
     }
 }

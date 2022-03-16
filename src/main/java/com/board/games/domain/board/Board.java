@@ -24,7 +24,8 @@ public class Board {
 
     /**
      * <p>
-     * Gets the respective {@link Cell} located at the given position. Validates whether the provided position is within
+     * Gets the respective {@link Cell} located at the given position.
+     * Validates whether the provided position is within
      * the range bounded by the Board dimension
      * </p>
      *

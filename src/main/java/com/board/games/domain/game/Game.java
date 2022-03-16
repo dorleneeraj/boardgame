@@ -4,12 +4,14 @@ import com.board.games.exception.GameException;
 import com.board.games.statistics.GameTracker;
 
 /**
- * A generic interface for a single/ multi-player board game. It declares all the lifecycle events that a single instance of a game can have
+ * A generic interface for a single/ multi-player board game. It declares all
+ * the lifecycle events that a single instance of a game can have
  */
 public interface Game {
 
     /**
-     * <p>Game needs an external element to track the game state and progress. Attaches such external {@link GameTracker} objects<p/>
+     * <p>Game needs an external element to track the game state and progress
+     * . Attaches such external {@link GameTracker} objects<p/>
      *
      * @param gameTracker
      */

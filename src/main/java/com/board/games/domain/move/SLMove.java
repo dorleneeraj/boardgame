@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Encapsulates the details of a single move by the Token on the Snakes and Ladder game board
+ * Encapsulates the details of a single move by the Token on the Snakes and
+ * Ladder game board
  *
  * @see Move
  */
@@ -72,7 +73,7 @@ public class SLMove implements Move {
     public Map<String, Object> getMoveDetails() {
         return this.moveDetails;
     }
-    
+
     @JacocoExcludeGenerated
     public int getFromPosition() {
         return fromPosition;
@@ -99,16 +100,16 @@ public class SLMove implements Move {
     }
 
     @JacocoExcludeGenerated
-    public Move getInterMediateMove() {
-        return interMediateMove;
-    }
-
-    @JacocoExcludeGenerated
     public void setTotalTilesMoved(int totalTilesMoved) {
         if (totalTilesMoved != 0) {
             this.totalTilesMoved = totalTilesMoved;
             this.moveDetails.put(MOVE_TOTAL_TILES, totalTilesMoved);
         }
+    }
+
+    @JacocoExcludeGenerated
+    public Move getInterMediateMove() {
+        return interMediateMove;
     }
 
     @JacocoExcludeGenerated
@@ -203,8 +204,6 @@ public class SLMove implements Move {
     @Override
     @JacocoExcludeGenerated
     public String toString() {
-        return "TokenMove{" +
-                "moveDetails=" + moveDetails +
-                '}';
+        return "TokenMove{" + "moveDetails=" + moveDetails + '}';
     }
 }
