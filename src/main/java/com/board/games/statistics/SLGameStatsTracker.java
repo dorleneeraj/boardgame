@@ -90,6 +90,24 @@ public class SLGameStatsTracker implements GameTracker {
     }
 
 
+    @Override
+    public void generateAnalysisAcrossRuns() {
+        int totalGamesPlayed = gamesData.size();
+        if (totalGamesPlayed > 0) {
+            int totalTurnsAcrossGames = gamesData.stream().mapToInt(gameStat -> gameStat.totalTurnsInTheGame).sum();
+            int maxTurnsInAGame = gamesData.stream().mapToInt(gameStat -> gameStat.totalTurnsInTheGame).max().orElse(0);
+            int minTurnsInAGame = gamesData.stream().mapToInt(gameStat -> gameStat.totalTurnsInTheGame).min().orElse(0);
+            double averageTurnsInAGame = Math.ceil(totalTurnsAcrossGames / totalGamesPlayed);
+
+            LOGGER.info("-----------------------------------------");
+            LOGGER.info("Total games played in the simulation: " + totalGamesPlayed);
+            LOGGER.info("Maximum turns played in the game: " + maxTurnsInAGame);
+            LOGGER.info("Minimum turns played in the game: " + minTurnsInAGame);
+            LOGGER.info("Average turns required to end the game: " + averageTurnsInAGame);
+            LOGGER.info("-----------------------------------------");
+        }
+    }
+
     /**
      *
      */

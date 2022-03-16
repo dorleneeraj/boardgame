@@ -32,6 +32,7 @@ public class GameSimulator {
                 LOGGER.error("Cannot start the game :: " + gameException.getMessage(), gameException);
             }
         }
+        tracker.generateAnalysisAcrossRuns();
     }
 
     /**
