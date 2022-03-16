@@ -3,23 +3,17 @@ package com.board.games.domain.game;
 import com.board.games.domain.board.Board;
 import com.board.games.domain.cell.Cell;
 import com.board.games.domain.cell.SLBoardCell;
-import com.board.games.domain.cell.SnakeCell;
 import com.board.games.domain.move.Move;
 import com.board.games.domain.move.SLMove;
 import com.board.games.domain.move.SLMoveType;
-import com.board.games.domain.move.SLMovesFactory;
 import com.board.games.domain.player.SLPlayer;
-import com.board.games.domain.player.SLPlayersFactory;
 import com.board.games.domain.token.Token;
 import com.board.games.exception.GameException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -188,7 +182,7 @@ class SLGameTest {
     public void test_validateGameState() throws Exception{
         players.add(new SLPlayer("player 1", new Token(1, Token.TokenColour.BLUE,0)));
         slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
-        slGame.validateGameState();
+        slGame.validateGameData();
     }
     
     @Test
@@ -196,7 +190,7 @@ class SLGameTest {
         slGame = Mockito.spy(new SLGame(null, playerCount, dice, players));
 
         Throwable throwable = assertThrows(GameException.class, () -> {
-            slGame.validateGameState();
+            slGame.validateGameData();
         });
 
         assertTrue( throwable.getMessage().contains("Board cannot be null for a board game"));
@@ -207,7 +201,7 @@ class SLGameTest {
         slGame = Mockito.spy(new SLGame(board, playerCount, dice, new LinkedList<>()));
 
         Throwable throwable = assertThrows(GameException.class, () -> {
-            slGame.validateGameState();
+            slGame.validateGameData();
         });
 
         assertTrue(throwable.getMessage().contains("Game needs to have at least 1 player to start with"));
@@ -220,7 +214,7 @@ class SLGameTest {
         slGame = Mockito.spy(new SLGame(board, playerCount, null, players));
 
         Throwable throwable = assertThrows(GameException.class, () -> {
-            slGame.validateGameState();
+            slGame.validateGameData();
         });
 
         assertTrue( throwable.getMessage().contains("Snake and Ladder game needs an instance of Dice"));

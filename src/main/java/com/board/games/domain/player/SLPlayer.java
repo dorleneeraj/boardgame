@@ -55,6 +55,11 @@ public class SLPlayer extends Player {
     }
 
     /**
+     * <p>
+     * The {@link SLMove} encapsulates a lot of information regarding the turn of the player.
+     * Gathers the statistics and updates the local counters for the same
+     * </p>
+     *
      * @param currentMove
      */
     protected void captureTurnStats(SLMove currentMove) {
@@ -95,6 +100,10 @@ public class SLPlayer extends Player {
     }
 
     /**
+     * <p>
+     * Updates the information related to the consecutive streak of turns for the current Player
+     * </p>
+     *
      * @param currentMove
      */
     protected void captureConsecutiveTurnDetails(SLMove currentMove) {

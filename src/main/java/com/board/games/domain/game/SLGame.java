@@ -48,7 +48,7 @@ public class SLGame extends BoardGame {
     }
 
     @Override
-    protected void validateGameState() throws GameException {
+    protected void validateGameData() throws GameException {
         if (null == this.gameBoard) {
             throw ExceptionUtil.getInvalidGameConfigurationException("Board cannot be null for a board game");
         }
@@ -64,13 +64,14 @@ public class SLGame extends BoardGame {
 
     @Override
     protected void selectNextPlayer() {
+        // Selects the next player depending upon the next in the queue
         if (null != playersQueue && !playersQueue.isEmpty()) {
             currentPlayer = playersQueue.peek();
         }
     }
 
     @Override
-    protected void takeTurn() throws GameException{
+    protected void takeTurn() throws GameException {
         Integer diceRoll = currentPlayer.rollDice(this.dice);
         SLMove currentMove = performMove(diceRoll);
         SLBoardCell currentCell = (SLBoardCell) this.gameBoard.getCellByNumber(currentMove.getToPosition());
@@ -84,7 +85,7 @@ public class SLGame extends BoardGame {
      * @param diceRoll
      * @return
      */
-    protected SLMove performMove(int diceRoll) throws GameException{
+    protected SLMove performMove(int diceRoll) throws GameException {
         Token currentPlayerToken = currentPlayer.getToken();
         Integer currentPosition = currentPlayer.getCurrentPosition();
         Cell fromCell = this.gameBoard.getCellByNumber(currentPlayer.getCurrentPosition());
@@ -149,7 +150,7 @@ public class SLGame extends BoardGame {
     }
 
     /**
-     *
+     * <p>Simple builder for the {@link SLGame}</p>
      */
     @JacocoExcludeGenerated
     public static class SLGameBuilder {

@@ -9,7 +9,6 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -65,7 +64,7 @@ class BoardGameTest {
         inOrder.verify(boardGame).updateAndGetNextState();
         inOrder.verify(boardGame).setGameState(GameState.STARTED);
         for (int i = 0; i < 5; i++) {
-            inOrder.verify(boardGame).playTurn();
+            inOrder.verify(boardGame).processNextTurn();
             inOrder.verify(boardGame).updateMoveStatistics();
             inOrder.verify(boardGame).updateAndGetNextState();
             inOrder.verify(boardGame).setGameState(Mockito.any());
@@ -92,7 +91,7 @@ class BoardGameTest {
         Mockito.doCallRealMethod().when(boardGame).initializeGame();
         boardGame.initializeGame();
         inOrder.verify(boardGame).initializeGameStates();
-        inOrder.verify(boardGame).validateGameState();
+        inOrder.verify(boardGame).validateGameData();
         inOrder.verify(boardGame).updateAndGetNextState();
         inOrder.verify(boardGame).setGameState(Mockito.any());
     }
@@ -100,8 +99,8 @@ class BoardGameTest {
     @Test
     void playTurn() throws Exception{
         InOrder inOrder = Mockito.inOrder(boardGame);
-        Mockito.doCallRealMethod().when(boardGame).playTurn();
-        boardGame.playTurn();
+        Mockito.doCallRealMethod().when(boardGame).processNextTurn();
+        boardGame.processNextTurn();
         inOrder.verify(boardGame).selectNextPlayer();
         inOrder.verify(boardGame).takeTurn();
     }

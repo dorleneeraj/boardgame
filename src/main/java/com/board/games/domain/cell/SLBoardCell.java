@@ -22,8 +22,7 @@ public class SLBoardCell implements Cell {
     private Integer cellNumber;
     private final List<SLBoardCell> neighbours = new ArrayList<>();
 
-    // The list of all the Tokens the current cell has
-    private final Set<Token> currentTokensOnCell = new HashSet<>();
+    private final Set<Token> currentTokensOnCell = new HashSet<>();  // The list of all the Tokens the current cell has
 
     public SLBoardCell(Integer cellNumber) {
         this.cellNumber = cellNumber;

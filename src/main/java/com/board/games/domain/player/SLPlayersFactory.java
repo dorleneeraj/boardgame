@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- *
+ * <p>Simple static factory to generate a list of {@link SLPlayer} </p>
  */
 public class SLPlayersFactory {
 

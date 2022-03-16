@@ -1,9 +1,12 @@
 package com.board.games.domain.board;
 
+import com.board.games.domain.cell.LadderCell;
+import com.board.games.domain.cell.SnakeCell;
+
 import java.util.Objects;
 
 /**
- *
+ * <p>A simple pojo class to represent respective {@link LadderCell} and {@link SnakeCell} on the board.</p>
  */
 public class SLTuple {
 

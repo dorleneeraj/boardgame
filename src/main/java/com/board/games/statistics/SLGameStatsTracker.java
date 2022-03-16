@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * <p>
- * A class that maintains the state of the game in progress
+ * A class that maintains the state of the {@link SLGame} in progress
  * </p>
  */
 @JacocoExcludeGenerated

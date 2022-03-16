@@ -18,7 +18,7 @@ class SLBoardFactoryTest {
         List<SLTuple> snakeTuples = Arrays.asList(new SLTuple(56, 45));
         List<SLTuple> ladderTuples = Arrays.asList(new SLTuple(56, 80));
 
-       Throwable th = assertThrows(GameException.class, () -> SLBoardFactory.validateLadderAndSnakeTuples(snakeTuples, ladderTuples));
+       Throwable th = assertThrows(GameException.class, () -> SLBoardFactory.validateLadderAndSnakeTuples(snakeTuples, ladderTuples, new Dimension(10,10)));
        
        assertTrue(th.getMessage().contains("Ladder and Snake tuples cannot overlap with each other"));
     }

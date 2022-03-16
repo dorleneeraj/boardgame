@@ -14,7 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ * <p>
+ * An abstract implementation of a generic Board Game. It declares various Template methods that govern the overall
+ * flow of the board game.
+ * </p>
  */
 public abstract class BoardGame implements Game {
 
@@ -52,10 +55,10 @@ public abstract class BoardGame implements Game {
     }
 
     @Override
-    public void playGame() throws GameException{
+    public void playGame() throws GameException {
         setGameState(updateAndGetNextState());
         while (!GameState.GAME_COMPLETED.equals(currentGameState)) {
-            playTurn();
+            processNextTurn();
             updateMoveStatistics();
             setGameState(updateAndGetNextState());
         }
@@ -74,16 +77,40 @@ public abstract class BoardGame implements Game {
     // Abstract Method Declaration
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * <p>Initializes the states required by a game to progress in its lifecycle</p>
+     */
     protected abstract void initializeGameStates();
 
-    protected abstract void validateGameState() throws GameException;
+    /**
+     * <p>Validates all the parameters of the game before starting</p>
+     *
+     * @throws GameException
+     */
+    protected abstract void validateGameData() throws GameException;
 
+    /**
+     * <p>Selects the next player in line depending upon the data-structure used by a game to store its players</p>
+     */
     protected abstract void selectNextPlayer();
 
+    /**
+     * <p>Depending upon the current state of the game, determines what the next state of the game would be</p>
+     *
+     * @return
+     */
     protected abstract GameState updateAndGetNextState();
 
+    /**
+     * <p>A hook to update the statistics after every move if required</p>
+     */
     public abstract void updateMoveStatistics();
 
+    /**
+     * <p>A hook for each player to take a turn in the game</p>
+     *
+     * @throws GameException
+     */
     protected abstract void takeTurn() throws GameException;
 
     public abstract List<? extends Player> getGamePlayers();
@@ -92,17 +119,30 @@ public abstract class BoardGame implements Game {
     // Default implementations
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * <p>Template method to initializes the game. Performs any pre-processing if required before starting the game</p>
+     *
+     * @throws GameException
+     */
     protected void initializeGame() throws GameException {
         initializeGameStates();
-        validateGameState();
+        validateGameData();
         setGameState(updateAndGetNextState());
     }
 
-    protected void playTurn() throws GameException{
+    /**
+     * <p>Template method to process a distinct turn of the player in the game</p>
+     *
+     * @throws GameException
+     */
+    protected void processNextTurn() throws GameException {
         selectNextPlayer();
         takeTurn();
     }
 
+    /**
+     * <p>Generates the game analytics. Processes every {@link GameTracker} object associated with the game</p>
+     */
     protected void generateGameAnalytics() {
         for (GameTracker gameTracker : getGameTrackers()) {
             gameTracker.trackGameProgress(this);

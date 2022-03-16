@@ -9,14 +9,14 @@ import java.util.List;
 
 /**
  * <p>
- * Declares the contract for a Board cell for any Board Game
+ * Declares the generic interface for a Board cell for any Board Game
  * </p>
  */
 public interface Cell {
 
     /**
      * <p>
-     * Accepts the give token
+     * Accepts the give token to the current cell
      * </p>
      *
      * @param token The {@link Token} that needs to be accepted

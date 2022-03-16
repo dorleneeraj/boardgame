@@ -5,7 +5,9 @@ import com.board.games.JacocoExcludeGenerated;
 import java.util.Objects;
 
 /**
+ * <p>
  * Token indicates a piece on the board game.
+ * </p>
  */
 public class Token {
 

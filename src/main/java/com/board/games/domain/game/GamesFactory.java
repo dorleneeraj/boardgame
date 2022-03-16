@@ -20,19 +20,34 @@ import static com.board.games.domain.game.SLGame.*;
  */
 public class GamesFactory {
 
+    /**
+     * <p>Builds the instance of the {@link SLGame} with default parameters</p>
+     *
+     * @return {@link SLGame} that can be played/ simulated
+     * @throws GameException
+     */
     public static SLGame getDefaultSLGame() throws GameException {
         return getSLGame(SLBoardFactory.getDefaultBoard(), 4);
     }
 
     private static SLGame getSLGame(Board board, int playerCount) throws GameException {
-        List<? extends Player> players = SLPlayersFactory.getSLPlayers(playerCount);
+        List<SLPlayer> players = SLPlayersFactory.getSLPlayers(playerCount);
         if (null == players || players.isEmpty()) {
             throw ExceptionUtil.getGamePlayerConfigurationException("Snake and Ladder games at least need 1 player to start the game.");
         }
-        List<SLPlayer> slPlayers = players.stream().filter(player -> player instanceof SLPlayer).map(player -> (SLPlayer) player).collect(Collectors.toList());
-        return new SLGameBuilder().withGameBoard(board).addPlayers(slPlayers).withDice(new Dice()).build();
+        return new SLGameBuilder().withGameBoard(board).addPlayers(players).withDice(new Dice()).build();
     }
 
+    /**
+     * <p>Builds the instance of the {@link SLGame} from the given configuration</p>
+     *
+     * @param ladderTuples   Ladder cells that needs to be included
+     * @param snakeTuples    Snake cells that needs to be included
+     * @param boardDimension Dimension of the Game board
+     * @param playerCount    Number of players playing the game
+     * @return {@link SLGame} that can be played/ simulated
+     * @throws GameException
+     */
     public static SLGame getSLGameWithConfiguration(List<SLTuple> ladderTuples, List<SLTuple> snakeTuples, Dimension boardDimension,
                                                     int playerCount) throws GameException {
         Board board = SLBoardFactory.getConfigurableBoard(ladderTuples, snakeTuples, boardDimension);

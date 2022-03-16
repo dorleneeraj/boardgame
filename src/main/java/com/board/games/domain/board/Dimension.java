@@ -15,13 +15,7 @@ public class Dimension {
     private Integer row;
     private Integer column;
 
-    public Dimension(Integer row, Integer column) throws GameException {
-        Objects.requireNonNull(row);
-        Objects.requireNonNull(column);
-        if (row <= 0 || column <= 0) {
-            throw ExceptionUtil.getInvalidBoardConfigurationException("Invalid data received for Board Dimension. Board Dimension needs to have positive " +
-                    "values for row and column respectively");
-        }
+    public Dimension(Integer row, Integer column) {
         this.row = row;
         this.column = column;
     }

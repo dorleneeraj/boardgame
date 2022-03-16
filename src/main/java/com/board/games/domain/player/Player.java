@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * An entity representing a board game player
+ * <p>An entity representing a board game player</p>
  */
 public abstract class Player {
 
@@ -26,10 +26,20 @@ public abstract class Player {
         return new ArrayList<>(playerMoves);
     }
 
+    /**
+     * <p>Adds a {@link Move} played by the player</p>
+     *
+     * @param playerMove
+     */
     public void addMove(Move playerMove) {
         this.playerMoves.push(playerMove);
     }
 
+    /**
+     * <p>Returns the previous {@link Move} played by the Player</p>
+     *
+     * @return
+     */
     public Move getPreviousMove() {
         return playerMoves.peek();
     }
