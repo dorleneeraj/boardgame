@@ -15,7 +15,7 @@ public abstract class Player {
     ///////////////////////////////////////////////////////////////////////////
     // Instance Variables
     ///////////////////////////////////////////////////////////////////////////
-    private final String name;
+    protected final String name;
     private final Stack<Move> playerMoves = new Stack<>();
 
     public Player(String name) {

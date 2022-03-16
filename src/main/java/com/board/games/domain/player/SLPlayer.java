@@ -14,7 +14,7 @@ import com.board.games.domain.token.Token;
  */
 public class SLPlayer extends Player {
 
-    private final Token token;
+    protected final Token token;
 
     ///////////////////////////////////////////////////////////////////////////
     // Instance Variables to capture the statistics of a player for a 
@@ -303,6 +303,11 @@ public class SLPlayer extends Player {
 
     }
 
+    @Override
+    public String toString() {
+        return "SLPlayer{" + "name='" + name + '\'' + ", token=" + token + '}';
+    }
+    
     @JacocoExcludeGenerated
     public Token getToken() {
         return token;
