@@ -68,7 +68,7 @@ public abstract class BoardGame implements Game {
     @Override
     public void endGame() {
         if (!GameState.GAME_COMPLETED.equals(currentGameState)) {
-
+            LOGGER.info("The Game is being abandoned");
         }
         generateGameAnalytics();
         setGameState(updateAndGetNextState());
