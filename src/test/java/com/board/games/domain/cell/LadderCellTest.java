@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
+import static com.board.games.domain.token.Token.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -29,7 +30,7 @@ class LadderCellTest {
     static void setUp() {
         boardCell = Mockito.spy(new SLBoardCell(10));
         ladderEndCell = Mockito.spy(new SLBoardCell(25));
-        token = new Token(1, Token.TokenColour.RED, 0);
+        token = new Token(1, TokenColour.RED, 0);
         ladderCell = Mockito.spy(new LadderCell(boardCell, ladderEndCell));
     }
 

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
+import static com.board.games.domain.token.Token.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -26,7 +27,7 @@ class SnakeCellTest {
     void setUp() {
         boardCell = Mockito.spy(new SLBoardCell(35));
         snakeEndCell = Mockito.spy(new SLBoardCell(20));
-        token = new Token(1, Token.TokenColour.GREEN, 30);
+        token = new Token(1, TokenColour.GREEN, 30);
         snakeCell = Mockito.spy(new SnakeCell(boardCell, snakeEndCell));
     }
 

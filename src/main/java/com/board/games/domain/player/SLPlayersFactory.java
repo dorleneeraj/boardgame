@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
+import static com.board.games.domain.token.Token.TokenColour;
+
 /**
  * <p>Simple static factory to generate a list of {@link SLPlayer} </p>
  */
@@ -26,7 +28,7 @@ public class SLPlayersFactory {
         }
 
         List<SLPlayer> players = new ArrayList<>();
-        Stack<Token.TokenColour> tokenColours = getRandomTokenColours(playerCount);
+        Stack<TokenColour> tokenColours = getRandomTokenColours(playerCount);
         for (int i = 1; i <= playerCount; i++) {
             String name = "Player " + i;
             Token token = new Token(i, tokenColours.pop(), INITIAL_PLAYER_POSITION);
@@ -35,10 +37,10 @@ public class SLPlayersFactory {
         return players;
     }
 
-    private static Stack<Token.TokenColour> getRandomTokenColours(int playerCount) {
-        List<Token.TokenColour> tokenColours = Arrays.asList(Token.TokenColour.RED, Token.TokenColour.GREEN,
-                Token.TokenColour.BLUE, Token.TokenColour.YELLOW);
-        Stack<Token.TokenColour> stack = new Stack<>();
+    private static Stack<TokenColour> getRandomTokenColours(int playerCount) {
+        List<TokenColour> tokenColours = Arrays.asList(TokenColour.RED, TokenColour.GREEN, TokenColour.BLUE,
+                TokenColour.YELLOW);
+        Stack<TokenColour> stack = new Stack<>();
         List<Integer> list = new ArrayList<>();
         for (int i = 1; i <= playerCount; i++) {
             list.add(i);

@@ -79,7 +79,7 @@ public class Token {
                 position + '}';
     }
 
-    public enum TokenColour {
+    public static enum TokenColour {
         RED, BLUE, GREEN, YELLOW
     }
 }

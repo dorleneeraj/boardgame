@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static com.board.games.domain.token.Token.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,8 +24,8 @@ class SLBoardCellTest {
     @BeforeAll
     static void setUp() {
         slBoardCell = new SLBoardCell(10);
-        token1 = new Token(1, Token.TokenColour.BLUE, 0);
-        token2 = new Token(2, Token.TokenColour.YELLOW, 0);
+        token1 = new Token(1, TokenColour.BLUE, 0);
+        token2 = new Token(2, TokenColour.YELLOW, 0);
     }
 
     @Test

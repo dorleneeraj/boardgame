@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import static com.board.games.domain.token.Token.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -73,7 +74,7 @@ class SLGameTest {
     @Test
     void test_performMove() throws Exception {
         SLPlayer player = Mockito.mock(SLPlayer.class);
-        Token token = new Token(1, Token.TokenColour.BLUE, 35);
+        Token token = new Token(1, TokenColour.BLUE, 35);
         Cell fromCell = new SLBoardCell(35);
         Cell toCell = Mockito.spy(new SLBoardCell(39));
 
@@ -95,7 +96,7 @@ class SLGameTest {
     @Test
     void test_performStartMove() throws Exception {
         SLPlayer player = Mockito.mock(SLPlayer.class);
-        Token token = new Token(1, Token.TokenColour.BLUE, 0);
+        Token token = new Token(1, TokenColour.BLUE, 0);
         Cell fromCell = null;
         Cell toCell = Mockito.spy(new SLBoardCell(3));
 
@@ -117,7 +118,7 @@ class SLGameTest {
     @Test
     void test_performUnluckyMove() throws Exception {
         SLPlayer player = Mockito.mock(SLPlayer.class);
-        Token token = new Token(1, Token.TokenColour.BLUE, 0);
+        Token token = new Token(1, TokenColour.BLUE, 0);
         Cell fromCell = new SLBoardCell(98);
         Cell toCell = null;
 
@@ -180,7 +181,7 @@ class SLGameTest {
 
     @Test
     public void test_validateGameState() throws Exception {
-        players.add(new SLPlayer("player 1", new Token(1, Token.TokenColour.BLUE, 0)));
+        players.add(new SLPlayer("player 1", new Token(1, TokenColour.BLUE, 0)));
         slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
         slGame.validateGameData();
     }
