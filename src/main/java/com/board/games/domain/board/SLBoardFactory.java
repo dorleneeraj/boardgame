@@ -15,8 +15,10 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 /**
- * <p>A Simple static factory to generate an instance of {@link Board} for
- * the {@link SLGame}</p>
+ * <p>
+ * A Simple static factory to generate an instance of {@link Board} for
+ * the {@link SLGame}
+ * </p>
  */
 public class SLBoardFactory {
 

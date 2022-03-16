@@ -28,7 +28,7 @@ class SLBoardCellTest {
     }
 
     @Test
-    void acceptToken() throws Exception {
+    void test_acceptToken() throws Exception {
         Move move1 = slBoardCell.acceptToken(token1);
         Move move2 = slBoardCell.acceptToken(token2);
         assertEquals(10, token1.getPosition());
@@ -38,19 +38,19 @@ class SLBoardCellTest {
     }
 
     @Test
-    void removeToken() throws Exception {
+    void test_removeToken() throws Exception {
         slBoardCell.removeToken(token1);
         slBoardCell.removeToken(token2);
         assertTrue(slBoardCell.getCurrentTokensOnCell().isEmpty());
     }
 
     @Test
-    void getCellPosition() {
+    void test_getCellPosition() {
         assertEquals(10, slBoardCell.getCellPosition());
     }
 
     @Test
-    void getCurrentTokensOnCell() throws Exception {
+    void test_getCurrentTokensOnCell() throws Exception {
         slBoardCell.acceptToken(token1);
         slBoardCell.acceptToken(token2);
         assertNotNull(slBoardCell.getCurrentTokensOnCell());
@@ -60,7 +60,7 @@ class SLBoardCellTest {
     }
 
     @Test
-    void hasASnakeNeighbours() {
+    void test_hasASnakeNeighbour() {
         slBoardCell.setNeighbours(Arrays.asList(new SnakeCell(new SLBoardCell(40), new SLBoardCell(15))));
         assertTrue(slBoardCell.hasASnakeNeighbours());
     }

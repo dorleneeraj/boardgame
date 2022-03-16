@@ -42,7 +42,7 @@ class SLGameTest {
     }
 
     @Test
-    void initializeGameStates() {
+    void test_initializeGameStates() {
         slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
         slGame.initializeGameStates();
         Queue<GameState> gameStates = slGame.getGameStates();
@@ -56,7 +56,7 @@ class SLGameTest {
     }
 
     @Test
-    void selectNextPlayer() {
+    void test_selectValidNextPlayer() {
         players.add(new SLPlayer("Player 1", Mockito.mock(Token.class)));
         slGame = Mockito.spy(new SLGame(board, playerCount, dice, players));
         slGame.selectNextPlayer();

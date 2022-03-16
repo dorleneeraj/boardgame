@@ -34,7 +34,7 @@ class LadderCellTest {
     }
 
     @Test
-    void testAcceptToken() throws Exception {
+    void test_acceptToken() throws Exception {
         Move move = ladderCell.acceptToken(token);
         assertNotNull(move);
         assertTrue(move instanceof SLMove);
@@ -53,14 +53,16 @@ class LadderCellTest {
 
 
     @Test
-    void getCellPosition() {
+    void test_getCellPosition() {
         assertEquals(10, ladderCell.getCellPosition());
     }
 
     @Test
-    void testGetCurrentTokensOnCell() {
+    void test_GetCurrentTokensOnCell() {
         Throwable throwable = assertThrows(GameException.class, () -> {
             ladderCell.getCurrentTokensOnCell();
         });
+
+        assertTrue(throwable.getMessage().contains("cannot have any tokens"));
     }
 }

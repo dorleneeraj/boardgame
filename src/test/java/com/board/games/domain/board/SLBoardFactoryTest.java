@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class SLBoardFactoryTest {
 
     @Test
-    public void test_validateLadderAndSnakeTuples() throws Exception {
+    public void test_validateErrorOnOverlappingSnakeAndLadders() throws Exception {
         List<SLTuple> snakeTuples = Arrays.asList(new SLTuple(56, 45));
         List<SLTuple> ladderTuples = Arrays.asList(new SLTuple(56, 80));
 

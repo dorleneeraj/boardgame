@@ -32,7 +32,7 @@ class SnakeCellTest {
 
 
     @Test
-    void acceptToken() throws Exception {
+    void test_acceptToken() throws Exception {
         Move move = snakeCell.acceptToken(token);
         assertNotNull(move);
         assertTrue(move instanceof SLMove);
@@ -50,14 +50,16 @@ class SnakeCellTest {
     }
 
     @Test
-    void getCellPosition() {
+    void test_getCellPosition() {
         assertEquals(35, snakeCell.getCellPosition());
     }
 
     @Test
-    void getCurrentTokensOnCell() {
+    void test_getCurrentTokensOnCell() {
         Throwable throwable = assertThrows(GameException.class, () -> {
             snakeCell.getCurrentTokensOnCell();
         });
+
+        assertTrue(throwable.getMessage().contains("cannot have any tokens"));
     }
 }

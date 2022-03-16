@@ -26,7 +26,7 @@ class BoardGameTest {
     }
 
     @Test
-    void startGame() throws Exception {
+    void verify_startGameFlow() throws Exception {
         InOrder inOrder = Mockito.inOrder(boardGame);
         Mockito.doCallRealMethod().when(boardGame).startGame();
         boardGame.startGame();
@@ -36,7 +36,7 @@ class BoardGameTest {
     }
 
     @Test
-    void playGame() throws Exception {
+    void verify_playGameFlow() throws Exception {
         InOrder inOrder = Mockito.inOrder(boardGame);
         Mockito.when(boardGame.updateAndGetNextState()).thenAnswer(new Answer<GameState>() {
             int count = 0;
@@ -73,7 +73,7 @@ class BoardGameTest {
 
 
     @Test
-    void endGame() {
+    void verify_endGameFlow() {
         InOrder inOrder = Mockito.inOrder(boardGame);
         Mockito.when(boardGame.updateAndGetNextState()).thenReturn(GameState.FINISHED);
         Mockito.doCallRealMethod().when(boardGame).endGame();
@@ -86,7 +86,7 @@ class BoardGameTest {
     }
 
     @Test
-    void initializeGame() throws Exception {
+    void verify_initializeGameFlow() throws Exception {
         InOrder inOrder = Mockito.inOrder(boardGame);
         Mockito.doCallRealMethod().when(boardGame).initializeGame();
         boardGame.initializeGame();
@@ -97,7 +97,7 @@ class BoardGameTest {
     }
 
     @Test
-    void playTurn() throws Exception {
+    void verify_playTurnFlow() throws Exception {
         InOrder inOrder = Mockito.inOrder(boardGame);
         Mockito.doCallRealMethod().when(boardGame).processNextTurn();
         boardGame.processNextTurn();
@@ -106,7 +106,7 @@ class BoardGameTest {
     }
 
     @Test
-    void generateGameAnalytics() throws Exception {
+    void verify_generateGameAnalyticsFlow() throws Exception {
         GameTracker gametracker = Mockito.mock(GameTracker.class);
         List<GameTracker> gameTrackers = Arrays.asList(gametracker);
         Mockito.when(boardGame.getGameTrackers()).thenReturn(gameTrackers);

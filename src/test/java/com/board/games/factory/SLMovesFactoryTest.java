@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 class SLMovesFactoryTest {
 
     @Test
-    void getAdvanceMove() {
+    void test_getAdvanceMove() {
         Move move = SLMovesFactory.getAdvanceMove(10, 15);
         assertEquals(5, move.getMoveAttribute(SLMove.MOVE_TOTAL_TILES));
         assertEquals(10, move.getMoveAttribute(SLMove.MOVE_FROM_POSITION));
@@ -29,7 +29,7 @@ class SLMovesFactoryTest {
     }
 
     @Test
-    void getLadderAdvanceMove() throws Exception {
+    void test_getLadderAdvanceMove() throws Exception {
         Move intermediateStep = SLMovesFactory.getAdvanceMove(10, 15);
         Move ladderStep = SLMovesFactory.getAdvanceMove(15, 32);
         Move ladderMove = SLMovesFactory.getLadderAdvanceMove(intermediateStep, ladderStep);
@@ -44,7 +44,7 @@ class SLMovesFactoryTest {
     }
 
     @Test
-    void getSnakeDescendMove() throws Exception {
+    void test_getSnakeDescendMove() throws Exception {
         Move intermediateStep = SLMovesFactory.getAdvanceMove(55, 58);
         Move snakeStep = SLMovesFactory.getAdvanceMove(58, 23);
         Move snakeMove = SLMovesFactory.getSnakeDescendMove(intermediateStep, snakeStep);
@@ -59,7 +59,7 @@ class SLMovesFactoryTest {
     }
 
     @Test
-    void getUnluckyMove() {
+    void test_getUnluckyMove() {
         Move unluckyMove = SLMovesFactory.getUnluckyMove(98, 4);
         assertEquals(SLMoveType.UNLUCKY_MOVE, unluckyMove.getMoveAttribute(SLMove.MOVE_TYPE));
         assertEquals(98, unluckyMove.getMoveAttribute(SLMove.MOVE_FROM_POSITION));
@@ -69,7 +69,7 @@ class SLMovesFactoryTest {
     }
 
     @Test
-    void getLuckyMove() {
+    void test_getLuckyMove() {
         Move luckyMove = SLMovesFactory.getLuckyMove(98, 100);
         assertEquals(SLMoveType.ADVANCE_LUCKY_MOVE, luckyMove.getMoveAttribute(SLMove.MOVE_TYPE));
         assertEquals(98, luckyMove.getMoveAttribute(SLMove.MOVE_FROM_POSITION));

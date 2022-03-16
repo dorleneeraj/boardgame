@@ -77,7 +77,7 @@ class SLGameStatsTrackerTest {
     }
 
     @Test
-    void performOperation() {
+    void test_performOperation() {
         gameStatisticsData.analyzeData();
 
         assertEquals(64, gameStatisticsData.totalTurnsInTheGame);
